@@ -10,6 +10,5 @@ export const routes: Routes = [
     { path: 'detail', component: DetailsComponent }, //'details/id'
     { path: 'discover', component: WeekComponent }, //'discover/id'
     { path: '**', redirectTo: '' }
-
 ];
 
