@@ -1,79 +1,86 @@
 import { Component, OnInit } from '@angular/core';
-import * as mapboxgl from 'mapbox-gl'; // Mapbox per al mapa
+import * as mapboxgl from 'mapbox-gl';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule], // Standalone component, no necessita NgModule
+  imports: [CommonModule],
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  map: mapboxgl.Map; // Per a Mapbox
-  routes = [
-    { name: 'Espresso', color: 'btn-danger', geojson: 'assets/espresso.geojson' },
-    { name: 'Macchiato', color: 'btn-success', geojson: 'assets/macchiato.geojson' },
-    { name: 'Cappuccino', color: 'btn-primary', geojson: 'assets/cappuccino.geojson' }
-  ];
+  map!: mapboxgl.Map;
 
-  elevations = [
-    { name: 'Espresso', image: 'assets/elevation_espresso.jpg' },
-    { name: 'Macchiato', image: 'assets/elevation_macchiato.jpg' },
-    { name: 'Cappuccino', image: 'assets/elevation_cappuccino.jpg' }
+  routes: { name: string, color: string, coordinates: [number, number][] }[] = [
+    { name: 'Espresso', color: '#dc3545', coordinates: [[2.648, 39.569], [2.688, 39.629]] },
+    { name: 'Macchiato', color: '#28a745', coordinates: [[2.700, 39.570], [2.750, 39.630]] },
+    { name: 'Cappuccino', color: '#007bff', coordinates: [[2.620, 39.550], [2.660, 39.610]] }
   ];
 
   ngOnInit(): void {
-    this.initializeMap(); // Inicialitza el mapa
+    this.initializeMap();
   }
 
   initializeMap(): void {
-    (mapboxgl as any).accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN'; // Substitueix per l'access token de Mapbox
+    mapboxgl.default.accessToken = 'pk.eyJ1IjoiYWt1c3Rpa29hIiwiYSI6ImNtMWwxeThvNDA0a3Iya3NnZDN1YThzY24ifQ.6plMBiCVFOoSIRpcj_hm8A'; // Substitueix amb el teu token de Mapbox
 
     this.map = new mapboxgl.Map({
-      container: 'map', // ID del div per al mapa
-      style: 'mapbox://styles/mapbox/streets-v11', // Estil del mapa
-      center: [2.648, 39.569], // Coordenades centrals (Mallorca)
-      zoom: 10 // Zoom inicial
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [2.648, 39.569],
+      zoom: 11
     });
 
     this.map.on('load', () => {
-      // Carregar la ruta per defecte (Espresso en aquest cas)
-      this.loadRoute(this.routes[0].geojson);
+      this.loadRouteWithDirections(this.routes[0].coordinates, this.routes[0].color);
     });
   }
 
-  // Funció per carregar rutes a Mapbox des de fitxers GeoJSON
-  loadRoute(geojsonPath: string): void {
-    // Eliminar una capa existent si hi ha
-    if (this.map.getLayer('route')) {
-      this.map.removeLayer('route');
-      this.map.removeSource('route');
-    }
+  loadRouteWithDirections(coordinates: [number, number][], color: string): void {
+    const start = coordinates[0];
+    const end = coordinates[coordinates.length - 1];
 
-    // Afegir la nova ruta
-    this.map.addSource('route', {
-      'type': 'geojson',
-      'data': geojsonPath
-    });
+    const directionsRequest = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?geometries=geojson&access_token=${mapboxgl.default.accessToken}`;
 
-    this.map.addLayer({
-      'id': 'route',
-      'type': 'line',
-      'source': 'route',
-      'layout': {
-        'line-join': 'round',
-        'line-cap': 'round'
-      },
-      'paint': {
-        'line-color': '#ff0000', // Color de la ruta (pots ajustar-ho segons la ruta)
-        'line-width': 5
-      }
-    });
+    fetch(directionsRequest)
+      .then(response => response.json())
+      .then(data => {
+        const route = data.routes[0].geometry;
+
+        if (this.map.getLayer('route')) {
+          this.map.removeLayer('route');
+          this.map.removeSource('route');
+        }
+
+        this.map.addSource('route', {
+          'type': 'geojson',
+          'data': {
+            'type': 'Feature',
+            'geometry': route,
+            'properties': {}
+          }
+        });
+
+        this.map.addLayer({
+          'id': 'route',
+          'type': 'line',
+          'source': 'route',
+          'layout': {
+            'line-join': 'round',
+            'line-cap': 'round'
+          },
+          'paint': {
+            'line-color': color,
+            'line-width': 5
+          }
+        });
+      })
+      .catch(error => console.error('Error carregant la ruta: ', error));
   }
 
-  // Carrega la ruta seleccionada amb els botons
-  onRouteSelect(route: any): void {
-    this.loadRoute(route.geojson);
+  onRouteSelect(route: { name: string, color: string, coordinates: [number, number][] }): void {
+    this.loadRouteWithDirections(route.coordinates, route.color);
   }
+
 }
