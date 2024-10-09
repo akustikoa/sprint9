@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { CommonModule } from '@angular/common';
+import { RouteService } from '../../services/route.sevice'
+import { Route } from '../../interfaces/route.interface'
 
 @Component({
   selector: 'app-details',
@@ -11,19 +13,17 @@ import { CommonModule } from '@angular/common';
 })
 export class DetailsComponent implements OnInit {
   map!: mapboxgl.Map;
+  routes: Route[] = [];
 
-  routes: { name: string, color: string, coordinates: [number, number][] }[] = [
-    { name: 'Espresso', color: '#dc3545', coordinates: [[2.648, 39.569], [2.688, 39.629]] },
-    { name: 'Macchiato', color: '#28a745', coordinates: [[2.700, 39.570], [2.750, 39.630]] },
-    { name: 'Cappuccino', color: '#007bff', coordinates: [[2.620, 39.550], [2.660, 39.610]] }
-  ];
+  constructor(private routeService: RouteService) { }
 
   ngOnInit(): void {
+    this.routes = this.routeService.getRoutes(); // Obtenim rutes del servei
     this.initializeMap();
   }
 
   initializeMap(): void {
-    mapboxgl.default.accessToken = '';
+    mapboxgl.default.accessToken = 'pk.eyJ1IjoiYWt1c3Rpa29hIiwiYSI6ImNtMWwxeThvNDA0a3Iya3NnZDN1YThzY24ifQ.6plMBiCVFOoSIRpcj_hm8A'; // Mapbox token
 
     this.map = new mapboxgl.Map({
       container: 'map',
@@ -79,8 +79,7 @@ export class DetailsComponent implements OnInit {
       .catch(error => console.error('Error carregant la ruta: ', error));
   }
 
-  onRouteSelect(route: { name: string, color: string, coordinates: [number, number][] }): void {
+  onRouteSelect(route: Route): void {
     this.loadRouteWithDirections(route.coordinates, route.color);
   }
-
 }
