@@ -1,0 +1,31 @@
+<div class="container mt-4">
+
+    <h3 class="d-inline text-start">SUNDAY, MAY 5th | </h3>
+    <h5 class="d-inline"> Ride 1</h5>
+    <img src="assets/img_home.jpg" class="img-fluid mt-3 mb-5 w-100 rounded-1" alt="Imatge del dia">
+
+
+    <h3>Day 1 - Rural Plains and Cura Monastery</h3>
+    <p>Your first ride of the trip will take you through the heart of the island, what we call here the
+        ‘rural plains’. The rolling terrain through charming villages, fields, and vineyards offers a great
+        introduction to the island. The Cappuccinos will loop back north from here and the Espressos
+        will ride south to Cura Monastery, located on top of a mountain.
+    </p>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div id="map" style="height: 320px;" class="mb-4 rounded-1"></div> <!-- Mapa -->
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-around mb-4">
+                @for (route of routes; track route.name) {
+                <button (click)="onRouteSelect(route)" class="btn custom_btn"
+                    [ngStyle]="{'background-color': route.color, 'color': '#fff'}">
+                    {{ route.name }}
+                </button>
+                }
+            </div>
+            <canvas id="elevationChart" class="mb-4"></canvas> <!-- Gràfic interactiu -->
+        </div>
+    </div>
+</div>
