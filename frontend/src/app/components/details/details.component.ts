@@ -28,7 +28,7 @@ export class DetailsComponent implements OnInit {
   }
 
   initializeMap(): void {
-    mapboxgl.default.accessToken = 'TOKEN';
+    mapboxgl.default.accessToken = 'Token';
 
     this.map = new mapboxgl.Map({
       container: 'map',
