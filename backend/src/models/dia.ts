@@ -1,0 +1,21 @@
+import { DataTypes } from "sequelize";
+import sequelize from '../config/db.config';
+import Tour from './tour';
+
+const Dia = sequelize.define('Dia', {
+    id_dia: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    numero_dia: DataTypes.INTEGER,
+    titol_etapa: DataTypes.STRING,
+    imatge_etapa: DataTypes.STRING,
+    descripció: DataTypes.TEXT,
+    coordenades_inici: DataTypes.STRING,
+    coordenades_final: DataTypes.STRING,
+});
+
+Dia.belongsTo(Tour, { foreignKey: 'id_tour' });
+
+export default Dia;

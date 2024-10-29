@@ -1,13 +1,23 @@
 // Servidor Express
-import express, { Request, Response } from 'express';
+import express from 'express';
+import sequelize from './config/db.config';
+import Tour from './models/tour';
+import Dia from './models/dia';
+import Recorregut from './models/recorregut';
 
 const app = express(); // inicialitzem l'app
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!');
+app.get('/', (req, res) => {
+    res.send('API de Bikecat funcionant');
 });
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+sequelize.sync().then(() => {
+    console.log('Database sincronitzada');
+}).catch((err) => {
+    console.error('Error sincrontizant DB', err);
+});
+
+app.listen(PORT, () => {
+    console.log(`Servidor funcinant al port  ${PORT}`);
 });
