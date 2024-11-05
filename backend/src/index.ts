@@ -6,7 +6,7 @@ import Dia from './models/dia';
 import Recorregut from './models/recorregut';
 
 const app = express(); // inicialitzem l'app
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 
 app.get('/', (req, res) => {
     res.send('API de Bikecat funcionant');
@@ -19,5 +19,7 @@ sequelize.sync().then(() => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor funcinant al port  ${PORT}`);
+    console.log(`Servidor funcionant al port  ${PORT}`);
 });
+console.log(`Servidor intentant escoltar al port ${PORT}`);
+console.log(`Configuració de la DB: ${process.env.DB_NAME}`);

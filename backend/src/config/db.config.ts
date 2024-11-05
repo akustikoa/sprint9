@@ -1,10 +1,18 @@
 //configurem la conexió amb la BD
 import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
 
-const sequilize = new Sequelize('bikecat', 'root', 'password', {
-    host: 'localhost',
-    dialect: 'mysql',
-    logging: false,
-});
+dotenv.config();
 
-export default sequilize;
+const sequelize = new Sequelize(
+    process.env.DB_NAME!,
+    process.env.DB_USER!,
+    process.env.DB_PASSWORD!,
+    {
+        host: process.env.DB_HOST!,
+        dialect: 'mysql',
+    }
+);
+
+
+export default sequelize;
