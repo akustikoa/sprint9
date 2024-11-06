@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from '../config/db.config';
+import sequelize from '../db/connection';
 import Tour from './tour';
 
 const Dia = sequelize.define('Dia', {

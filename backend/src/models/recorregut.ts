@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequilize from "../config/db.config";
+import sequilize from "../db/connection";
 import Dia from './dia';
 
 const Recorregut = sequilize.define('Recorregut', {
