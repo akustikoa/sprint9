@@ -5,8 +5,8 @@ import Dia from '../models/dia';
 
 //obtenir tots els dies d'un tour 
 export const GetDiesByTour = async (req: Request, res: Response) => {
-    const { tourID } = req.params; // s'espera que tourID sigui part de l'URL 
-    const dies = await Dia.findAll({ where: { id_tour: tourID } });
+    const { tourId } = req.params; // s'espera que tourID sigui part de l'URL 
+    const dies = await Dia.findAll({ where: { id_tour: tourId } });
     res.json(dies);
 };
 

@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';       // a la 33 ROUTES DE DIA I RECORREGUT COMENTAT
+import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import tourRoutes from '../routes/tour';
