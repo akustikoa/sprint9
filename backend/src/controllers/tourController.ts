@@ -17,7 +17,7 @@ export const getTour = async (req: Request, res: Response) => {
     }
 };
 
-export const postTour = async (req: Request, res: Response) => {
+export const createTour = async (req: Request, res: Response) => {
     const { body } = req;
     try {
         const tour = await Tour.create(body);
@@ -27,6 +27,19 @@ export const postTour = async (req: Request, res: Response) => {
         res.status(500).json({ msg: 'Error al crear el tour' });
     }
 };
+
+export const updateTour = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { body } = req;
+    const tour = await Tour.findByPk(id);
+    if (tour) {
+        await tour.update(body);
+        res.json({ msg: `S'ha actualitzat el tour amb id ${id}` });
+    } else {
+        res.status(400).json({ msg: `No s'ha pogut actualitar el tour amb id ${id}` });
+    }
+};
+
 
 export const deleteTour = async (req: Request, res: Response) => {
     const { id } = req.params;

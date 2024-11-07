@@ -2,8 +2,8 @@ import express, { Application, Request, Response } from 'express';       // a la
 import cors from 'cors';
 import dotenv from 'dotenv';
 import tourRoutes from '../routes/tour';
-// import diaRoutes from '../routes/dia';
-// import recorregutRoutes from '../routes/recorregut';
+import diaRoutes from '../routes/dia';
+import recorregutRoutes from '../routes/recorregut';
 import db from '../db/connection';
 
 dotenv.config();
@@ -14,7 +14,7 @@ class Server {
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT || '3000';
+        this.port = process.env.PORT || '3001';
         this.listen();
         this.middlewares();
         this.routes();
@@ -29,8 +29,8 @@ class Server {
 
     routes() {
         this.app.use('/api/tours', tourRoutes);
-        // this.app.use('/api/dies', diaRoutes);
-        // this.app.use('/api/recorreguts', recorregutRoutes);
+        this.app.use('/api/dies', diaRoutes);
+        this.app.use('/api/recorreguts', recorregutRoutes);
     }
 
     middlewares() {
@@ -43,6 +43,7 @@ class Server {
             await db.authenticate();
             console.log('BD connectada');
         } catch (error) {
+            console.log(error);
             console.error('Error en la connexió de la BD:', error);
         }
     }

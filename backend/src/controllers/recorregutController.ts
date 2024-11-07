@@ -9,7 +9,7 @@ export const getRecorregutsByDia = async (req: Request, res: Response) => {
 };
 
 
-//obternir un recorregur específic 
+//obternir un recorregur específic (etapa)
 export const getRecorregut = async (req: Request, res: Response) => {
     const { id } = req.params;
     const recorregut = await Recorregut.findByPk(id);
@@ -42,5 +42,17 @@ export const updateRecorregut = async (req: Request, res: Response) => {
         res.json(recorregut);
     } else {
         res.status(400).json({ msg: `No s'ha pogut actualitzar el recorregut amb id ${id}` });
+    }
+};
+
+//eliminar recorregut
+export const deleteRecorregut = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const recorregut = await Recorregut.findByPk(id);
+    if (recorregut) {
+        await recorregut.destroy();
+        res.json({ msg: `S'ha eliminat el recorregut amb id ${id}` });
+    } else {
+        res.status(404).json({ msg: `No s'ha trobat el recorregut amb id ${id}` });
     }
 };

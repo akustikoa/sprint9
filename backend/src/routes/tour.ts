@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import { getTours, getTour, postTour, deleteTour } from '../controllers/tourController';
+import { getTours, getTour, createTour, updateTour, deleteTour } from '../controllers/tourController';
 
 const tourRouter = Router();
 
 tourRouter.get('/', getTours);
 tourRouter.get('/:id', getTour);
-tourRouter.post('/', postTour);
+tourRouter.post('/', createTour);
+tourRouter.put('/:id', updateTour);
 tourRouter.delete('/:id', deleteTour);
 
 export default tourRouter;

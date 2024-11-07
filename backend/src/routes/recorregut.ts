@@ -1,12 +1,12 @@
-// import { Router } from 'express';
-// import { getRecorregut, getRecorreguts, createRecorregut, deleteRecorregut, updateRecorregut } from '../controllers/tourController';
+import { Router } from 'express';
+import { getRecorregutsByDia, getRecorregut, createRecorregut, updateRecorregut, deleteRecorregut } from '../controllers/recorregutController'
 
-// const router = Router();
+const recorregutRouter = Router();
 
-// router.get('/', getRecorreguts);
-// router.get('/:id', getRecorregut);
-// router.post('/', createRecorregut);
-// router.put('/:id', updateRecorregut);
-// router.delete('/:id', deleteRecorregut);
+recorregutRouter.get('/dia/:diaId', getRecorregutsByDia);
+recorregutRouter.get('/:id', getRecorregut);
+recorregutRouter.post('/', createRecorregut);
+recorregutRouter.put('/:id', updateRecorregut);
+recorregutRouter.delete('/id', deleteRecorregut);
 
-// export default router;
+export default recorregutRouter;
