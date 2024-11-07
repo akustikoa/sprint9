@@ -11,7 +11,11 @@ const Recorregut = sequilize.define('Recorregut', {
     nom_recorregut: DataTypes.STRING,
     color: DataTypes.STRING,
     coordenades: DataTypes.JSON,
+}, {
+    tableName: 'recorreguts',
+    timestamps: false
 });
+
 
 Recorregut.belongsTo(Dia, { foreignKey: 'id_dia' });
 

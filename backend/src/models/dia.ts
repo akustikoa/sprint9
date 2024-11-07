@@ -11,9 +11,12 @@ const Dia = sequelize.define('Dia', {
     numero_dia: DataTypes.INTEGER,
     titol_etapa: DataTypes.STRING,
     imatge_etapa: DataTypes.STRING,
-    descripció: DataTypes.TEXT,
+    descripcio: DataTypes.TEXT,
     coordenades_inici: DataTypes.STRING,
     coordenades_final: DataTypes.STRING,
+}, {
+    tableName: 'dies',
+    timestamps: false
 });
 
 Dia.belongsTo(Tour, { foreignKey: 'id_tour' });
