@@ -3,7 +3,7 @@
         <h3 class="d-inline">MARK’S MALLORCA CYCLING TOUR |</h3>
         <h5 class="d-inline"> May 4th – May 11th</h5>
     </div>
-    <img src="assets/img_home.jpg" class="img-fluid mt3 mb-4 rounded-1 img_mod" alt="Imatge destacada">
+    <img src="assets/img_home.jpg" class="img-fluid mt-3 mb-4 rounded-1 img_mod" alt="Imatge destacada">
     <div class="row mb-4">
         <div class="col-6">
             <button class="btn btn-danger btn-lg w-100 rounded-1" type="button" [routerLink]="['/days']">
@@ -16,4 +16,20 @@
             </button>
         </div>
     </div>
-</div>
+
+    <!-- SECCIÓ TEMPORAL PER MOSTRAR ELS TOURS -->
+    <div class="mt-4">
+        @if (tours() && tours().length > 0) {
+        <h4>Llista de Tours (Prova):</h4>
+        <ul>
+            @for (tour of tours(); track tour.id_tour) {
+            <li>
+                <strong>{{ tour.nom_tour }}</strong> - {{ tour.data_inici }} a {{ tour.data_final }}
+            </li>
+            }
+        </ul>
+        }
+        @if (!tours() || tours().length === 0) {
+        <p>No hi ha tours disponibles.</p>
+        }
+    </div>
