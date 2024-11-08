@@ -23,4 +23,11 @@ export class TourService { //declarem la classe TourService com a servei per pod
         });
     }
 
+    //carregar un tour específic per ID i actualitzar el signal
+    loadTour(id: string): void {
+        this.http.get<Tour>('${this.apiUrl}/${id').subscribe({
+            next: (tour) => this.selectedTour.set(tour),
+            error: (err) => console.log('Error carregant el tour', err)
+        });
+    }
 }
