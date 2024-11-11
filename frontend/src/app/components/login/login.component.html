@@ -1,0 +1,11 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+    <label for="id_tour">Selecciona el Tour</label>
+    <select formControlName="id_tour" id="id_tour">
+        <option *ngfor="let tour of tours" [value]="tour.id">{{tour.nom}}</option> // modificar l'*ngFor
+    </select>
+
+    <label for="password">contrassenya</label>
+    <input type="password" id="password" formControlName="pasword" placeholder="Introdueix la contrassenya" />
+
+    <button type="submit">Envia</button>
+</form>
