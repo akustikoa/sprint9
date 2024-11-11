@@ -20,7 +20,7 @@ export class TourService { //declarem la classe TourService com a servei per pod
         return this.http.post<{ valid: boolean }>(`${this.apiUrl}/verify-password`, { id_tour, password });
     }
 
-    //carreguem tots els tours i actualitzem el signal
+    //carreguem tots els tours i actualitzem el signal per al Login
     loadTours(): void {
         this.http.get<Tour[]>(this.apiUrl).subscribe({
             next: (tours) => this.tours.set(tours),
@@ -30,7 +30,7 @@ export class TourService { //declarem la classe TourService com a servei per pod
 
     //carregar un tour específic per ID i actualitzar el signal
     loadTour(id: string): void {
-        this.http.get<Tour>('${this.apiUrl}/${id').subscribe({
+        this.http.get<Tour>(`${this.apiUrl}/${id}`).subscribe({
             next: (tour) => this.selectedTour.set(tour),
             error: (err) => console.log('Error carregant el tour', err)
         });

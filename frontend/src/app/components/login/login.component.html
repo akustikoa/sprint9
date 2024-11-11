@@ -1,6 +1,21 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
     <label for="id_tour">Selecciona el Tour</label>
     <select formControlName="id_tour" id="id_tour">
+        @for (tour of tours(); track tour.id_tour) {
+        <option [value]="tour.id_tour">{{ tour.nom_tour }}</option>
+        }
+    </select>
+
+    <label for="password">Contrassenya</label>
+    <input type="password" id="password" formControlName="password" placeholder="Introdueix la contrassenya" />
+
+    <button type="submit">Envia</button>
+</form>
+
+
+<!-- <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+    <label for="id_tour">Selecciona el Tour</label>
+    <select formControlName="id_tour" id="id_tour">
         @for (tour of tours; track tour.id) {
         <option [value]="tour.id">{{ tour.nom }}</option>
         }
@@ -10,4 +25,4 @@
     <input type="password" id="password" formControlName="password" placeholder="Introdueix la contrassenya" />
 
     <button type="submit">Envia</button>
-</form>
+</form> -->
