@@ -15,6 +15,11 @@ export class TourService { //declarem la classe TourService com a servei per pod
 
     constructor(private http: HttpClient) { } // injectemm Httpclient per fet peticions http
 
+    //verifiquem l'ID i password introduit al login
+    verifyTourPassword(id_tour: string, password: string) {
+        return this.http.post<{ valid: boolean }>(`${this.apiUrl}/verify-password`, { id_tour, password });
+    }
+
     //carreguem tots els tours i actualitzem el signal
     loadTours(): void {
         this.http.get<Tour[]>(this.apiUrl).subscribe({

@@ -6,7 +6,7 @@ export const validateTourPassword = async (req: Request, res: Response) => {
 
     try {
         const tour = await Tour.findByPk(id_tour);
-        if (tour && (tour as any).password === password) {  // !!!!Cas explícit per a password
+        if (tour && (tour as any).password === password) {  // !!!!Cas explícit per a password!!!!
             res.json({ valid: true });
         } else if (!tour) {
             res.status(404).json({ msg: 'Tour no trobat' });
