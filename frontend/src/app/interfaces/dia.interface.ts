@@ -3,5 +3,4 @@ export interface Dia {
     titol_etapa: string;
     imatge_etapa: string;
     id_tour: number;
-
 }

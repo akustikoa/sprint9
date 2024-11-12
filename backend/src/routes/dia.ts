@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { GetDiesByTour, getDia, createDia, updateDia, deleteDia } from '../controllers/diaController';
+import { getDiesByTour, getDia, createDia, updateDia, deleteDia } from '../controllers/diaController';
 
 const diaRouter = Router();
 
-diaRouter.get('/tour/:tourId', GetDiesByTour);
+diaRouter.get('/tour/:tourId', getDiesByTour);
 diaRouter.get('/:id', getDia);
 diaRouter.post('/', createDia);
 diaRouter.put('/:id', updateDia);

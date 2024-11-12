@@ -1,112 +1,25 @@
 <div class="container">
     <h2 class="text-start ms-3 mt-4">Cycling stages</h2>
     <div class="row d-flex justify-content-start">
-        <div class="col-md-4 mb-4 card-container card-">
-            <a class="text-decoration-none" [routerLink]="['/detail']">
-                <div class="card">
-                    <img src="assets/list-days/img_stage_petit_7.jpg" class="card-img-top img-fluid"
-                        alt="Imatge del dia 1">
-                    <div class="card-body d-flex justify-content-between align-items-center">
-                        <span class="h5 d-flex align-items-center mb-0">
-                            <div class="position-relative me-4 ">
-                                <i class="h1 bi bi-calendar bi-lg"></i>
-                                <span class="position-absolute top-50 start-50 translate-middle h4">1</span>
-                            </div><span> Rural Plains & Cura Monastery</span>
-                        </span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
+        @for (dia of tourDays(); track dia.id_dia) {
         <div class="col-md-4 mb-4 card-container">
-            <a class="text-decoration-none" [routerLink]="['/detail']">
+            <a class="text-decoration-none" [routerLink]="['/detail', dia.id_dia]">
                 <div class="card">
-                    <img src="assets/list-days/img_stage_petit_2.jpg" class="card-img-top img-fluid"
-                        alt="Imatge del dia 1">
+                    <img [src]="'assets/list-days/' + dia.imatge_etapa" class="card-img-top img-fluid"
+                        [alt]="'Imatge del dia ' + dia.id_dia">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <span class="h5 d-flex align-items-center mb-0">
                             <div class="position-relative me-4">
                                 <i class="h1 bi bi-calendar bi-lg"></i>
-                                <span class="position-absolute top-50 start-50 translate-middle h4">2</span>
-                            </div>Cap de Formentor & Pollença
-                        </span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-
-        <div class="col-md-4 mb-4 card-container">
-            <a class="text-decoration-none" [routerLink]="['/detail']">
-                <div class="card">
-                    <img src="assets/list-days/img_stage_petit_3.jpg" class="card-img-top img-fluid"
-                        alt="Imatge del dia 1">
-                    <div class="card-body d-flex justify-content-between align-items-center">
-                        <span class="h5 d-flex align-items-center mb-0">
-                            <div class="position-relative me-4">
-                                <i class="h1 bi bi-calendar bi-lg"></i>
-                                <span class="position-absolute top-50 start-50 translate-middle h4">3</span>
-                            </div>Lluc Monastery & Serra de
-                            Tramuntana
-                        </span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4 mb-4 card-container">
-            <a class="text-decoration-none" [routerLink]="['/detail']">
-                <div class="card">
-                    <img src="assets/list-days/img_stage_petit_4.jpg" class="card-img-top img-fluid"
-                        alt="Imatge del dia 1">
-                    <div class="card-body d-flex justify-content-between align-items-center">
-                        <span class="h5 d-flex align-items-center mb-0">
-                            <div class="position-relative me-4">
-                                <i class="h1 bi bi-calendar bi-lg"></i>
-                                <span class="position-absolute top-50 start-50 translate-middle h4">4</span>
+                                <span class="position-absolute top-50 start-50 translate-middle h4">{{ dia.id_dia
+                                    }}</span>
                             </div>
-                            Sa Calobra
+                            <span>{{ dia.titol_etapa }}</span>
                         </span>
                     </div>
                 </div>
             </a>
         </div>
-
-
-        <div class="col-md-4 mb-4 card-container">
-            <a class="text-decoration-none" [routerLink]="['/detail']">
-                <div class="card">
-                    <img src="assets/list-days/img_stage_petit_5.jpg" class="card-img-top img-fluid"
-                        alt="Imatge del dia 1">
-                    <div class="card-body d-flex justify-content-between align-items-center">
-                        <span class="h5 d-flex align-items-center mb-0">
-                            <div class="position-relative me-4">
-                                <i class="h1 bi bi-calendar bi-lg"></i>
-                                <span class="position-absolute top-50 start-50 translate-middle h4">5</span>
-                            </div>Deia, Valldemossa & Orient
-                        </span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4 mb-4 card-container">
-            <a class="text-decoration-none" [routerLink]="['/detail']">
-                <div class="card">
-                    <img src="assets/list-days/img_stage_petit_6.jpg" class="card-img-top img-fluid"
-                        alt="Imatge del dia 1">
-                    <div class="card-body d-flex justify-content-between align-items-center">
-                        <span class="h5 d-flex align-items-center mb-0">
-                            <div class="position-relative me-4">
-                                <i class="h1 bi bi-calendar bi-lg"></i>
-                                <span class="position-absolute top-50 start-50 translate-middle h4">6</span>
-                            </div>
-                            West Coast Rollercoaster
-                        </span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
+        }
     </div>
 </div>
