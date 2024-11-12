@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Tour } from '../interfaces/tour.interface';
+imoprt { Dia } form '../interfaces/dia.interface';
 
 @Injectable({
     providedIn: 'root'
