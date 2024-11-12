@@ -29,7 +29,7 @@ class Server {
 
     routes() {
         this.app.use('/api/tours', tourRoutes);
-        this.app.use('/api/dies', diaRoutes);
+        this.app.use('/api/days', diaRoutes);
         this.app.use('/api/recorreguts', recorregutRoutes);
     }
 

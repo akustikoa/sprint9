@@ -19,7 +19,7 @@ const Dia = sequelize.define('Dia', {
     coordenades_inici3: DataTypes.STRING,
     coordenades_final3: DataTypes.STRING,
 }, {
-    tableName: 'dies',
+    tableName: 'days',
     timestamps: false
 });
 

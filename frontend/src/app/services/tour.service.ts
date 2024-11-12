@@ -9,7 +9,7 @@ import { Dia } from '../interfaces/dia.interface';
 
 export class TourService { //declarem la classe TourService com a servei per poder gestionar tours
     private apiUrl = 'http://localhost:3001/api/tours'; // endponit per tours
-    private daysUrl = 'http://localhost:3001/api/dies'; //endpoint per carregar dies del tour 
+    private daysUrl = 'http://localhost:3001/api/days'; //endpoint per carregar dies del tour 
 
     //definició signals
     tours = signal<Tour[]>([]);
