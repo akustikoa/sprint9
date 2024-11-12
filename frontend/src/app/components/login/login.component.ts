@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TourService } from '../../services/tour.service';
 import { Tour } from '../../interfaces/tour.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +14,12 @@ import { Tour } from '../../interfaces/tour.interface';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   tours = this.tourService.tours; //Array carregat per la BD
+  errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
-    private tourService: TourService
+    private tourService: TourService,
+    private router: Router
   ) { }
 
   //validem que no estiguin buits
@@ -40,13 +43,19 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         if (response.valid) {
           // Si la contrasenya és vàlida, redirigim l'usuari a la pàgina del tour
+          this.tourService.selectedTour.set(id_tour);
+          this.router.navigate(['/home']);
           console.log('Accés concedit al tour:', id_tour);
-          // Aquí podries redirigir a la pàgina del tour o carregar la informació necessària
+
         } else {
+          this.errorMessage = 'Contrassenya incorrecta'
           console.error('Contrasenya incorrecta');
         }
       },
-      error: (err) => console.error('Error de verificació', err)
+      error: (err) => {
+        console.error('Error de verificació', err);
+        this.errorMessage = 'Error de verificació';
+      }
     });
   }
 }

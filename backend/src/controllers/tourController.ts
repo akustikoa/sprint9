@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Tour from '../models/tour';
 
-export const validateTourPassword = async (req: Request, res: Response) => {
+export const verifyTourPassword = async (req: Request, res: Response) => {
     const { id_tour, password } = req.body;
 
     try {

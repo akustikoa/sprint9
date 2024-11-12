@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TourService } from '../../services/tour.service';
 import { Tour } from '../../interfaces/tour.interface'
@@ -13,10 +13,14 @@ import { Tour } from '../../interfaces/tour.interface'
   styleUrl: './home.component.scss'
 })
 
-export class HomeComponent {
-  tours = this.tourService.tours;
+export class HomeComponent implements OnInit {
+  selectedTour = this.tourService.selectedTour; //obtenim el tour seleccionat del servei
 
-  constructor(private tourService: TourService) {
-    this.tourService.loadTours();
+  constructor(private tourService: TourService) { }
+
+  ngOnInit(): void {
+    this.tourService.loadSelectedTour(); // carreguem el toru amb l'id seleccionat
   }
+
+
 }

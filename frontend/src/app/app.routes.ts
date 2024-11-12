@@ -6,7 +6,8 @@ import { WeekComponent } from './components/week/week.component';
 import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: '', component: LoginComponent },
+    { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'days', component: ListDaysComponent },
     { path: 'detail', component: DetailsComponent }, //'details/id'

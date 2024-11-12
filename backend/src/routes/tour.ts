@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getTours, getTour, createTour, updateTour, deleteTour, validateTourPassword } from '../controllers/tourController';
+import { getTours, getTour, createTour, updateTour, deleteTour, verifyTourPassword } from '../controllers/tourController';
 
 const tourRouter = Router();
 
@@ -8,6 +8,6 @@ tourRouter.get('/:id', getTour);
 tourRouter.post('/', createTour);
 tourRouter.put('/:id', updateTour);
 tourRouter.delete('/:id', deleteTour);
-tourRouter.post('/verify', validateTourPassword)
+tourRouter.post('/verify-password', verifyTourPassword)
 
 export default tourRouter;
