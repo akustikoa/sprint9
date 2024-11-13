@@ -10,7 +10,7 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'days', component: ListDaysComponent },
-    { path: 'detail', component: DetailsComponent }, //'details/id'
+    { path: 'detail/:id', component: DetailsComponent }, //'details/id'
     { path: 'discover', component: WeekComponent }, //'discover/id'
     { path: '**', redirectTo: '' }
 ];

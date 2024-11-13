@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { CommonModule } from '@angular/common';
 import { RouteService } from '../../services/route.service';
 import { Route } from '../../interfaces/route.interface';
 import { Chart, registerables } from 'chart.js';
+import { ActivatedRoute } from '@angular/router';
+import { TourService } from '../../services/tour.service';
+import { Dia } from '../../interfaces/dia.interface';
 
 @Component({
   selector: 'app-details',
@@ -13,15 +16,22 @@ import { Chart, registerables } from 'chart.js';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
+  id_dia: number | null = null;
+  selectedDay = signal<Dia | null | undefined>(null);
   map!: mapboxgl.Map;
   routes: Route[] = [];
   chart!: Chart;
 
-  constructor(private routeService: RouteService) {
+  constructor(private routeService: RouteService, private route: ActivatedRoute, private tourService: TourService) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
+    this.id_dia = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.id_dia) {
+      this.selectedDay.set(this.tourService.getDayById(this.id_dia));
+    }
+
     this.routes = this.routeService.getRoutes();
     this.initializeMap();
     this.createChart([]); // Inicialitzem el gràfic amb dades buides

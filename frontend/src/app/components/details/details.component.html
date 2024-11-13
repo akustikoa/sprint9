@@ -1,4 +1,12 @@
 <div class="container mt-4">
+    <div class="container mt-4">
+        @if (selectedDay()) {
+        <h3 class="d-inline text-start">{{ selectedDay()!.titol_etapa }} | </h3>
+        <img [src]="'assets/list-days/' + selectedDay()!.imatge_etapa" class="img-fluid mt-3 mb-5 w-100 rounded-1"
+            [alt]="selectedDay()!.titol_etapa">
+        <p>{{ selectedDay()!.descripcio }}</p>
+        }
+    </div>
 
     <h3 class="d-inline text-start">SUNDAY, MAY 5th | </h3>
     <h5 class="d-inline"> Ride 1</h5>
@@ -14,7 +22,7 @@
 
     <div class="row mt-5">
         <div class="col-md-6">
-            <div id="map" style="height: 320px;" class="mb-4 rounded-1"></div> <!-- Mapa -->
+            <div id="map" style="height: 320px;" class="mb-4 rounded-1"></div>
         </div>
         <div class="col-md-6">
             <div class="d-flex justify-content-around mb-4">
@@ -25,7 +33,7 @@
                 </button>
                 }
             </div>
-            <canvas id="elevationChart" class="mb-4"></canvas> <!-- Gràfic interactiu -->
+            <canvas id="elevationChart" class="mb-4"></canvas>
         </div>
     </div>
 </div>

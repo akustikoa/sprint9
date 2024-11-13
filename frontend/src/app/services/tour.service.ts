@@ -47,6 +47,12 @@ export class TourService { //declarem la classe TourService com a servei per pod
             error: (err) => console.log('Error carregant dies', err)
         });
     }
+
+    //busquemm dia de la llista tourDays carregada a loadDaysBytourId
+    getDayById(id_dia: number): Dia | undefined {
+        return this.tourDays().find((dia) => dia.id_dia === id_dia);
+    }
+
     //!!!!!!!(BORRAR SI NO EL FEM SERVIR?) carregar un tour específic per ID i actualitzar el signal 
     loadTour(id: string): void {
         this.http.get<Tour>(`${this.apiUrl}/${id}`).subscribe({
