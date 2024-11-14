@@ -1,0 +1,30 @@
+.custom-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 100px);
+  width: 100vw;
+}
+// .row {
+//   margin: 0 !important;
+// }
+.curtom-login form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el contingut dins del formulari */
+  width: 100%; /* Ocupa el 100% de l'ample de la columna */
+  max-width: 300px; /* Amplada màxima per evitar que sigui massa ample */
+}
+.custom-logo {
+  display: block;
+  width: 130px;
+  height: auto;
+  margin: 0 auto; /* Centra el logo horitzontalment */
+}
+
+.custom-boto {
+  display: block;
+  width: 100px;
+  height: auto;
+  margin: 0 auto; /* Centra el logo horitzontalment */
+}
