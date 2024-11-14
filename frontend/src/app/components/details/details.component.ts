@@ -1,8 +1,6 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { CommonModule } from '@angular/common';
-import { RouteService } from '../../services/route.service';
-import { Route } from '../../interfaces/route.interface';
 import { Chart, registerables } from 'chart.js';
 import { ActivatedRoute } from '@angular/router';
 import { TourService } from '../../services/tour.service';
@@ -19,22 +17,73 @@ export class DetailsComponent implements OnInit {
   id_dia: number | null = null;
   selectedDay = signal<Dia | null | undefined>(null);
   map!: mapboxgl.Map;
-  routes: Route[] = [];
+  routes: { name: string; color: string; coordinates: [number, number][] }[] = [];
   chart!: Chart;
 
-  constructor(private routeService: RouteService, private route: ActivatedRoute, private tourService: TourService) {
+  constructor(private route: ActivatedRoute, private tourService: TourService) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
     this.id_dia = Number(this.route.snapshot.paramMap.get('id'));
     if (this.id_dia) {
-      this.selectedDay.set(this.tourService.getDayById(this.id_dia));
+      const day = this.tourService.getDayById(this.id_dia);
+      if (day) {
+        this.selectedDay.set(day);
+        this.configureRoutes(day);
+      }
     }
-
-    this.routes = this.routeService.getRoutes();
     this.initializeMap();
     this.createChart([]); // Inicialitzem el gràfic amb dades buides
+  }
+
+  configureRoutes(day: Dia): void {
+    this.routes = []; // Resetejem les rutes abans de configurar-les
+
+    const parseCoordinates = (coord: string | null): [number, number] | null => {
+      if (coord) {
+        // Split la cadena per la coma i converteix cada part en nombre
+        const parts = coord.split(',').map(part => parseFloat(part.trim()));
+        if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+          return [parts[0], parts[1]] as [number, number];
+        }
+      }
+      return null;
+    };
+
+
+    // Configura la ruta Espresso si hi ha coordenades d'inici i final
+    const espressoCoords = parseCoordinates(day.coordenades_inici);
+    const espressoEndCoords = parseCoordinates(day.coordenades_final);
+    if (espressoCoords && espressoEndCoords) {
+      this.routes.push({
+        name: 'Espresso',
+        color: 'red',
+        coordinates: [espressoCoords, espressoEndCoords]
+      });
+    }
+
+    // Configura la ruta Macchiato si hi ha coordenades d'inici2 i final2
+    const macchiatoCoords = parseCoordinates(day.coordenades_inici2);
+    const macchiatoEndCoords = parseCoordinates(day.coordenades_final2);
+    if (macchiatoCoords && macchiatoEndCoords) {
+      this.routes.push({
+        name: 'Macchiato',
+        color: 'green',
+        coordinates: [macchiatoCoords, macchiatoEndCoords]
+      });
+    }
+
+    // Configura la ruta Cappuccino si hi ha coordenades d'inici3 i final3
+    const cappuccinoCoords = parseCoordinates(day.coordenades_inici3);
+    const cappuccinoEndCoords = parseCoordinates(day.coordenades_final3);
+    if (cappuccinoCoords && cappuccinoEndCoords) {
+      this.routes.push({
+        name: 'Cappuccino',
+        color: 'blue',
+        coordinates: [cappuccinoCoords, cappuccinoEndCoords]
+      });
+    }
   }
 
   initializeMap(): void {
@@ -50,7 +99,11 @@ export class DetailsComponent implements OnInit {
     });
 
     this.map.on('load', () => {
-      this.loadRouteWithDirections(this.routes[0].coordinates, this.routes[0].color);
+      if (this.routes.length === 1) {
+        this.loadRouteWithDirections(this.routes[0].coordinates, this.routes[0].color);
+      } else if (this.routes.length > 1) {
+        this.loadRouteWithDirections(this.routes[0].coordinates, this.routes[0].color);
+      }
     });
   }
 
@@ -93,29 +146,25 @@ export class DetailsComponent implements OnInit {
           }
         });
 
-        // Cridem a la funció per obtenir les dades d'elevació
         this.getElevationData(route.coordinates);
       })
       .catch(error => console.error('Error carregant la ruta: ', error));
   }
 
-  // Funció per obtenir l'elevació mitjançant l'API d'Elevació de Mapbox
   getElevationData(coordinates: [number, number][]): void {
     const elevationPromises = coordinates.map(coord => {
       const elevationRequest = `https://api.mapbox.com/v4/mapbox.mapbox-terrain-v2/tilequery/${coord[0]},${coord[1]}.json?layers=contour&limit=1&access_token=${mapboxgl.default.accessToken}`;
       return fetch(elevationRequest).then(response => response.json());
     });
 
-    // Esperem a que totes les dades d'elevació arribin
     Promise.all(elevationPromises).then(elevationResults => {
       const elevations = elevationResults.map(result => {
         if (result.features.length > 0) {
-          return result.features[0].properties.ele; // Elevació en metres
+          return result.features[0].properties.ele;
         }
         return 0;
       });
 
-      // Actualitzem el gràfic amb les dades d'elevació
       this.updateChart(elevations);
     }).catch(error => console.error('Error obtenint les dades d\'elevació: ', error));
   }
@@ -125,19 +174,17 @@ export class DetailsComponent implements OnInit {
     const ctx = canvas.getContext('2d');
     const gradient = ctx?.createLinearGradient(0, 0, 0, canvas.height);
 
-    // Definir el gradient de color
     if (gradient) {
-      gradient.addColorStop(0, 'red'); // Punts baixos
-      gradient.addColorStop(1, 'green');   // Punts alts
+      gradient.addColorStop(0, 'red');
+      gradient.addColorStop(1, 'green');
     }
 
-    // Ajustar les etiquetes per mostrar cada 5 km
     const labels = elevationData.map((_, i) => i % 5 === 0 ? `Km ${i}` : '');
 
     this.chart = new Chart(ctx!, {
       type: 'line',
       data: {
-        labels: labels, // Etiquetes amb intervals de 5 km
+        labels: labels,
         datasets: [{
           label: 'Elevation',
           data: elevationData,
@@ -157,7 +204,6 @@ export class DetailsComponent implements OnInit {
   }
 
   updateChart(elevationData: number[]): void {
-    // Ajustar les etiquetes per mostrar cada 5 km
     const labels = elevationData.map((_, i) => i % 5 === 0 ? `Km ${i}` : '');
 
     this.chart.data.labels = labels;
@@ -165,12 +211,7 @@ export class DetailsComponent implements OnInit {
     this.chart.update();
   }
 
-  onRouteSelect(route: Route): void {
+  onRouteSelect(route: { coordinates: [number, number][]; color: string }): void {
     this.loadRouteWithDirections(route.coordinates, route.color);
   }
 }
-
-
-
-
-

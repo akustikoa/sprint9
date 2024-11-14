@@ -4,5 +4,11 @@ export interface Dia {
     titol_etapa: string;
     imatge_etapa: string;
     id_tour: number;
-    descripcio: string
+    descripcio: string;
+    coordenades_inici: string;
+    coordenades_inici2: string;
+    coordenades_inici3: string;
+    coordenades_final: string;
+    coordenades_final2: string;
+    coordenades_final3: string;
 }
