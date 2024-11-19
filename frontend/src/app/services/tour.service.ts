@@ -79,8 +79,4 @@ export class TourService { //declarem la classe TourService com a servei per pod
         this.selectedTour.set(null); // Neteja el signal de Tour seleccionat
         this.router.navigate(['/login']); // Redirigeix al login
     }
-
-
-
-
 }
