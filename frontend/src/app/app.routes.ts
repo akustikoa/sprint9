@@ -4,6 +4,7 @@ import { ListDaysComponent } from './components/list-days/list-days.component';
 import { DetailsComponent } from './components/details/details.component';
 import { WeekComponent } from './components/week/week.component';
 import { LoginComponent } from './components/login/login.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -12,6 +13,7 @@ export const routes: Routes = [
     { path: 'days', component: ListDaysComponent },
     { path: 'detail/:id', component: DetailsComponent }, //'details/id'
     { path: 'discover', component: WeekComponent }, //'discover/id'
+    { path: 'contact', component: ContactComponent },
     { path: '**', redirectTo: '' }
 ];
 

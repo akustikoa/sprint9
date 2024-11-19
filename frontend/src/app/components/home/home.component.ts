@@ -19,7 +19,12 @@ export class HomeComponent implements OnInit {
   constructor(private tourService: TourService) { }
 
   ngOnInit(): void {
-    this.tourService.loadSelectedTour(); // carreguem el toru amb l'id seleccionat
+    const id_tour = localStorage.getItem('authenticatedTourId'); // Obtenim l'ID del tour emmagatzemat
+    if (id_tour) {
+      this.tourService.loadSelectedTour(Number(id_tour)); // Carreguem el tour seleccionat
+    } else {
+      console.error('No hi ha cap ID de tour autenticat');
+    }
   }
 
 

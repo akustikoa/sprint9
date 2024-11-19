@@ -18,6 +18,14 @@ export class TourService { //declarem la classe TourService com a servei per pod
 
     constructor(private http: HttpClient) { } // injectemm Httpclient per fet peticions http
 
+
+
+
+    // Verificar l'usuari per email i contrasenya
+    verifyUserTour(email: string, password: string) {
+        return this.http.post<{ valid: boolean; id_tour: number }>(`${this.apiUrl}/verify-user-tour`, { email, password });
+    }
+
     //verifiquem l'ID i password introduit al login
     verifyTourPassword(id_tour: string, password: string) {
         return this.http.post<{ valid: boolean }>(`${this.apiUrl}/verify-password`, { id_tour, password });
@@ -31,15 +39,19 @@ export class TourService { //declarem la classe TourService com a servei per pod
         });
     }
 
-    loadSelectedTour(): void {
-        const id = this.selectedTour();
-        if (id) {
-            this.http.get<Tour>(`${this.apiUrl}/${id}`).subscribe({ //fem la peticio get a l'endpoint
-                next: (tour) => this.selectedTour.set(tour),
-                error: (err) => console.log('Error carregant el tour', err)
-            });
-        }
+    loadSelectedTour(id_tour: number): void {
+        this.http.get<Tour>(`${this.apiUrl}/${id_tour}`).subscribe({
+            next: (tour) => this.selectedTour.set(tour),
+            error: (err) => console.error('Error carregant el tour seleccionat:', err)
+        });
     }
+
+
+    //Pel login
+    loadSelectedTourById(id: number) {
+        return this.http.get<Tour>(`${this.apiUrl}/${id}`);
+    }
+
 
     loadDaysBytourId(id_tour: number): void {
         this.http.get<Dia[]>(`${this.daysUrl}/tour/${id_tour}`).subscribe({
@@ -60,4 +72,7 @@ export class TourService { //declarem la classe TourService com a servei per pod
             error: (err) => console.log('Error carregant el tour', err)
         });
     }
+
+
+
 }
