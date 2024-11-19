@@ -2,6 +2,8 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Tour } from '../interfaces/tour.interface';
 import { Dia } from '../interfaces/dia.interface';
+import { Router } from '@angular/router';
+
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +18,7 @@ export class TourService { //declarem la classe TourService com a servei per pod
     selectedTour = signal<Tour | null>(null);
     tourDays = signal<Dia[]>([]); // Emmagatzema els dies del tour seleccionat
 
-    constructor(private http: HttpClient) { } // injectemm Httpclient per fet peticions http
+    constructor(private http: HttpClient, private router: Router) { } // injectemm Httpclient per fet peticions http
 
 
 
@@ -72,6 +74,12 @@ export class TourService { //declarem la classe TourService com a servei per pod
             error: (err) => console.log('Error carregant el tour', err)
         });
     }
+    logout(): void {
+        localStorage.removeItem('authenticatedTourId'); // Elimina l'ID autenticat
+        this.selectedTour.set(null); // Neteja el signal de Tour seleccionat
+        this.router.navigate(['/login']); // Redirigeix al login
+    }
+
 
 
 
