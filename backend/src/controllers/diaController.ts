@@ -4,10 +4,24 @@ import { Request, Response } from 'express';
 import Dia from '../models/dia';
 
 //obtenir tots els dies d'un tour 
+// export const getDiesByTour = async (req: Request, res: Response) => {
+//     const { tourId } = req.params; // s'espera que tourID sigui part de l'URL 
+//     const dies = await Dia.findAll({ where: { id_tour: tourId } });
+//     res.json(dies);
+// };
 export const getDiesByTour = async (req: Request, res: Response) => {
-    const { tourId } = req.params; // s'espera que tourID sigui part de l'URL 
-    const dies = await Dia.findAll({ where: { id_tour: tourId } });
-    res.json(dies);
+    const { tourId } = req.params;
+
+    try {
+        const dies = await Dia.findAll({
+            where: { id_tour: tourId },
+            order: [['numero_dia', 'ASC']], // Ordenem pel número del dia
+        });
+        res.json(dies);
+    } catch (error) {
+        console.error('Error carregant els dies:', error);
+        res.status(500).json({ msg: 'Error del servidor' });
+    }
 };
 
 //Obtenir un dia específic

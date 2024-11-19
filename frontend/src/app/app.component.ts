@@ -34,4 +34,8 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+
+  showNavbar(): boolean {
+    return this.router.url !== '/login';
+  }
 }

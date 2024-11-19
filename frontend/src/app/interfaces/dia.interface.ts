@@ -1,5 +1,6 @@
 export interface Dia {
     id_dia: number;
+    numero_dia: number;
     data_dia: string;
     titol_etapa: string;
     imatge_etapa: string;

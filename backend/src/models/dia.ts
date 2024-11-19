@@ -8,6 +8,10 @@ const Dia = sequelize.define('Dia', {
         primaryKey: true,
         autoIncrement: true,
     },
+    numero_dia: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
     data_dia: DataTypes.STRING,
     titol_etapa: DataTypes.STRING,
     imatge_etapa: DataTypes.STRING,
