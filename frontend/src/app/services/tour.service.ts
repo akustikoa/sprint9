@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Tour } from '../interfaces/tour.interface';
 import { Dia } from '../interfaces/dia.interface';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -78,5 +79,10 @@ export class TourService { //declarem la classe TourService com a servei per pod
         localStorage.removeItem('authenticatedTourId'); // Elimina l'ID autenticat
         this.selectedTour.set(null); // Neteja el signal de Tour seleccionat
         this.router.navigate(['/login']); // Redirigeix al login
+    }
+
+    //ADMIN-DASHBOARD
+    deleteFullTour(tourId: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/delete-full-tour/${tourId}`);
     }
 }

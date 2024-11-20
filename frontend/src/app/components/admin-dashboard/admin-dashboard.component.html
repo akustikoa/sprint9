@@ -1,0 +1,31 @@
+<div class="container mt-4">
+    <h1>Panell d'Administració</h1>
+
+    <!-- Llistat de tours -->
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Data d'Inici</th>
+                <th>Data Final</th>
+                <th>Accions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let tour of tours; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ tour.nom_tour }}</td>
+                <td>{{ tour.data_inici | date }}</td>
+                <td>{{ tour.data_final | date }}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" (click)="viewTourDetails(tour.id_tour)">Detalls</button>
+                    <button class="btn btn-danger btn-sm" (click)="deleteTour(tour.id_tour)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Botó per crear un nou tour -->
+    <button class="btn btn-primary mt-3" [routerLink]="['/admin/tour/new']">Crear Nou Tour</button>
+</div>
