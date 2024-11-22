@@ -64,7 +64,7 @@
             <button type="button" class="btn btn-secondary" (click)="addUser()">+ Afegir Usuari</button>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3" (click)="onSubmit()"> <!-- [disabled]="!adminForm.valid" -->
+        <button type="submit" class="btn btn-primary mt-3" (click)="onSubmit()" [disabled]="!adminForm.valid">
             {{ tourId ? 'Actualitzar Tour' : 'Crear Tour' }}
         </button>
 

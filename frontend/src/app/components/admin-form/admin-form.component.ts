@@ -39,11 +39,11 @@ export class AdminFormComponent implements OnInit {
 
   initForm(): void {
     this.adminForm = this.fb.group({
-      nom_tour: ['', Validators.required],
-      imatge_tour: ['', Validators.required],
-      data_inici: ['', Validators.required],
-      data_final: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      nom_tour: [''],
+      imatge_tour: [''],
+      data_inici: [''],
+      data_final: [''],
+      password: [''],
       days: this.fb.array([]),
       users: this.fb.array([]),
     });
@@ -51,13 +51,13 @@ export class AdminFormComponent implements OnInit {
 
   addDay(): void {
     const dayGroup = this.fb.group({
-      numero_dia: ['', Validators.required],
-      data_dia: ['', Validators.required],
-      titol_etapa: ['', Validators.required],
-      imatge_etapa: ['', Validators.required],
-      descripcio: ['', Validators.required],
-      coordenades_inici: ['', Validators.required],
-      coordenades_final: ['', Validators.required],
+      numero_dia: [''],
+      data_dia: [''],
+      titol_etapa: [''],
+      imatge_etapa: [''],
+      descripcio: [''],
+      coordenades_inici: [''],
+      coordenades_final: [''],
     });
 
     this.days.push(dayGroup);
@@ -65,7 +65,7 @@ export class AdminFormComponent implements OnInit {
 
   addUser(): void {
     const userGroup = this.fb.group({
-      email: ['', Validators.required, Validators.email]
+      email: ['']
     });
 
     this.users.push(userGroup);
@@ -115,15 +115,22 @@ export class AdminFormComponent implements OnInit {
   onSubmit(): void {
     if (this.adminForm.valid) {
       const formData = this.adminForm.value;
+
       if (this.tourId) {
         this.tourService.updateFullTour(this.tourId, formData);
-        alert('Tour actualitzat amb èxit!');
-        this.router.navigate(['/admin']);
       } else {
         this.tourService.createFullTour(formData);
-        alert('Tour creat amb èxit!');
-        this.router.navigate(['/admin']);
       }
+
+      // Navegació i missatges d'èxit es gestionen al servei
+      if (!this.tourService.errorMessage()) {
+        this.router.navigate(['/admin']);
+        alert(this.tourId ? 'Tour actualitzat amb èxit!' : 'Tour creat amb èxit!');
+      } else {
+        alert(this.tourService.errorMessage());
+      }
+    } else {
+      alert('El formulari no és vàlid. Revisa els camps.');
     }
   }
 

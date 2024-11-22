@@ -5,8 +5,8 @@ class Tour extends Model {
     public id_tour!: number;
     public nom_tour!: string;
     public imatge_tour!: string;
-    public data_inici!: Date;
-    public data_final!: Date;
+    public data_inici!: string;
+    public data_final!: string;
     public password!: string;
 }
 
@@ -17,11 +17,26 @@ Tour.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        nom_tour: { type: DataTypes.STRING },
-        imatge_tour: { type: DataTypes.STRING },
-        data_inici: { type: DataTypes.STRING },
-        data_final: { type: DataTypes.STRING },
-        password: { type: DataTypes.STRING },
+        nom_tour: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        imatge_tour: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        data_inici: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        data_final: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false, // Afegeix aquesta línia per fer que sigui requerit
+        },
     },
     {
         sequelize: db,
@@ -31,8 +46,6 @@ Tour.init(
 );
 
 export default Tour;
-
-
 
 
 

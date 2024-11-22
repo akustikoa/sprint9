@@ -38,35 +38,42 @@ export const verifyUserTourPassword = async (req: Request, res: Response): Promi
 
 //TOURS COMPLETS
 //CREAR tour complet
-export const createFullTour = async (req: Request, res: Response) => {
+export const createFullTour = async (req: Request, res: Response): Promise<void> => {
     const { tour, days, users } = req.body;
 
     try {
-        //crear tour
+        // Comprovar que es passa la informació mínima requerida del tour
+        if (!tour || !tour.nom_tour || !tour.imatge_tour || !tour.data_inici || !tour.data_final || !tour.password) {
+            res.status(400).json({ msg: 'Falten camps obligatoris al tour.' });
+            return; // Afegir `return` per assegurar que la funció acaba aquí
+        }
+
+        // Crear el tour
         const createdTour = await Tour.create(tour);
 
-        //crear els dies associats
+        // Crear els dies associats
         if (days && days.length > 0) {
             for (const day of days) {
                 await Dia.create({ ...day, id_tour: createdTour.getDataValue('id_tour') });
             }
-
         }
 
-        // crear els usuaris associats
+        // Crear els usuaris associats
         if (users && users.length > 0) {
             for (const user of users) {
-                await User.create({ ...user, id_tour: createdTour.getDataValue('id_tour') })
+                await User.create({ ...user, id_tour: createdTour.getDataValue('id_tour') });
             }
         }
 
-        res.status(201).json({ msg: 'Tour creat correctament' });
+        res.status(201).json({ msg: 'Tour creat correctament', createdTour });
+        return; // Afegir `return` per assegurar que la funció acaba aquí
     } catch (error) {
         console.error('Error creant el tour', error);
         res.status(500).json({ msg: 'Error del servidor' });
+        return; // Afegir `return` per assegurar que la funció acaba aquí
     }
-
 };
+
 
 // MOFIFICAR tour complet
 export const updateFullTour = async (req: Request, res: Response): Promise<void> => {

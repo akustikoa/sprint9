@@ -13,11 +13,13 @@ import { Observable } from 'rxjs';
 export class TourService { //declarem la classe TourService com a servei per poder gestionar tours
     private apiUrl = 'http://localhost:3001/api/tours'; // endponit per tours
     private daysUrl = 'http://localhost:3001/api/days'; //endpoint per carregar dies del tour 
+    public isLoading = signal(false);
+    public errorMessage = signal<string | null>(null);
 
-    //definició signals
     tours = signal<Tour[]>([]);
     selectedTour = signal<Tour | null>(null);
     tourDays = signal<Dia[]>([]); // Emmagatzema els dies del tour seleccionat
+
 
     constructor(private http: HttpClient, private router: Router) { } // injectemm Httpclient per fet peticions http
 
@@ -89,23 +91,37 @@ export class TourService { //declarem la classe TourService com a servei per pod
         return this.http.delete<void>(`${this.apiUrl}/delete-full-tour/${tourId}`);
     }
 
-    updateFullTour(tourId: number, data: any): void {
-        this.http.put<void>(`${this.apiUrl}/update-full-tour/${tourId}`, data).subscribe({
+    updateFullTour(tourId: number, tourData: Tour): void {
+        this.isLoading.set(true);
+        this.errorMessage.set(null);
+
+        this.http.put(`${this.apiUrl}/update-full-tour/${tourId}`, tourData).subscribe({
             next: () => {
-                console.log('Tour actualitzat correctament!');
-                this.loadTours(); // Actualitza la llista de tours després de l'actualització
+                this.isLoading.set(false);
+                console.log('Tour actualitzat amb èxit!');
             },
-            error: (err) => console.error('Error actualitzant el tour:', err),
+            error: (error) => {
+                this.isLoading.set(false);
+                this.errorMessage.set('Hi ha hagut un error en actualitzar el tour.');
+                console.error('Error actualitzant el tour:', error);
+            },
         });
     }
 
-    createFullTour(data: any): void {
-        this.http.post<void>(`${this.apiUrl}/create-full-tour`, data).subscribe({
+    createFullTour(tourData: Tour): void {
+        this.isLoading.set(true);
+        this.errorMessage.set(null);
+
+        this.http.post(`${this.apiUrl}/create-full-tour`, tourData).subscribe({
             next: () => {
-                console.log('Tour creat correctament!');
-                this.loadTours(); // Actualitza la llista de tours després de la creació
+                this.isLoading.set(false);
+                console.log('Tour creat amb èxit!');
             },
-            error: (err) => console.error('Error creant el tour:', err),
+            error: (error) => {
+                this.isLoading.set(false);
+                this.errorMessage.set('Hi ha hagut un error en crear el tour.');
+                console.error('Error creant el tour:', error);
+            },
         });
     }
 
