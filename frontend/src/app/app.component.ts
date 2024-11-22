@@ -18,15 +18,17 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     const authenticatedTourId = localStorage.getItem('authenticatedTourId');
     if (authenticatedTourId) {
-      // Carrega el tour seleccionat a partir de l'id i redirigeix a home
       this.tourService.loadSelectedTourById(Number(authenticatedTourId)).subscribe({
         next: (tour) => {
           this.tourService.selectedTour.set(tour); // Assigna el tour complet
-          this.router.navigate(['/home']);
+
+          // Només redirigeix a home si l'usuari està a la ruta arrel
+          if (this.router.url === '/' || this.router.url === '/login') {
+            this.router.navigate(['/home']);
+          }
         },
         error: () => {
-          // Si hi ha algun error, redirigeix a login
-          this.router.navigate(['/login']);
+          this.router.navigate(['/login']); // Si hi ha un error, redirigeix a login
         }
       });
     } else {

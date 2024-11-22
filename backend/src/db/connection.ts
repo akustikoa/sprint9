@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize(
-    process.env.DB_NAME || 'default_db',
+const db = new Sequelize(
+    process.env.DB_NAME || 'bikecat',
     process.env.DB_USER || 'root',
     process.env.DB_PASSWORD || '',
     {
@@ -10,4 +10,4 @@ const sequelize = new Sequelize(
     }
 );
 
-export default sequelize;
+export default db;

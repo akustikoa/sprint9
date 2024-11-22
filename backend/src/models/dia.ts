@@ -1,32 +1,46 @@
-import { DataTypes } from "sequelize";
-import sequelize from '../db/connection';
-import Tour from './tour';
+import { DataTypes, Model } from 'sequelize';
+import db from '../db/connection';
 
-const Dia = sequelize.define('Dia', {
-    id_dia: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    numero_dia: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    data_dia: DataTypes.STRING,
-    titol_etapa: DataTypes.STRING,
-    imatge_etapa: DataTypes.STRING,
-    descripcio: DataTypes.TEXT,
-    coordenades_inici: DataTypes.STRING,
-    coordenades_final: DataTypes.STRING,
-    coordenades_inici2: DataTypes.STRING,
-    coordenades_final2: DataTypes.STRING,
-    coordenades_inici3: DataTypes.STRING,
-    coordenades_final3: DataTypes.STRING,
-}, {
-    tableName: 'days',
-    timestamps: false
-});
+class Dia extends Model {
+    public id_dia!: number;
+    public numero_dia!: number;
+    public data_dia!: string;
+    public titol_etapa!: string;
+    public imatge_etapa!: string;
+    public descripcio!: string;
+    public coordenades_inici!: string;
+    public coordenades_final!: string;
+    public id_tour!: number;
+}
 
-Dia.belongsTo(Tour, { foreignKey: 'id_tour' });
+Dia.init(
+    {
+        id_dia: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        numero_dia: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        data_dia: DataTypes.STRING,
+        titol_etapa: DataTypes.STRING,
+        imatge_etapa: DataTypes.STRING,
+        descripcio: DataTypes.TEXT,
+        coordenades_inici: DataTypes.STRING,
+        coordenades_final: DataTypes.STRING,
+        id_tour: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+    },
+    {
+        sequelize: db,
+        tableName: 'days',
+        timestamps: false,
+    }
+);
 
 export default Dia;
+

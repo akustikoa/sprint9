@@ -1,5 +1,16 @@
 import { Router } from 'express';
-import { getTours, getTour, createTour, updateTour, deleteTour, verifyUserTourPassword, createFullTour, updateFullTour, deleteFullTour } from '../controllers/tourController';
+import {
+    getTours,
+    getTour,
+    createTour,
+    updateTour,
+    deleteTour,
+    verifyUserTourPassword,
+    createFullTour,
+    updateFullTour,
+    deleteFullTour,
+    getTourWithDetails
+} from '../controllers/tourController';
 
 const tourRouter = Router();
 
@@ -11,6 +22,7 @@ tourRouter.delete('/:id', deleteTour);
 tourRouter.post('/verify-user-tour', verifyUserTourPassword);
 tourRouter.post('/create-full-tour', createFullTour);
 tourRouter.put('/update-full-tour/:id', updateFullTour);
-tourRouter.delete('/delete-full-tour/:id', deleteFullTour)
+tourRouter.delete('/delete-full-tour/:id', deleteFullTour);
+tourRouter.get('/details/:id', getTourWithDetails);
 
 export default tourRouter;

@@ -1,0 +1,72 @@
+<!-- Gestió del Tour -->
+<div class="container mt-4">
+    <h2>Gestió del Tour</h2>
+    <form [formGroup]="adminForm">
+        <!-- Camps de la taula tours -->
+        <h3>Dades del Tour</h3>
+        <div class="mb-3">
+            <label for="nom_tour">Nom del Tour:</label>
+            <input type="text" id="nom_tour" formControlName="nom_tour" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="imatge_tour">Imatge del Tour:</label>
+            <input type="text" id="imatge_tour" formControlName="imatge_tour" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="data_inici">Data d'Inici:</label>
+            <input type="text" id="data_inici" formControlName="data_inici" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="data_final">Data Final:</label>
+            <input type="text" id="data_final" formControlName="data_final" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label for="password">Contrasenya:</label>
+            <input type="password" id="password" formControlName="password" class="form-control" />
+        </div>
+
+        <!-- Camps de la taula dies -->
+        <h3>Dades dels Dies</h3>
+        <div formArrayName="days">
+            <div *ngFor="let day of days.controls; let i = index" [formGroupName]="i" class="mb-3">
+                <label for="numero_dia">Número de Dia:</label>
+                <input type="text" id="numero_dia" formControlName="numero_dia" class="form-control" />
+
+                <label for="data_dia">Data del Dia:</label>
+                <input type="text" id="data_dia" formControlName="data_dia" class="form-control" />
+
+                <label for="titol_etapa">Títol de l'Etapa:</label>
+                <input type="text" id="titol_etapa" formControlName="titol_etapa" class="form-control" />
+
+                <label for="imatge_etapa">Imatge de l'Etapa:</label>
+                <input type="text" id="imatge_etapa" formControlName="imatge_etapa" class="form-control" />
+
+                <label for="descripcio">Descripció:</label>
+                <textarea id="descripcio" formControlName="descripcio" class="form-control"></textarea>
+
+                <label for="coordenades_inici">Coordenades Inici:</label>
+                <input type="text" id="coordenades_inici" formControlName="coordenades_inici" class="form-control" />
+
+                <label for="coordenades_final">Coordenades Final:</label>
+                <input type="text" id="coordenades_final" formControlName="coordenades_final" class="form-control" />
+            </div>
+
+            <button type="button" class="btn btn-secondary" (click)="addDay()">+ Afegir Dia</button>
+        </div>
+
+        <h3>Dades dels usuaris</h3>
+        <div formArrayName="users">
+            <div *ngFor="let user of users.controls; let i = index" [formGroupName]="i" class="mb-3">
+                <label for="email">Email:</label>
+                <input type="email" id="email" formControlName="email" class="form-control" />
+            </div>
+
+            <button type="button" class="btn btn-secondary" (click)="addUser()">+ Afegir Usuari</button>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3" (click)="onSubmit()"> <!-- [disabled]="!adminForm.valid" -->
+            {{ tourId ? 'Actualitzar Tour' : 'Crear Tour' }}
+        </button>
+
+    </form>
+</div>

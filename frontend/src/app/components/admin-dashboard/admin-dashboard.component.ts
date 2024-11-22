@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
 import { TourService } from '../../services/tour.service';
-import { Tour } from '../../interfaces/tour.interface';
-import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -13,23 +11,16 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./admin-dashboard.component.scss']
 })
 export class AdminDashboardComponent implements OnInit {
-  tours: Tour[] = []; // Per emmagatzemar els tours carregats des del servei
-
-  constructor(private tourService: TourService, private router: Router) { }
+  constructor(public tourService: TourService) { }
 
   ngOnInit(): void {
-    this.loadTours(); // Carrega la informació dels tours al inicialitzar
-  }
-
-  // Mètode per carregar els tours
-  loadTours(): void {
-    this.tourService.loadTours(); // Actualitza el signal de tours
-    this.tours = this.tourService.tours(); // Llegeix el signal per mostrar
+    this.tourService.loadTours(); // Carrega la informació dels tours al servei
+    console.log('AdminDashboard carregat');
   }
 
   // Navegar a la vista de detalls o edició
   viewTourDetails(tourId: number): void {
-    this.router.navigate(['/admin/tour', tourId]); // Ruta configurada per a la vista de detall/edició
+    console.log('Detalls del tour:', tourId); // Aquí pots implementar la navegació
   }
 
   // Eliminar un tour
@@ -38,13 +29,14 @@ export class AdminDashboardComponent implements OnInit {
       this.tourService.deleteFullTour(tourId).subscribe({
         next: () => {
           alert('Tour eliminat amb èxit!');
-          this.loadTours(); // Actualitza la llista després d'eliminar
+          this.tourService.loadTours(); // Actualitza la llista després d'eliminar
         },
-        error: (err: HttpErrorResponse) => {
-          console.error('Error eliminant el tour:', err.message);
+        error: (err) => {
+          console.error('Error eliminant el tour:', err);
           alert('No s\'ha pogut eliminar el tour.');
         }
       });
     }
   }
 }
+

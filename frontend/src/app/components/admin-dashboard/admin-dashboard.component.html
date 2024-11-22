@@ -13,11 +13,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let tour of tours; let i = index">
+            <tr *ngFor="let tour of tourService.tours(); let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ tour.nom_tour }}</td>
-                <td>{{ tour.data_inici | date }}</td>
-                <td>{{ tour.data_final | date }}</td>
+                <td>{{ tour.data_inici }}</td>
+                <td>{{ tour.data_final }}</td>
                 <td>
                     <button class="btn btn-info btn-sm" (click)="viewTourDetails(tour.id_tour)">Detalls</button>
                     <button class="btn btn-danger btn-sm" (click)="deleteTour(tour.id_tour)">Eliminar</button>

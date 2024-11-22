@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import Dia from '../models/dia'
-import User from '../models/user';
-import Tour from '../models/tour';
+import { Tour, User } from '../models'; // Importa Tour i User des de models/index.ts
+import Dia from '../models/dia'; // Si Dia no està al fitxer index.ts, mantén aquest import
+
 
 
 //LOGIN
@@ -196,3 +196,31 @@ export const deleteTour = async (req: Request, res: Response) => {
         res.json({ msg: 'Tour eliminat' });
     }
 };
+
+//ADMIN FORM
+//Retornem dies i usuaris associats a un Tour
+
+export const getTourWithDetails = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+        const tour = await Tour.findByPk(id, {
+            include: [
+                { model: Dia, as: 'days' },
+                { model: User, as: 'users' },
+            ],
+        });
+
+        if (!tour) {
+            res.status(404).json({ msg: `No s'ha trobat el tour amb id ${id}` });
+            return;
+        }
+
+        res.json(tour);
+    } catch (error) {
+        console.error('Error carregant el tour:', error);
+        res.status(500).json({ msg: 'Error carregant el tour' });
+    }
+};
+
+

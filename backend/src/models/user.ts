@@ -1,27 +1,35 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from 'sequelize';
 import db from '../db/connection';
 
-const User = db.define('User', {
-    id_user: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+class User extends Model {
+    public id_user!: number;
+    public email!: string;
+    public id_tour!: number;
+}
+
+User.init(
+    {
+        id_user: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+        },
+        id_tour: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     },
-    email: {
-        type: DataTypes.STRING,
-        unique: true,
-        allowNull: false
-    },
-    id_tour: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'tours',
-            key: 'id_tour'
-        }
+    {
+        sequelize: db,
+        tableName: 'users',
+        timestamps: false,
     }
-}, {
-    timestamps: false
-});
+);
 
 export default User;
+

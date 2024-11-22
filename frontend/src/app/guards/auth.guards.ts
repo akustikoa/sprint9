@@ -10,10 +10,13 @@ export class AuthGuard implements CanActivate {
 
     canActivate(): boolean {
         const authenticatedTourId = localStorage.getItem('authenticatedTourId'); //recuperem el valor de localstorage
+        console.log('Guard activat:', authenticatedTourId);
         if (!authenticatedTourId) {
+            console.log('Redirigint a login...');
             this.router.navigate(['/login']);
             return false;
         }
+        console.log('Accés permès.');
         return true;
     }
 }

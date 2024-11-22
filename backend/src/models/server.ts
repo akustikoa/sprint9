@@ -1,9 +1,10 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import tourRoutes from '../routes/tour';
 import diaRoutes from '../routes/dia';
 import recorregutRoutes from '../routes/recorregut';
+import './index'; // Això inicialitza les relacions i models
 import db from '../db/connection';
 
 dotenv.config();
@@ -42,9 +43,12 @@ class Server {
         try {
             await db.authenticate();
             console.log('BD connectada');
+
+            // Sincronitzar models (només per a desenvolupament; elimina `alter: true` a producció)
+            await db.sync();
+            console.log('Models sincronitzats correctament');
         } catch (error) {
-            console.log(error);
-            console.error('Error en la connexió de la BD:', error);
+            console.error('Error en la connexió de la BD o sincronització:', error);
         }
     }
 }
