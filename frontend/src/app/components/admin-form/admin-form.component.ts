@@ -5,6 +5,7 @@ import { TourService } from '../../services/tour.service';
 import { Tour } from '../../interfaces/tour.interface';
 import { Dia } from '../../interfaces/dia.interface';
 import { CommonModule } from '@angular/common';
+import { TourPayload } from '../../interfaces/tour-payload.interface';
 
 @Component({
   selector: 'app-admin-form',
@@ -116,13 +117,29 @@ export class AdminFormComponent implements OnInit {
     if (this.adminForm.valid) {
       const formData = this.adminForm.value;
 
+      // Crear el payload per enviar al backend
+      const requestPayload: TourPayload = {
+        tour: {
+          nom_tour: formData.nom_tour,
+          imatge_tour: formData.imatge_tour,
+          data_inici: formData.data_inici,
+          data_final: formData.data_final,
+          password: formData.password,
+        },
+        days: formData.days || [], // Dies associats
+        users: formData.users || [], // Usuaris associats
+      };
+
+      console.log('Payload enviat:', requestPayload);
+
+      // Crida al servei per crear o actualitzar el tour
       if (this.tourId) {
-        this.tourService.updateFullTour(this.tourId, formData);
+        this.tourService.updateFullTour(this.tourId, requestPayload);
       } else {
-        this.tourService.createFullTour(formData);
+        this.tourService.createFullTour(requestPayload);
       }
 
-      // Navegació i missatges d'èxit es gestionen al servei
+      // Navegació i missatges d'èxit
       if (!this.tourService.errorMessage()) {
         this.router.navigate(['/admin']);
         alert(this.tourId ? 'Tour actualitzat amb èxit!' : 'Tour creat amb èxit!');
@@ -133,6 +150,9 @@ export class AdminFormComponent implements OnInit {
       alert('El formulari no és vàlid. Revisa els camps.');
     }
   }
+
+
+
 
 
 }

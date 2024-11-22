@@ -4,6 +4,7 @@ import { Tour } from '../interfaces/tour.interface';
 import { Dia } from '../interfaces/dia.interface';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { TourPayload } from '../interfaces/tour-payload.interface';
 
 
 @Injectable({
@@ -91,7 +92,24 @@ export class TourService { //declarem la classe TourService com a servei per pod
         return this.http.delete<void>(`${this.apiUrl}/delete-full-tour/${tourId}`);
     }
 
-    updateFullTour(tourId: number, tourData: Tour): void {
+    createFullTour(tourData: TourPayload): void {
+        this.isLoading.set(true);
+        this.errorMessage.set(null);
+
+        this.http.post(`${this.apiUrl}/create-full-tour`, tourData).subscribe({
+            next: () => {
+                this.isLoading.set(false);
+                console.log('Tour creat amb èxit!');
+            },
+            error: (error) => {
+                this.isLoading.set(false);
+                this.errorMessage.set('Hi ha hagut un error en crear el tour.');
+                console.error('Error creant el tour:', error);
+            },
+        });
+    }
+
+    updateFullTour(tourId: number, tourData: TourPayload): void {
         this.isLoading.set(true);
         this.errorMessage.set(null);
 
@@ -108,22 +126,8 @@ export class TourService { //declarem la classe TourService com a servei per pod
         });
     }
 
-    createFullTour(tourData: Tour): void {
-        this.isLoading.set(true);
-        this.errorMessage.set(null);
 
-        this.http.post(`${this.apiUrl}/create-full-tour`, tourData).subscribe({
-            next: () => {
-                this.isLoading.set(false);
-                console.log('Tour creat amb èxit!');
-            },
-            error: (error) => {
-                this.isLoading.set(false);
-                this.errorMessage.set('Hi ha hagut un error en crear el tour.');
-                console.error('Error creant el tour:', error);
-            },
-        });
-    }
+
 
     //ADMIN FORM
     getTourById(id: number): Tour | null {

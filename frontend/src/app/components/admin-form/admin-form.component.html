@@ -1,7 +1,6 @@
-<!-- Gestió del Tour -->
 <div class="container mt-4">
     <h2>Gestió del Tour</h2>
-    <form [formGroup]="adminForm">
+    <form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
         <!-- Camps de la taula tours -->
         <h3>Dades del Tour</h3>
         <div class="mb-3">
@@ -54,7 +53,7 @@
             <button type="button" class="btn btn-secondary" (click)="addDay()">+ Afegir Dia</button>
         </div>
 
-        <h3>Dades dels usuaris</h3>
+        <h3>Dades dels Usuaris</h3>
         <div formArrayName="users">
             <div *ngFor="let user of users.controls; let i = index" [formGroupName]="i" class="mb-3">
                 <label for="email">Email:</label>
@@ -64,9 +63,9 @@
             <button type="button" class="btn btn-secondary" (click)="addUser()">+ Afegir Usuari</button>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3" (click)="onSubmit()" [disabled]="!adminForm.valid">
+        <!-- Botó de Submit -->
+        <button type="submit" class="btn btn-primary mt-3" [disabled]="!adminForm.valid">
             {{ tourId ? 'Actualitzar Tour' : 'Crear Tour' }}
         </button>
-
     </form>
 </div>
