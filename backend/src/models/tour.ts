@@ -1,5 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '../db/connection';
+import Dia from './dia';
+import User from './user';
 
 class Tour extends Model {
     public id_tour!: number;
@@ -8,6 +10,10 @@ class Tour extends Model {
     public data_inici!: string;
     public data_final!: string;
     public password!: string;
+
+    // Relacions opcionals
+    public days?: Dia[]; // Associació amb la taula days
+    public users?: User[]; // Associació amb la taula users
 }
 
 Tour.init(
@@ -35,7 +41,7 @@ Tour.init(
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false, // Afegeix aquesta línia per fer que sigui requerit
+            allowNull: false,
         },
     },
     {
@@ -46,6 +52,7 @@ Tour.init(
 );
 
 export default Tour;
+
 
 
 

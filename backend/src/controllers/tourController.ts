@@ -207,27 +207,42 @@ export const deleteTour = async (req: Request, res: Response) => {
 //ADMIN FORM
 //Retornem dies i usuaris associats a un Tour
 
-export const getTourWithDetails = async (req: Request, res: Response) => {
+export const getTourWithDetails = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
     try {
         const tour = await Tour.findByPk(id, {
             include: [
-                { model: Dia, as: 'days' },
-                { model: User, as: 'users' },
+                { model: Dia, as: 'days' }, // Incloure la relació amb Dia
+                { model: User, as: 'users' }, // Incloure la relació amb User
             ],
         });
 
         if (!tour) {
-            res.status(404).json({ msg: `No s'ha trobat el tour amb id ${id}` });
+            res.status(404).json({ msg: 'Tour no trobat' });
             return;
         }
 
-        res.json(tour);
+        const payload = {
+            tour: {
+                nom_tour: tour.nom_tour,
+                imatge_tour: tour.imatge_tour,
+                data_inici: tour.data_inici,
+                data_final: tour.data_final,
+                password: tour.password,
+            },
+            days: tour.days, // Incloure els dies
+            users: tour.users, // Incloure els usuaris
+        };
+
+        res.json(payload);
     } catch (error) {
-        console.error('Error carregant el tour:', error);
-        res.status(500).json({ msg: 'Error carregant el tour' });
+        console.error('Error obtenint el tour:', error);
+        res.status(500).json({ msg: 'Error del servidor' });
     }
 };
+
+
+
 
 

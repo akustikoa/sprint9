@@ -9,6 +9,6 @@ export interface TourPayload {
         data_final: string;
         password: string;
     };
-    days: Dia[]; // Array d'objectes de tipus `Dia`
-    users: User[]; // Array d'objectes de tipus `User`
+    days: Dia[];
+    users: User[];
 }

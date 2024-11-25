@@ -82,42 +82,69 @@ export class AdminFormComponent implements OnInit {
   }
 
   loadTourDetails(id: number): void {
-    const tour = this.tourService.getTourById(id);
-    if (tour) {
-      this.adminForm.patchValue({
-        nom_tour: tour.nom_tour,
-        imatge_tour: tour.imatge_tour,
-        data_inici: tour.data_inici,
-        data_final: tour.data_final,
-        password: tour.password,
-      });
+    this.tourService.getTourDetailsById(id).subscribe({
+      next: (tourPayload) => {
+        console.log('Payload rebut:', tourPayload); // Depuració
 
-      // Carrega els dies
-      this.days.clear();
-      tour.days?.forEach((day: Dia) => {
-        const dayGroup = this.fb.group({
-          numero_dia: day.numero_dia,
-          data_dia: day.data_dia,
-          titol_etapa: day.titol_etapa,
-        });
-        this.days.push(dayGroup);
-      });
+        if (tourPayload && tourPayload.tour) {
+          // Carregar dades principals
+          this.adminForm.patchValue({
+            nom_tour: tourPayload.tour.nom_tour || '',
+            imatge_tour: tourPayload.tour.imatge_tour || '',
+            data_inici: tourPayload.tour.data_inici || '',
+            data_final: tourPayload.tour.data_final || '',
+            password: tourPayload.tour.password || '',
+          });
 
-      // Carrega els usuaris
-      (tour.users as { email: string }[])?.forEach((user) => {
-        const userGroup = this.fb.group({
-          email: user.email,
-        });
-        this.users.push(userGroup);
-      });
-    }
+          // Carregar dies associats
+          this.days.clear();
+          if (Array.isArray(tourPayload.days) && tourPayload.days.length > 0) {
+            tourPayload.days.forEach((day) => {
+              const dayGroup = this.fb.group({
+                numero_dia: day.numero_dia || '',
+                data_dia: day.data_dia || '',
+                titol_etapa: day.titol_etapa || '',
+                imatge_etapa: day.imatge_etapa || '',
+                descripcio: day.descripcio || '',
+                coordenades_inici: day.coordenades_inici || '',
+                coordenades_final: day.coordenades_final || '',
+              });
+              this.days.push(dayGroup);
+            });
+          }
+
+          // Carregar usuaris associats
+          this.users.clear();
+          if (Array.isArray(tourPayload.users) && tourPayload.users.length > 0) {
+            tourPayload.users.forEach((user) => {
+              const userGroup = this.fb.group({
+                email: user.email || '',
+              });
+              this.users.push(userGroup);
+            });
+          }
+
+          console.log('Dades carregades correctament:', tourPayload);
+        } else {
+          console.error('El payload rebut no conté informació vàlida:', tourPayload);
+          alert('No s\'han trobat dades vàlides per aquest tour.');
+          this.router.navigate(['/admin']);
+        }
+      },
+      error: (error) => {
+        console.error('Error carregant els detalls del tour:', error);
+        alert('Hi ha hagut un error en carregar els detalls del tour.');
+      },
+    });
   }
+
+
+
 
   onSubmit(): void {
     if (this.adminForm.valid) {
       const formData = this.adminForm.value;
 
-      // Crear el payload per enviar al backend
       const requestPayload: TourPayload = {
         tour: {
           nom_tour: formData.nom_tour,
@@ -126,8 +153,8 @@ export class AdminFormComponent implements OnInit {
           data_final: formData.data_final,
           password: formData.password,
         },
-        days: formData.days || [], // Dies associats
-        users: formData.users || [], // Usuaris associats
+        days: formData.days || [],
+        users: formData.users || [],
       };
 
       console.log('Payload enviat:', requestPayload);
@@ -150,6 +177,7 @@ export class AdminFormComponent implements OnInit {
       alert('El formulari no és vàlid. Revisa els camps.');
     }
   }
+
 
 
 

@@ -135,4 +135,7 @@ export class TourService { //declarem la classe TourService com a servei per pod
         return tour;
     }
 
+    getTourDetailsById(id: number): Observable<TourPayload> {
+        return this.http.get<TourPayload>(`${this.apiUrl}/details/${id}`);
+    }
 }
