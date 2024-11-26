@@ -177,10 +177,4 @@ export class AdminFormComponent implements OnInit {
       alert('El formulari no és vàlid. Revisa els camps.');
     }
   }
-
-
-
-
-
-
 }

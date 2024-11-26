@@ -13,8 +13,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let tour of tourService.tours(); let i = index">
-                <td>{{ i + 1 }}</td>
+            @for (tour of tourService.tours(); track tour.id_tour) {
+            <tr>
+                <td>{{ tourService.tours().indexOf(tour) + 1 }}</td>
                 <td>{{ tour.nom_tour }}</td>
                 <td>{{ tour.data_inici }}</td>
                 <td>{{ tour.data_final }}</td>
@@ -25,6 +26,7 @@
                     <button class="btn btn-danger btn-sm" (click)="deleteTour(tour.id_tour)">Eliminar</button>
                 </td>
             </tr>
+            }
         </tbody>
     </table>
 
