@@ -17,10 +17,9 @@ export const routes: Routes = [
     { path: 'detail/:id', component: DetailsComponent, canActivate: [AuthGuard] }, //'details/id'
     { path: 'discover', component: WeekComponent, canActivate: [AuthGuard] }, //'discover/id'
     { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
-    { path: 'admin', component: AdminDashboardComponent }, // Panell d'administració
-    { path: 'admin-form', component: AdminFormComponent },
-    // { path: 'admin/tour/new', component: AdminFormComponent }, // Formulari de creació
-    { path: 'admin-form/:id', component: AdminFormComponent }, // Formulari de detall/edició
+    { path: 'admin', component: AdminDashboardComponent, canActivate: [AuthGuard] }, // Panell d'administració
+    { path: 'admin-form', component: AdminFormComponent, canActivate: [AuthGuard] },// { path: 'admin/tour/new', component: AdminFormComponent }, // Formulari de creació
+    { path: 'admin-form/:id', component: AdminFormComponent, canActivate: [AuthGuard] }, // Formulari de detall/edició
     { path: '**', redirectTo: '' }
 ];
 

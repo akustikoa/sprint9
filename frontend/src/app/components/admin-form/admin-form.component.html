@@ -28,27 +28,29 @@
         <h3>Dades dels Dies</h3>
         <div formArrayName="days">
             @for (day of days.controls; track day.value.numero_dia) {
-            <div [formGroupName]="days.controls.indexOf(day)" class="mb-3">
-                <label class="form-label">Número de Dia:</label>
-                <input type="text" formControlName="numero_dia" class="form-control" />
+            <div class="col-md-12 mb-4 card-container"> // continuar maquetant ////////////////////////
+                <div [formGroupName]="days.controls.indexOf(day)" class="mb-3">
+                    <label class="form-label">Número de Dia:</label>
+                    <input type="text" formControlName="numero_dia" class="form-control" />
 
-                <label class="form-label">Data del Dia:</label>
-                <input type="text" formControlName="data_dia" class="form-control" />
+                    <label class="form-label">Data del Dia:</label>
+                    <input type="text" formControlName="data_dia" class="form-control" />
 
-                <label class="form-label">Títol de l'Etapa:</label>
-                <input type="text" formControlName="titol_etapa" class="form-control" />
+                    <label class="form-label">Títol de l'Etapa:</label>
+                    <input type="text" formControlName="titol_etapa" class="form-control" />
 
-                <label class="form-label">Imatge de l'Etapa:</label>
-                <input type="text" formControlName="imatge_etapa" class="form-control" />
+                    <label class="form-label">Imatge de l'Etapa:</label>
+                    <input type="text" formControlName="imatge_etapa" class="form-control" />
 
-                <label class="form-label">Descripció:</label>
-                <textarea formControlName="descripcio" class="form-control"></textarea>
+                    <label class="form-label">Descripció:</label>
+                    <textarea formControlName="descripcio" class="form-control"></textarea>
 
-                <label class="form-label">Coordenades Inici:</label>
-                <input type="text" formControlName="coordenades_inici" class="form-control" />
+                    <label class="form-label">Coordenades Inici:</label>
+                    <input type="text" formControlName="coordenades_inici" class="form-control" />
 
-                <label class="form-label">Coordenades Final:</label>
-                <input type="text" formControlName="coordenades_final" class="form-control" />
+                    <label class="form-label">Coordenades Final:</label>
+                    <input type="text" formControlName="coordenades_final" class="form-control" />
+                </div>
             </div>
             }
             <button type="button" class="btn btn-secondary mt-3" (click)="addDay()">+ Afegir Dia</button>
