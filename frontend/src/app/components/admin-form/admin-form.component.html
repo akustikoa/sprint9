@@ -1,70 +1,111 @@
 <div class="container mt-4">
-    <h2>Gestió del Tour</h2>
+    <h2 class="mb-5">Gestió de {{adminForm.get('nom_tour')?.value }} </h2>
     <form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
         <!-- Camps de la taula tours -->
-        <h3>Dades del Tour</h3>
-        <div class="mb-3">
-            <label for="nom_tour">Nom del Tour:</label>
-            <input type="text" id="nom_tour" formControlName="nom_tour" class="form-control" />
+        <div class="card mb-5 shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Dades del Tour</h4>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="nom_tour" class="form-label">Nom del Tour:</label>
+                    <input type="text" id="nom_tour" formControlName="nom_tour" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="imatge_tour" class="form-label">Imatge del Tour:</label>
+                    <input type="text" id="imatge_tour" formControlName="imatge_tour" class="form-control" />
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="data_inici" class="form-label">Data d'Inici:</label>
+                        <input type="text" id="data_inici" formControlName="data_inici" class="form-control" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="data_final" class="form-label">Data Final:</label>
+                        <input type="text" id="data_final" formControlName="data_final" class="form-control" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="password" class="form-label">Contrasenya:</label>
+                        <input type="password" id="password" formControlName="password" class="form-control" />
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="imatge_tour">Imatge del Tour:</label>
-            <input type="text" id="imatge_tour" formControlName="imatge_tour" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label for="data_inici">Data d'Inici:</label>
-            <input type="text" id="data_inici" formControlName="data_inici" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label for="data_final">Data Final:</label>
-            <input type="text" id="data_final" formControlName="data_final" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <label for="password">Contrasenya:</label>
-            <input type="password" id="password" formControlName="password" class="form-control" />
-        </div>
+
 
         <!-- Camps de la taula dies -->
-        <h3>Dades dels Dies</h3>
+        <h3 class="text-center mt-4">Dades dels Dies</h3>
         <div formArrayName="days">
             @for (day of days.controls; track day.value.numero_dia) {
-            <div class="col-md-12 mb-4 card-container"> // continuar maquetant ////////////////////////
-                <div [formGroupName]="days.controls.indexOf(day)" class="mb-3">
-                    <label class="form-label">Número de Dia:</label>
-                    <input type="text" formControlName="numero_dia" class="form-control" />
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header  text-white">
+                    <h5>Dia {{ day.value.numero_dia }}</h5>
+                </div>
+                <div class="card-body">
+                    <div [formGroupName]="days.controls.indexOf(day)">
+                        <div class="row">
+                            <!-- Primera columna -->
+                            <div class="col-md-6">
+                                <label class="form-label">Número de Dia:</label>
+                                <input type="text" formControlName="numero_dia" class="form-control mb-3" />
 
-                    <label class="form-label">Data del Dia:</label>
-                    <input type="text" formControlName="data_dia" class="form-control" />
+                                <label class="form-label">Data del Dia:</label>
+                                <input type="text" formControlName="data_dia" class="form-control mb-3" />
 
-                    <label class="form-label">Títol de l'Etapa:</label>
-                    <input type="text" formControlName="titol_etapa" class="form-control" />
+                                <label class="form-label">Títol de l'Etapa:</label>
+                                <input type="text" formControlName="titol_etapa" class="form-control mb-3" />
 
-                    <label class="form-label">Imatge de l'Etapa:</label>
-                    <input type="text" formControlName="imatge_etapa" class="form-control" />
+                                <label class="form-label">Imatge de l'Etapa:</label>
+                                <input type="text" formControlName="imatge_etapa" class="form-control mb-3" />
+                            </div>
 
-                    <label class="form-label">Descripció:</label>
-                    <textarea formControlName="descripcio" class="form-control"></textarea>
+                            <!-- Segona columna -->
+                            <div class="col-md-6">
 
-                    <label class="form-label">Coordenades Inici:</label>
-                    <input type="text" formControlName="coordenades_inici" class="form-control" />
+                                <label class="form-label">Descripció:</label>
+                                <textarea formControlName="descripcio" class="form-control mb-3" rows="4"></textarea>
 
-                    <label class="form-label">Coordenades Final:</label>
-                    <input type="text" formControlName="coordenades_final" class="form-control" />
+                                <label class="form-label">Coordenades Inici:</label>
+                                <input type="text" formControlName="coordenades_inici" class="form-control mb-3" />
+
+                                <label class="form-label">Coordenades Final:</label>
+                                <input type="text" formControlName="coordenades_final" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             }
-            <button type="button" class="btn btn-secondary mt-3" (click)="addDay()">+ Afegir Dia</button>
         </div>
 
-        <div formArrayName="users">
-            @for (user of users.controls; track user.value.email) {
-            <div [formGroupName]="users.controls.indexOf(user)" class="mb-3">
-                <label class="form-label">Email:</label>
-                <input type="email" formControlName="email" class="form-control" />
-            </div>
-            }
-            <button type="button" class="btn btn-secondary mt-3" (click)="addUser()">+ Afegir Usuari</button>
+        <!-- Botó per afegir més dies -->
+        <div class="text-center">
+            <button type="button" class="btn btn-secondary mt-3" (click)="addDay()">Afegir Dia</button>
         </div>
+
+        <h3 class="text-center mt-4">Usuaris</h3>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header text-white">
+                <h5 class="mb-0">Llista d'Usuaris</h5>
+            </div>
+            <div class="card-body">
+                <div formArrayName="users">
+                    @for (user of users.controls; track user.value.email) {
+                    <div [formGroupName]="users.controls.indexOf(user)" class="mb-3">
+                        <label for="email_{{ users.controls.indexOf(user) }}" class="form-label">Email Usuari {{
+                            users.controls.indexOf(user) + 1 }}:</label>
+                        <input type="email" id="email_{{ users.controls.indexOf(user) }}" formControlName="email"
+                            class="form-control" />
+                    </div>
+                    }
+                </div>
+                <!-- Botó per afegir més usuaris -->
+                <button type="button" class="btn btn-secondary mt-3" (click)="addUser()">Afegir Usuari</button>
+            </div>
+        </div>
+
+
 
         <!-- Botó de Submit -->
         <button type="submit" class="btn btn-primary mt-3" [disabled]="!adminForm.valid">
