@@ -2,14 +2,14 @@
     <h1>Panell d'Administració</h1>
 
     <!-- Llistat de tours -->
-    <table class="table mt-4">
-        <thead>
+    <table class="table mt-4 overflow-hidden rounded ">
+        <thead class="text-white">
             <tr>
-                <th>#</th>
-                <th>Nom</th>
-                <th>Data d'Inici</th>
-                <th>Data Final</th>
-                <th>Accions</th>
+                <th class="fs-5 text-white bg-dark">#</th>
+                <th class="fs-5 text-white bg-dark">Tour</th>
+                <th class="fs-5 text-white bg-dark">Data d'Inici</th>
+                <th class="fs-5 text-white bg-dark">Data Final</th>
+                <th class="fs-5 text-white bg-dark">Accions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,9 +20,8 @@
                 <td>{{ tour.data_inici }}</td>
                 <td>{{ tour.data_final }}</td>
                 <td>
-                    <button class="btn btn-info" [routerLink]="['/admin-form', tour.id_tour]">
-                        Detalls
-                    </button>
+                    <button class="btn btn-secondary btn-sm text-white me-3"
+                        [routerLink]="['/admin-form', tour.id_tour]">Detalls</button>
                     <button class="btn btn-danger btn-sm" (click)="deleteTour(tour.id_tour)">Eliminar</button>
                 </td>
             </tr>
@@ -31,5 +30,5 @@
     </table>
 
     <!-- Botó per crear un nou tour -->
-    <button class="btn btn-primary mt-3" [routerLink]="['/admin-form']">Crear Nou Tour</button>
+    <button class="btn btn-secondary mt-3 mb-4" [routerLink]="['/admin-form']">Crear Nou Tour</button>
 </div>
