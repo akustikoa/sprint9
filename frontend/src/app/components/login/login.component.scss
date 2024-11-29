@@ -1,9 +1,16 @@
+:host {
+  display: block;
+  background-color: black; /* El color que vols aplicar */
+  min-height: 100vh; /* Fes que el component cobreixi tota l'alçada de la pàgina */
+}
+
 .custom-login {
   display: flex;
+  flex-direction: column; /* Assegura que el contingut s'organitzi verticalment */
   align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 100px);
-  width: 100vw;
+  justify-content: center; /* Centra el contingut verticalment */
+  min-height: 100vh; /* Ocupa tota l'alçada */
+  width: 100vw; /* Ocupa tota l'amplada */
 }
 // .row {
 //   margin: 0 !important;
@@ -37,7 +44,6 @@
 .container {
   background-color: black;
 }
-
-:host ::ng-deep body {
-  background-color: black !important;
-}
+// :host ::ng-deep body {
+//   background-color: black !important;
+// }
