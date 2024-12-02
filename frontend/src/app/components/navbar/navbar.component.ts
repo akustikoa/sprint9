@@ -14,6 +14,8 @@ import { TourService } from '../../services/tour.service';
 export class NavbarComponent {
   constructor(private tourService: TourService) { }
 
+
+
   onLogout(): void {
     this.tourService.logout(); // Crida al mètode del servei
   }

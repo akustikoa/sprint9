@@ -1,11 +1,20 @@
 <div class="container text-start">
     @if (selectedTour()) {
     <div class="container text-start my-3">
-        <h4 class="d-inline">{{ selectedTour()!.nom_tour }} | </h4>
-        <h6 class="d-inline">{{ selectedTour()!.data_inici }} – {{ selectedTour()!.data_final }}</h6>
+        <div class="responsive-title">
+            <!-- Nom del tour -->
+            <h4 class="d-inline">{{ selectedTour()!.nom_tour }}</h4>
+
+            <!-- Data -->
+            <h6 class="d-inline ms-2">{{ selectedTour()!.data_inici }} – {{ selectedTour()!.data_final }}</h6>
+        </div>
     </div>
+
+    <!-- Imatge -->
     <img [src]="'assets/img_home/' + selectedTour()?.imatge_tour" class="img-fluid mt-3 mb-4 rounded-1 img_mod"
         alt="Imatge destacada">
+
+    <!-- Botons -->
     <div class="row mb-4">
         <div class="col-6">
             <button class="btn btn-danger btn-lg w-100 rounded-1" type="button" [routerLink]="['/days']">
@@ -20,6 +29,8 @@
     </div>
     }
 </div>
+
+
 
 
 <!-- <div class="container text-start">

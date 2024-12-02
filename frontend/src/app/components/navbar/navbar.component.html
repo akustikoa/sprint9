@@ -1,7 +1,6 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light mt-2">
         <div class="container-fluid">
-
             <a class="navbar-brand" [routerLink]="['/home']">
                 <img src="assets/bikecat_logo.png" class="logo mb-2">
             </a>
@@ -13,25 +12,26 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!-- Contingut del Navbar -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-light text-opacity-75 fs-6" [routerLink]="['/days']">CYCLING STAGES</a>
+                        <a class="nav-link text-light text-opacity-75 fs-6" [routerLink]="['/days']"
+                            data-bs-toggle="collapse" data-bs-target="#navbarNav">CYCLING STAGES</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light text-opacity-75 fs-6" [routerLink]="['/discover']">DISCOVER</a>
+                        <a class="nav-link text-light text-opacity-75 fs-6" [routerLink]="['/discover']"
+                            data-bs-toggle="collapse" data-bs-target="#navbarNav">DISCOVER</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light text-opacity-75 fs-6" [routerLink]="['/contact']">CONTACT</a>
+                        <a class="nav-link text-light text-opacity-75 fs-6" [routerLink]="['/contact']"
+                            data-bs-toggle="collapse" data-bs-target="#navbarNav">CONTACT</a>
                     </li>
                     <li class="nav-item d-flex align-items-center ms-lg-2">
                         <button class="btn btn-danger btn-sm" (click)="onLogout()">Log Out</button>
-
                     </li>
-
                 </ul>
             </div>
-
         </div>
     </nav>
 </div>

@@ -1,49 +1,31 @@
-:host {
-  display: block;
-  background-color: black; /* El color que vols aplicar */
-  min-height: 100vh; /* Fes que el component cobreixi tota l'alçada de la pàgina */
-}
+// :host {
+//   display: block;
+//   background-color: black; /* El color que vols aplicar */
+//   min-height: 100vh; /* Fes que el component cobreixi tota l'alçada de la pàgina */
+// }
 
 .custom-login {
   display: flex;
   flex-direction: column; /* Assegura que el contingut s'organitzi verticalment */
   align-items: center;
   justify-content: center; /* Centra el contingut verticalment */
-  min-height: 100vh; /* Ocupa tota l'alçada */
+  min-height: 480px; /* Ocupa tota l'alçada */
   width: 100vw; /* Ocupa tota l'amplada */
 }
-// .row {
-//   margin: 0 !important;
-// }
-.curtom-login form {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centra el contingut dins del formulari */
-  width: 100%; /* Ocupa el 100% de l'ample de la columna */
-  max-width: 300px; /* Amplada màxima per evitar que sigui massa ample */
-}
-.custom-logo {
-  display: block;
-  width: 130px;
-  height: auto;
-  margin: 0 auto; /* Centra el logo horitzontalment */
-}
 
-.custom-boto {
-  display: block;
-  width: 100px;
-  height: auto;
-  margin: 0 auto; /* Centra el logo horitzontalment */
-}
 .img_mod {
   background-color: #1d1e1f;
   //border: 1px, solid #c7cacc;
-  box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
+  // box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
 }
 
-.container {
-  background-color: black;
-}
-// :host ::ng-deep body {
-//   background-color: black !important;
+// .container {
+//   background-color: black;
 // }
+
+.white-line {
+  width: 100%;
+  height: 1px;
+  background-color: white;
+  margin: 10px 0;
+}

@@ -6,3 +6,27 @@
   border: 1.2px, solid #c7cacc;
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
 }
+
+/* Estil per a pantalles grans */
+.responsive-title h4,
+.responsive-title h6 {
+  display: inline; /* Manté el text en una sola línia */
+}
+
+.responsive-title h4::after {
+  content: "|"; /* Afegim el separador */
+  margin-left: 10px;
+}
+
+/* Estil per a pantalles petites */
+@media (max-width: 768px) {
+  .responsive-title h4::after {
+    content: ""; /* El separador desapareix */
+  }
+
+  .responsive-title h4,
+  .responsive-title h6 {
+    display: block; /* Divideix el text en dues línies */
+    margin-bottom: 0.5rem;
+  }
+}
