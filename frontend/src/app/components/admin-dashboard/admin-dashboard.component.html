@@ -1,8 +1,10 @@
 <div class="container mt-4">
     <h1>Panell d'Administració</h1>
 
+    <!-- Verifica si hi ha tours disponibles -->
+    @if (filteredTours.length > 0) {
     <!-- Llistat de tours -->
-    <table class="table table-hover  mt-4 overflow-hidden rounded ">
+    <table class="table table-hover mt-4 overflow-hidden rounded">
         <thead class="text-white">
             <tr>
                 <th class="fs-5 text-white bg-dark">#</th>
@@ -13,16 +15,20 @@
             </tr>
         </thead>
         <tbody>
-            @for (tour of tourService.tours(); track tour.id_tour) {
+            @for (tour of filteredTours; track tour.id_tour) {
             <tr>
-                <td>{{ tourService.tours().indexOf(tour) + 1 }}</td>
+                <td>{{ filteredTours.indexOf(tour) + 1 }}</td>
                 <td>{{ tour.nom_tour }}</td>
                 <td>{{ tour.data_inici }}</td>
                 <td>{{ tour.data_final }}</td>
                 <td>
                     <button class="btn btn-secondary btn-sm text-white me-3"
-                        [routerLink]="['/admin-form', tour.id_tour]">Detalls</button>
-                    <button class="btn btn-danger btn-sm" (click)="deleteTour(tour.id_tour)">Eliminar</button>
+                        [routerLink]="['/admin-form', tour.id_tour]">
+                        Detalls
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="deleteTour(tour.id_tour)">
+                        Eliminar
+                    </button>
                 </td>
             </tr>
             }
@@ -30,5 +36,11 @@
     </table>
 
     <!-- Botó per crear un nou tour -->
-    <button class="btn btn-secondary mt-3 mb-4" [routerLink]="['/admin-form']">Crear Nou Tour</button>
+    <button class="btn btn-secondary mt-3 mb-4" [routerLink]="['/admin-form']">
+        Crear Nou Tour
+    </button>
+    } @else {
+    <!-- Missatge si no hi ha tours -->
+    <p class="text-center mt-5">No hi ha tours disponibles.</p>
+    }
 </div>

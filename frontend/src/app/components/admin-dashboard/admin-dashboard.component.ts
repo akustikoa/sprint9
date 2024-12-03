@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit } from '@angular/core';
 import { TourService } from '../../services/tour.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Tour } from '../../interfaces/tour.interface';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -11,16 +12,26 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./admin-dashboard.component.scss']
 })
 export class AdminDashboardComponent implements OnInit {
-  constructor(public tourService: TourService) { }
+  filteredTours: Tour[] = []; // Variable per emmagatzemar els tours filtrats
 
-  ngOnInit(): void {
-    this.tourService.loadTours(); // Carrega la informació dels tours al servei
-    console.log('AdminDashboard carregat');
+  constructor(public tourService: TourService) {
+
+    effect(() => {
+      const tours = this.tourService.tours(); // Obté el valor actual dels tours
+      console.log('Tours carregats abans de filtrar:', tours);
+      this.filteredTours = tours.filter(tour => tour.nom_tour !== 'Admin Access'); // Filtra "Admin Access"
+      console.log('Tours visibles al panell d\'administració:', this.filteredTours);
+    });
   }
 
-  // Navegar a la vista de detalls o edició
-  viewTourDetails(tourId: number): void {
-    console.log('Detalls del tour:', tourId); // Aquí pots implementar la navegació
+  ngOnInit(): void {
+    console.log('AdminDashboard carregat');
+
+    // Reacciona als canvis en els tours
+
+
+    // Carrega els tours inicialment
+    this.tourService.loadTours();
   }
 
   // Eliminar un tour
@@ -38,5 +49,8 @@ export class AdminDashboardComponent implements OnInit {
       });
     }
   }
-}
 
+  trackById(index: number, tour: Tour): number {
+    return tour.id_tour; // Utilitza l'id del tour per al tracking
+  }
+}
