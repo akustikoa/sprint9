@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TourService } from '../../services/tour.service';
 import { RouterModule } from '@angular/router';
-import { Dia } from '../../interfaces/dia.interface';
+
 
 @Component({
   selector: 'app-list-days',

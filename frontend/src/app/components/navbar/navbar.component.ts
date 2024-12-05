@@ -17,6 +17,6 @@ export class NavbarComponent {
 
 
   onLogout(): void {
-    this.tourService.logout(); // Crida al mètode del servei
+    this.tourService.logout();
   }
 }

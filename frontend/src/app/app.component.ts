@@ -20,19 +20,18 @@ export class AppComponent implements OnInit {
     if (authenticatedTourId) {
       this.tourService.loadSelectedTourById(Number(authenticatedTourId)).subscribe({
         next: (tour) => {
-          this.tourService.selectedTour.set(tour); // Assigna el tour complet
+          this.tourService.selectedTour.set(tour); // Assigna el tour
 
-          // Només redirigeix a home si l'usuari està a la ruta arrel
+          // si l'usuari està a la ruta arrel va a la home
           if (this.router.url === '/' || this.router.url === '/login') {
             this.router.navigate(['/home']);
           }
         },
         error: () => {
-          this.router.navigate(['/login']); // Si hi ha un error, redirigeix a login
+          this.router.navigate(['/login']);
         }
       });
     } else {
-      // Si no hi ha autenticació, redirigeix a login
       this.router.navigate(['/login']);
     }
   }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TourService } from '../../services/tour.service';
-import { Tour } from '../../interfaces/tour.interface';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,10 +21,8 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    // Crear el formulari amb controls per email i password
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]], // Afegim validació d'email
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
@@ -36,16 +33,14 @@ export class LoginComponent implements OnInit {
     this.tourService.verifyUserTour(email, password).subscribe({
       next: (response) => {
         if (response.valid) {
-          localStorage.setItem('authenticatedTourId', response.id_tour.toString()); // Guardem l'ID del tour
-          // Cridem al servei per carregar el tour complet
+          localStorage.setItem('authenticatedTourId', response.id_tour.toString());
           this.tourService.loadSelectedTour(response.id_tour);
-          this.router.navigate(['/home']); // Redirigim a la home
+          this.router.navigate(['/home']);
         } else {
           this.errorMessage = 'Contrasenya incorrecta';
         }
       },
       error: (err) => {
-        console.error('Error de verificació', err);
         this.errorMessage = 'Error de verificació';
       }
     });

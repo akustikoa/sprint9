@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TourService } from '../../services/tour.service';
-import { Tour } from '../../interfaces/tour.interface';
-import { Dia } from '../../interfaces/dia.interface';
 import { CommonModule } from '@angular/common';
+
+import { TourService } from '../../services/tour.service';
 import { TourPayload } from '../../interfaces/tour-payload.interface';
 
 @Component({
@@ -28,7 +27,7 @@ export class AdminFormComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
 
-    // Si hi ha un ID a la ruta, carregar detalls
+    // Si ID carrega detalls al formulari
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
@@ -84,7 +83,6 @@ export class AdminFormComponent implements OnInit {
   loadTourDetails(id: number): void {
     this.tourService.getTourDetailsById(id).subscribe({
       next: (tourPayload) => {
-        console.log('Payload rebut:', tourPayload); // Depuració
 
         if (tourPayload && tourPayload.tour) {
           // Carregar dades principals
@@ -124,7 +122,6 @@ export class AdminFormComponent implements OnInit {
             });
           }
 
-          console.log('Dades carregades correctament:', tourPayload);
         } else {
           console.error('El payload rebut no conté informació vàlida:', tourPayload);
           alert('No s\'han trobat dades vàlides per aquest tour.');
@@ -137,8 +134,6 @@ export class AdminFormComponent implements OnInit {
       },
     });
   }
-
-
 
 
   onSubmit(): void {
@@ -157,16 +152,12 @@ export class AdminFormComponent implements OnInit {
         users: formData.users || [],
       };
 
-      console.log('Payload enviat:', requestPayload);
-
-      // Crida al servei per crear o actualitzar el tour
       if (this.tourId) {
         this.tourService.updateFullTour(this.tourId, requestPayload);
       } else {
         this.tourService.createFullTour(requestPayload);
       }
 
-      // Navegació i missatges d'èxit
       if (!this.tourService.errorMessage()) {
         this.router.navigate(['/admin']);
         alert(this.tourId ? 'Tour actualitzat amb èxit!' : 'Tour creat amb èxit!');

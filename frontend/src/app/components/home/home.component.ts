@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TourService } from '../../services/tour.service';
-import { Tour } from '../../interfaces/tour.interface'
+
 
 
 @Component({

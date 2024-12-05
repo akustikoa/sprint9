@@ -12,7 +12,7 @@ import { Tour } from '../../interfaces/tour.interface';
   styleUrls: ['./admin-dashboard.component.scss']
 })
 export class AdminDashboardComponent implements OnInit {
-  filteredTours: Tour[] = []; // Variable per emmagatzemar els tours filtrats
+  filteredTours: Tour[] = []; // Emmagatzema els tours filtrats
 
   constructor(public tourService: TourService) {
 
@@ -25,12 +25,8 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('AdminDashboard carregat');
 
-    // Reacciona als canvis en els tours
-
-
-    // Carrega els tours inicialment
+    // Carrega tours
     this.tourService.loadTours();
   }
 
@@ -48,9 +44,5 @@ export class AdminDashboardComponent implements OnInit {
         }
       });
     }
-  }
-
-  trackById(index: number, tour: Tour): number {
-    return tour.id_tour; // Utilitza l'id del tour per al tracking
   }
 }

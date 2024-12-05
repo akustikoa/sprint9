@@ -42,8 +42,6 @@ class Server {
         try {
             await db.authenticate();
             console.log('BD connectada');
-
-            // Sincronitzar models (només per a desenvolupament; elimina `alter: true` a producció)
             await db.sync();
             console.log('Models sincronitzats correctament');
         } catch (error) {

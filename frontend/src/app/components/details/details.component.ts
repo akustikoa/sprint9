@@ -1,10 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
-import * as mapboxgl from 'mapbox-gl';
 import { CommonModule } from '@angular/common';
-import { Chart, registerables } from 'chart.js';
 import { ActivatedRoute } from '@angular/router';
+
 import { TourService } from '../../services/tour.service';
 import { Dia } from '../../interfaces/dia.interface';
+import * as mapboxgl from 'mapbox-gl';
+import { Chart, registerables } from 'chart.js';
+
+
 
 @Component({
   selector: 'app-details',
