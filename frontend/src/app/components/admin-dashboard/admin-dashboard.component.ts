@@ -18,9 +18,7 @@ export class AdminDashboardComponent implements OnInit {
 
     effect(() => {
       const tours = this.tourService.tours(); // Obté el valor actual dels tours
-      console.log('Tours carregats abans de filtrar:', tours);
       this.filteredTours = tours.filter(tour => tour.nom_tour !== 'Admin Access'); // Filtra "Admin Access"
-      console.log('Tours visibles al panell d\'administració:', this.filteredTours);
     });
   }
 

@@ -39,7 +39,6 @@ export class TourService {
         this.http.get<Tour[]>(this.apiUrl).subscribe({
             next: (tours) => {
                 this.tours.set(tours);
-                console.log('Tours actualitzats al servei:', this.tours());
             },
             error: (err) => console.log('Error carregant tours:', err)
         });

@@ -37,15 +37,15 @@ export class DetailsComponent implements OnInit {
       }
     }
     this.initializeMap();
-    this.createChart([]); // Inicialitzem el gràfic amb dades buides
+    this.createChart([]); // Inicialitza el gràfic amb dades buides
   }
 
   configureRoutes(day: Dia): void {
-    this.routes = []; // Resetejem les rutes abans de configurar-les
+    this.routes = []; // Resseteja les rutes abans de configurar-les
 
     const parseCoordinates = (coord: string | null): [number, number] | null => {
       if (coord) {
-        // Split la cadena per la coma i converteix cada part en nombre
+        // converteix en nombre
         const parts = coord.split(',').map(part => parseFloat(part.trim()));
         if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
           return [parts[0], parts[1]] as [number, number];

@@ -14,14 +14,14 @@ import { TourService } from '../../services/tour.service';
 })
 
 export class HomeComponent implements OnInit {
-  selectedTour = this.tourService.selectedTour; //obtenim el tour seleccionat del servei
+  selectedTour = this.tourService.selectedTour;
 
   constructor(private tourService: TourService) { }
 
   ngOnInit(): void {
-    const id_tour = localStorage.getItem('authenticatedTourId'); // Obtenim l'ID del tour emmagatzemat
+    const id_tour = localStorage.getItem('authenticatedTourId');
     if (id_tour) {
-      this.tourService.loadSelectedTour(Number(id_tour)); // Carreguem el tour seleccionat
+      this.tourService.loadSelectedTour(Number(id_tour));
     } else {
       console.error('No hi ha cap ID de tour autenticat');
     }
