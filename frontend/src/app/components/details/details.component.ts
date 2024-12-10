@@ -31,6 +31,8 @@ export class DetailsComponent implements OnInit {
     this.id_dia = Number(this.route.snapshot.paramMap.get('id'));
     if (this.id_dia) {
       const day = this.tourService.getDayById(this.id_dia);
+      console.log(day);
+
       if (day) {
         this.selectedDay.set(day);
         this.configureRoutes(day);
@@ -90,7 +92,7 @@ export class DetailsComponent implements OnInit {
   }
 
   initializeMap(): void {
-    mapboxgl.default.accessToken = 'Token';
+    mapboxgl.default.accessToken = 'pk.eyJ1IjoiYWt1c3Rpa29hIiwiYSI6ImNtMWwxeThvNDA0a3Iya3NnZDN1YThzY24ifQ.6plMBiCVFOoSIRpcj_hm8A';
 
     this.map = new mapboxgl.Map({
       container: 'map',

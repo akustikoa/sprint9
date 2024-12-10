@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
-        const authenticatedTourId = localStorage.getItem('authenticatedTourId'); // Recuperem el valor de localStorage
+        const authenticatedTourId = localStorage.getItem('authenticatedTourId');
 
         if (!authenticatedTourId) {
             this.router.navigate(['/login']);

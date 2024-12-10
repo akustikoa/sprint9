@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Tour, User } from '../models'; // Importa Tour i User des de models/index.ts
-import Dia from '../models/dia'; // Si Dia no està al fitxer index.ts, mantén aquest import
+import { Tour, User } from '../models';
+import Dia from '../models/dia';
 
 
 
@@ -9,21 +9,21 @@ export const verifyUserTourPassword = async (req: Request, res: Response): Promi
     const { email, password } = req.body;
 
     try {
-        // 1. Verificar si l'usuari existeix
+        // Existeix usuasi?
         const user = await User.findOne({ where: { email } });
         if (!user) {
             res.status(404).json({ msg: 'Usuari no trobat' });
             return;
         }
 
-        // 2. Verificar si l'usuari està associat amb un tour
+        // usuari associat en un tour?
         const tour = await Tour.findByPk(user.getDataValue('id_tour'));
         if (!tour) {
             res.status(404).json({ msg: 'Tour no trobat per aquest usuari' });
             return;
         }
 
-        // 3. Verificar si la contrasenya és correcta
+        // Contrasenya correcta?
         if (tour.getDataValue('password') === password) {
             res.json({ valid: true, id_tour: tour.getDataValue('id_tour') });
         } else {
@@ -81,38 +81,28 @@ export const updateFullTour = async (req: Request, res: Response): Promise<void>
     const { tour, days, users } = req.body;
 
     try {
-        // 1. Verificar si el tour existeix
         const existingTour = await Tour.findByPk(id);
         if (!existingTour) {
             res.status(404).json({ msg: `No s'ha trobat cap tour amb l'id ${id}` });
             return;
         }
 
-        // 2. Actualitzar el tour
         await existingTour.update(tour);
-        console.log(`Tour amb id ${id} actualitzat correctament.`);
 
-        // 3. Actualitzar els dies
         await Dia.destroy({ where: { id_tour: id } });
-        console.log(`Tots els dies associats al tour amb id ${id} eliminats.`);
         if (days && Array.isArray(days) && days.length > 0) {
             for (const day of days) {
                 await Dia.create({ ...day, id_tour: id });
             }
-            console.log(`S'han creat ${days.length} dies nous per al tour amb id ${id}.`);
         }
 
-        // 4. Actualitzar els usuaris
         await User.destroy({ where: { id_tour: id } });
-        console.log(`Tots els usuaris associats al tour amb id ${id} eliminats.`);
         if (users && Array.isArray(users) && users.length > 0) {
             for (const user of users) {
                 await User.create({ ...user, id_tour: id });
             }
-            console.log(`S'han creat ${users.length} usuaris nous per al tour amb id ${id}.`);
         }
 
-        // 5. Retornar la resposta
         res.status(200).json({ msg: `Tour amb id ${id} actualitzat correctament` });
     } catch (error) {
         console.error('Error actualitzant el tour', error);
@@ -120,31 +110,23 @@ export const updateFullTour = async (req: Request, res: Response): Promise<void>
     }
 };
 
-//ELIMINAR tour
+//ELIMINAR tour complet
 export const deleteFullTour = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
     try {
-        // Verificar si el tour existeix abans d'intentar eliminar res
         const existingTour = await Tour.findByPk(id);
         if (!existingTour) {
             res.status(404).json({ msg: `No s'ha trobat el tour amb l'id ${id}` });
             return;
         }
 
-        // Eliminar els dies associats al tour
         const deletedDays = await Dia.destroy({ where: { id_tour: id } });
-        console.log(`Dies eliminats: ${deletedDays}`);
-
-        // Eliminar els usuaris associats al tour
         const deletedUsers = await User.destroy({ where: { id_tour: id } });
-        console.log(`Usuaris eliminats: ${deletedUsers}`);
 
-        // Finalment, eliminar el tour
         await existingTour.destroy();
         res.status(200).json({ msg: `Tour amb l'id ${id} eliminat correctament` });
     } catch (error) {
-        console.error('Error eliminant el tour', error);
         res.status(500).json({ msg: 'Error del servidor. Si us plau, intenta-ho més tard.' });
     }
 };
@@ -204,6 +186,7 @@ export const deleteTour = async (req: Request, res: Response) => {
     }
 };
 
+
 //ADMIN FORM
 //Retornem dies i usuaris associats a un Tour
 
@@ -213,8 +196,8 @@ export const getTourWithDetails = async (req: Request, res: Response): Promise<v
     try {
         const tour = await Tour.findByPk(id, {
             include: [
-                { model: Dia, as: 'days' }, // Incloure la relació amb Dia
-                { model: User, as: 'users' }, // Incloure la relació amb User
+                { model: Dia, as: 'days' },
+                { model: User, as: 'users' },
             ],
         });
 
@@ -237,7 +220,6 @@ export const getTourWithDetails = async (req: Request, res: Response): Promise<v
 
         res.json(payload);
     } catch (error) {
-        console.error('Error obtenint el tour:', error);
         res.status(500).json({ msg: 'Error del servidor' });
     }
 };

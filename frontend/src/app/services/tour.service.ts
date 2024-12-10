@@ -55,12 +55,10 @@ export class TourService {
         this.http.post(`${this.apiUrl}/create-full-tour`, tourData).subscribe({
             next: () => {
                 this.isLoading.set(false);
-                console.log('Tour creat amb èxit!');
             },
             error: (error) => {
                 this.isLoading.set(false);
                 this.errorMessage.set('Hi ha hagut un error en crear el tour.');
-                console.error('Error creant el tour:', error);
             },
         });
     }
@@ -72,12 +70,10 @@ export class TourService {
         this.http.put(`${this.apiUrl}/update-full-tour/${tourId}`, tourData).subscribe({
             next: () => {
                 this.isLoading.set(false);
-                console.log('Tour actualitzat amb èxit!');
             },
             error: (error) => {
                 this.isLoading.set(false);
                 this.errorMessage.set('Hi ha hagut un error en actualitzar el tour.');
-                console.error('Error actualitzant el tour:', error);
             },
         });
     }
