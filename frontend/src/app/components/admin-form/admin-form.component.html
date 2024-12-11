@@ -74,6 +74,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="text-end mt-3">
+                        <button type="button" class="btn btn-danger" (click)="deleteDay(days.controls.indexOf(day))">
+                            Eliminar Dia
+                        </button>
+                    </div>
                 </div>
             </div>
             }
@@ -93,19 +98,29 @@
                 <div formArrayName="users">
                     @for (user of users.controls; track user.value.email) {
                     <div [formGroupName]="users.controls.indexOf(user)" class="mb-3">
+                        <!-- Label a la part superior -->
                         <label for="email_{{ users.controls.indexOf(user) }}" class="form-label">Email Usuari {{
                             users.controls.indexOf(user) + 1 }}:</label>
-                        <input type="email" id="email_{{ users.controls.indexOf(user) }}" formControlName="email"
-                            class="form-control" />
+                        <!-- Contenidor per a l'input i el botó alineats a la mateixa línia -->
+                        <div class="d-flex align-items-center">
+                            <!-- Input -->
+                            <input type="email" id="email_{{ users.controls.indexOf(user) }}" formControlName="email"
+                                class="form-control me-2" />
+                            <!-- Botó d'eliminar -->
+                            <button type="button" class="btn btn-danger text-nowrap"
+                                (click)="deleteUser(users.controls.indexOf(user))">
+                                Eliminar Usuari
+                            </button>
+                        </div>
                     </div>
                     }
                 </div>
+
+
                 <!-- Botó per afegir més usuaris -->
                 <button type="button" class="btn btn-secondary mt-3" (click)="addUser()">Afegir Usuari</button>
             </div>
         </div>
-
-
 
         <!-- Botó de Submit -->
         <button type="submit" class="btn btn-danger mt-4 mb-5" [disabled]="!adminForm.valid">

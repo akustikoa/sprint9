@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import tourRoutes from '../routes/tour';
-import diaRoutes from '../routes/dia';
+// import diaRoutes from '../routes/dia';
 import './index'; //inicialitza relacions i models
 import db from '../db/connection';
 
@@ -28,7 +28,7 @@ class Server {
     }
     routes() {
         this.app.use('/api/tours', tourRoutes);
-        this.app.use('/api/days', diaRoutes);
+        // this.app.use('/api/days', diaRoutes);
 
     }
 
@@ -52,7 +52,7 @@ class Server {
 export default Server;
 
 
-//CODI PER XARXA LOCAL MIRAR MOVIL
+//CODI PER XARXA LOCAL (MOVIL-CLIENT)
 // import express, { Application } from 'express';
 // import cors from 'cors';
 // import dotenv from 'dotenv';

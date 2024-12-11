@@ -135,6 +135,23 @@ export class AdminFormComponent implements OnInit {
     });
   }
 
+  deleteDay(index: number): void {
+    const confirmDelete = confirm('Estàs segur que vols eliminar aquest dia?');
+    if (confirmDelete) {
+      this.days.removeAt(index);
+      this.onSubmit(); // Reutilitza la funció ja creada per enviar els canvis
+    }
+  }
+
+  deleteUser(index: number): void {
+    const confirmDelete = confirm('Estàs segur que vols eliminar aquest usuari?');
+    if (confirmDelete) {
+      this.users.removeAt(index);
+      this.onSubmit(); // Reutilitza la funció ja creada per enviar els canvis
+    }
+  }
+
+
 
   onSubmit(): void {
     if (this.adminForm.valid) {
