@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TourService } from '../../services/tour.service';
 
@@ -11,10 +11,18 @@ import { TourService } from '../../services/tour.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+  isMobile: boolean = false;
+
   constructor(private tourService: TourService) { }
 
-
+  @HostListener('window:resize', [])
+  onResize(): void {
+    this.isMobile = window.innerWidth < 992; // Actualitza isMobile en redimensionar
+  }
+  ngOnInit() {
+    this.isMobile = window.innerWidth < 992; // Inicialitza isMobile
+  }
 
   onLogout(): void {
     this.tourService.logout();

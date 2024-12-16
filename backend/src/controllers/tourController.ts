@@ -37,7 +37,7 @@ export const verifyUserTourPassword = async (req: Request, res: Response): Promi
 
 
 //TOURS COMPLETS
-//CREAR tour complet
+//CREAR 
 export const createFullTour = async (req: Request, res: Response): Promise<void> => {
     const { tour, days, users } = req.body;
 
@@ -74,7 +74,7 @@ export const createFullTour = async (req: Request, res: Response): Promise<void>
 };
 
 
-// MOFIFICAR tour complet
+// MOFIFICAR
 export const updateFullTour = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     const { tour, days, users } = req.body;
@@ -109,7 +109,7 @@ export const updateFullTour = async (req: Request, res: Response): Promise<void>
     }
 };
 
-//ELIMINAR tour complet
+//ELIMINAR 
 export const deleteFullTour = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 

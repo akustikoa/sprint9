@@ -5,7 +5,7 @@
                 <img src="assets/bikecat_logo.png" class="logo mb-2">
             </a>
 
-            <!-- Hamburguesa -->
+            <!-- Botó Hamburguesa -->
             <button class="navbar-toggler text-bg-light opacity-75" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -16,15 +16,18 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link text-light text-opacity-75 fs-6" [routerLink]="['/days']"
-                            data-bs-toggle="collapse" data-bs-target="#navbarNav">CYCLING STAGES</a>
+                            [attr.data-bs-toggle]="isMobile ? 'collapse' : null"
+                            [attr.data-bs-target]="isMobile ? '#navbarNav' : null">CYCLING STAGES</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light text-opacity-75 fs-6" [routerLink]="['/discover']"
-                            data-bs-toggle="collapse" data-bs-target="#navbarNav">DISCOVER</a>
+                            [attr.data-bs-toggle]="isMobile ? 'collapse' : null"
+                            [attr.data-bs-target]="isMobile ? '#navbarNav' : null">DISCOVER</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light text-opacity-75 fs-6" [routerLink]="['/contact']"
-                            data-bs-toggle="collapse" data-bs-target="#navbarNav">CONTACT</a>
+                            [attr.data-bs-toggle]="isMobile ? 'collapse' : null"
+                            [attr.data-bs-target]="isMobile ? '#navbarNav' : null">CONTACT</a>
                     </li>
                     <li class="nav-item d-flex align-items-center ms-lg-2">
                         <button class="btn btn-danger btn-sm" (click)="onLogout()">Log Out</button>
