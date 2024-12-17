@@ -1,15 +1,7 @@
 import { Router } from 'express';
 import {
-    getTours,
-    getTour,
-    createTour,
-    updateTour,
-    deleteTour,
-    verifyUserTourPassword,
-    createFullTour,
-    updateFullTour,
-    deleteFullTour,
-    getTourWithDetails
+    getTours, getTour, createTour, updateTour, deleteTour, verifyUserTourPassword, createFullTour,
+    updateFullTour, deleteFullTour, getTourWithDetails
 } from '../controllers/tourController';
 
 const tourRouter = Router();

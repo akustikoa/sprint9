@@ -1,9 +1,12 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+
 import tourRoutes from '../routes/tour';
 import diaRoutes from '../routes/dia';
-import './index'; //inicialitza relacions i models
+import uploadRoutes from '../routes/upload'; // Importa la ruta d'upload
+import './index'; // Inicialitza relacions i models
 import db from '../db/connection';
 
 dotenv.config();
@@ -26,15 +29,19 @@ class Server {
             console.log(`Servidor corrent en el port ${this.port}`);
         });
     }
-    routes() {
-        this.app.use('/api/tours', tourRoutes);
-        this.app.use('/api/days', diaRoutes);
-
-    }
 
     middlewares() {
         this.app.use(express.json());
         this.app.use(cors());
+
+        // Servir fitxers estàtics des de public/assets
+        this.app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
+    }
+
+    routes() {
+        this.app.use('/api/tours', tourRoutes);
+        this.app.use('/api/days', diaRoutes);
+        this.app.use('/api', uploadRoutes); // Afegim la nova ruta d'upload
     }
 
     async dbConnect() {
@@ -50,6 +57,7 @@ class Server {
 }
 
 export default Server;
+
 
 
 //CODI PER XARXA LOCAL (MOVIL-CLIENT)
