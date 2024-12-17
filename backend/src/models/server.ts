@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
+import * as path from 'path';
 
 import tourRoutes from '../routes/tour';
 import diaRoutes from '../routes/dia';
@@ -31,11 +31,18 @@ class Server {
     }
 
     middlewares() {
-        this.app.use(express.json());
-        this.app.use(cors());
 
-        // Servir fitxers estàtics des de public/assets
-        this.app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
+        this.app.use(express.json());
+        // Configuració CORS (per a proves)
+        this.app.use(cors());
+        // Middleware per servir arxius estàtics des de /public/assets
+        const assetsPath = path.join(process.cwd(), 'public', 'assets');
+        console.log(`Ruta absoluta a assets: ${assetsPath}`); // Log de la ruta absoluta corregida
+
+        this.app.use('/assets', (req, res, next) => {
+            // console.log(`Sol·licitud a /assets: ${req.url}`);
+            next();
+        }, express.static(assetsPath));
     }
 
     routes() {
@@ -57,6 +64,8 @@ class Server {
 }
 
 export default Server;
+
+
 
 
 

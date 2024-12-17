@@ -82,6 +82,18 @@ export class TourService {
         return this.http.delete<void>(`${this.apiUrl}/delete-full-tour/${tourId}`);
     }
 
+    // Pujar imatges al backend
+    uploadImage(file: File): Observable<{ url: string }> {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return this.http.post<{ url: string }>(
+            'http://localhost:3001/api/upload',
+            formData
+        );
+    }
+
+
 
     //HOME
 

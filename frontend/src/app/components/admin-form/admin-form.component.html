@@ -13,7 +13,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="imatge_tour" class="form-label">Imatge del Tour:</label>
-                    <input type="text" id="imatge_tour" formControlName="imatge_tour" class="form-control" />
+                    <input type="file" id="imatge_tour" class="form-control"
+                        (change)="onFileSelected($event, 'tour')" />
                 </div>
                 <div class="row">
                     <div class="col-md-4 mb-3">
@@ -57,7 +58,8 @@
                                 <input type="text" formControlName="titol_etapa" class="form-control mb-3" />
 
                                 <label class="form-label">Imatge de l'Etapa:</label>
-                                <input type="text" formControlName="imatge_etapa" class="form-control mb-3" />
+                                <input type="file" class="form-control mb-3"
+                                    (change)="onFileSelected($event, 'day', days.controls.indexOf(day))" />
                             </div>
 
                             <!-- Segona columna -->

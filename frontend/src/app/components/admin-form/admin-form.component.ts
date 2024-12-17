@@ -151,6 +151,33 @@ export class AdminFormComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: Event, type: 'tour' | 'day', index?: number): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+
+      // Mostra la càrrega al servei
+      this.tourService.uploadImage(file).subscribe({
+        next: (response) => {
+          const imageUrl = response.url;
+
+          if (type === 'tour') {
+            // Actualitza el camp de la imatge del tour
+            this.adminForm.patchValue({ imatge_tour: imageUrl });
+          } else if (type === 'day' && index !== undefined) {
+            // Actualitza el camp de la imatge de l'etapa específica
+            this.days.at(index).patchValue({ imatge_etapa: imageUrl });
+          }
+        },
+        error: (err) => {
+          console.error('Error pujant la imatge:', err);
+          alert('Hi ha hagut un error en pujar la imatge.');
+        },
+      });
+    }
+  }
+
 
 
   onSubmit(): void {
