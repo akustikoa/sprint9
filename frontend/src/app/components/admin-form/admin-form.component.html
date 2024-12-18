@@ -11,10 +11,20 @@
                     <label for="nom_tour" class="form-label">Nom del Tour:</label>
                     <input type="text" id="nom_tour" formControlName="nom_tour" class="form-control" />
                 </div>
-                <div class="mb-3">
-                    <label for="imatge_tour" class="form-label">Imatge del Tour:</label>
-                    <input type="file" id="imatge_tour" class="form-control"
-                        (change)="onFileSelected($event, 'tour')" />
+                <div class="row d-flex align-items-end">
+
+                    <div class="col-md-9 mb-3 ">
+                        <label for="imatge_tour" class="form-label">Imatge del Tour:</label>
+                        <input type="file" id="imatge_tour" class="form-control"
+                            (change)="onFileSelected($event, 'tour')" />
+                    </div>
+                    <!-- Previsualització -->
+                    <div class="col-md-3">
+                        @if (adminForm.get('imatge_tour')?.value) {
+                        <img [src]="'http://localhost:3001' + adminForm.get('imatge_tour')?.value" alt="Imatge del Tour"
+                            class="img-thumbnail mb-3" style="max-width: 200px;" />
+                        }
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 mb-3">
@@ -41,7 +51,7 @@
             @for (day of days.controls; track day.value.numero_dia) {
             <div class="card mb-5 shadow-sm">
                 <div class="card-header bg-dark text-white">
-                    <h4 class="mb-0">Dia {{ day.value.numero_dia }}</h4>
+                    <h4 class="mb-0">Etapa {{ day.value.numero_dia }}</h4>
                 </div>
                 <div class="card-body">
                     <div [formGroupName]="days.controls.indexOf(day)">
@@ -51,7 +61,7 @@
                                 <label class="form-label">Número de Dia:</label>
                                 <input type="text" formControlName="numero_dia" class="form-control mb-3" />
 
-                                <label class="form-label">Data del Dia:</label>
+                                <label class="form-label">Data de l'etapa:</label>
                                 <input type="text" formControlName="data_dia" class="form-control mb-3" />
 
                                 <label class="form-label">Títol de l'Etapa:</label>
@@ -60,6 +70,14 @@
                                 <label class="form-label">Imatge de l'Etapa:</label>
                                 <input type="file" class="form-control mb-3"
                                     (change)="onFileSelected($event, 'day', days.controls.indexOf(day))" />
+                                <!-- Previsualització -->
+                                <div>
+                                    @if (day.get('imatge_etapa')?.value) {
+                                    <img [src]="'http://localhost:3001' + day.get('imatge_etapa')?.value"
+                                        alt="Imatge de l'Etapa" class="img-thumbnail mb-3" style="max-width: 200px;" />
+                                    }
+                                </div>
+
                             </div>
 
                             <!-- Segona columna -->
