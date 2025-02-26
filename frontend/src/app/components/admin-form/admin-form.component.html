@@ -50,59 +50,74 @@
         <div formArrayName="days">
             @for (day of days.controls; track day.value.numero_dia) {
             <div class="card mb-5 shadow-sm">
-                <div class="card-header bg-dark text-white">
+                <!-- 🔹 Header amb botó per desplegar -->
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                     <h4 class="mb-0">Etapa {{ day.value.numero_dia }}</h4>
+                    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#etapa' + days.controls.indexOf(day)">
+                        <i class="bi bi-chevron-down"></i> Editar
+                    </button>
+
+
                 </div>
-                <div class="card-body">
-                    <div [formGroupName]="days.controls.indexOf(day)">
-                        <div class="row">
-                            <!-- Primera columna -->
-                            <div class="col-md-6">
-                                <label class="form-label">Número de Dia:</label>
-                                <input type="text" formControlName="numero_dia" class="form-control mb-3" />
 
-                                <label class="form-label">Data de l'etapa:</label>
-                                <input type="text" formControlName="data_dia" class="form-control mb-3" />
+                <!-- 🔹 Contingut desplegable -->
+                <div id="etapa{{ days.controls.indexOf(day) }}" class="collapse">
+                    <div class="card-body">
+                        <div [formGroupName]="days.controls.indexOf(day)">
+                            <div class="row">
+                                <!-- Primera columna -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Número de Dia:</label>
+                                    <input type="text" formControlName="numero_dia" class="form-control mb-3" />
 
-                                <label class="form-label">Títol de l'Etapa:</label>
-                                <input type="text" formControlName="titol_etapa" class="form-control mb-3" />
+                                    <label class="form-label">Data de l'etapa:</label>
+                                    <input type="text" formControlName="data_dia" class="form-control mb-3" />
 
-                                <label class="form-label">Imatge de l'Etapa:</label>
-                                <input type="file" class="form-control mb-3"
-                                    (change)="onFileSelected($event, 'day', days.controls.indexOf(day))" />
-                                <!-- Previsualització -->
-                                <div>
-                                    @if (day.get('imatge_etapa')?.value) {
-                                    <img [src]="'http://localhost:3001' + day.get('imatge_etapa')?.value"
-                                        alt="Imatge de l'Etapa" class="img-thumbnail mb-3" style="max-width: 200px;" />
-                                    }
+                                    <label class="form-label">Títol de l'Etapa:</label>
+                                    <input type="text" formControlName="titol_etapa" class="form-control mb-3" />
+
+                                    <label class="form-label">Imatge de l'Etapa:</label>
+                                    <input type="file" class="form-control mb-3"
+                                        (change)="onFileSelected($event, 'day', days.controls.indexOf(day))" />
+                                    <!-- Previsualització -->
+                                    <div>
+                                        @if (day.get('imatge_etapa')?.value) {
+                                        <img [src]="'http://localhost:3001' + day.get('imatge_etapa')?.value"
+                                            alt="Imatge de l'Etapa" class="img-thumbnail mb-3"
+                                            style="max-width: 200px;" />
+                                        }
+                                    </div>
                                 </div>
 
-                            </div>
+                                <!-- Segona columna -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Descripció:</label>
+                                    <textarea formControlName="descripcio" class="form-control mb-3"
+                                        rows="4"></textarea>
 
-                            <!-- Segona columna -->
-                            <div class="col-md-6">
+                                    <label class="form-label">Coordenades Inici:</label>
+                                    <input type="text" formControlName="coordenades_inici" class="form-control mb-3" />
 
-                                <label class="form-label">Descripció:</label>
-                                <textarea formControlName="descripcio" class="form-control mb-3" rows="4"></textarea>
-
-                                <label class="form-label">Coordenades Inici:</label>
-                                <input type="text" formControlName="coordenades_inici" class="form-control mb-3" />
-
-                                <label class="form-label">Coordenades Final:</label>
-                                <input type="text" formControlName="coordenades_final" class="form-control" />
+                                    <label class="form-label">Coordenades Final:</label>
+                                    <input type="text" formControlName="coordenades_final" class="form-control" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-end mt-3">
-                        <button type="button" class="btn btn-danger" (click)="deleteDay(days.controls.indexOf(day))">
-                            Eliminar Dia
-                        </button>
+
+                        <!-- Botó d'eliminar dia -->
+                        <div class="text-end mt-3">
+                            <button type="button" class="btn btn-danger"
+                                (click)="deleteDay(days.controls.indexOf(day))">
+                                Eliminar Dia
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
             }
         </div>
+
 
         <!-- Botó per afegir més dies -->
         <div class="text-center">

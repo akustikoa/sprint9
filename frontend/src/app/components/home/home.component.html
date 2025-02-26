@@ -2,9 +2,8 @@
     @if (selectedTour()) {
     <div class="container text-start my-3">
         <div class="responsive-title">
-            <h4 class="d-inline">{{ selectedTour()!.nom_tour }}</h4>
-
-            <h6 class="d-inline ms-2">{{ selectedTour()!.data_inici }} – {{ selectedTour()!.data_final }}</h6>
+            <h4 class="d-inline fw-bold">{{ selectedTour()!.nom_tour }}</h4><br>
+            <h6 class="d-inline">{{ selectedTour()!.data_inici }} – {{ selectedTour()!.data_final }}</h6>
         </div>
     </div>
 

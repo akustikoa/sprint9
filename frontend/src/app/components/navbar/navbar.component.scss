@@ -16,3 +16,8 @@
 .navbar-toggler:focus {
   box-shadow: none;
 }
+@media (max-width: 767.98px) {
+  .navbar {
+    padding-bottom: 18px;
+  }
+}
