@@ -5,7 +5,7 @@ import * as path from 'path';
 
 import tourRoutes from '../routes/tour';
 import diaRoutes from '../routes/dia';
-import uploadRoutes from '../routes/upload'; // Importa la ruta d'upload
+import uploadRoutes from '../routes/upload';
 import './index'; // Inicialitza relacions i models
 import db from '../db/connection';
 
@@ -33,14 +33,12 @@ class Server {
     middlewares() {
 
         this.app.use(express.json());
-        // Configuració CORS (per a proves)
         this.app.use(cors());
-        // Middleware per servir arxius estàtics des de /public/assets
+        //per a arxius estàtics des de /public/assets
         const assetsPath = path.join(process.cwd(), 'public', 'assets');
-        console.log(`Ruta absoluta a assets: ${assetsPath}`); // Log de la ruta absoluta corregida
+
 
         this.app.use('/assets', (req, res, next) => {
-            // console.log(`Sol·licitud a /assets: ${req.url}`);
             next();
         }, express.static(assetsPath));
     }
@@ -48,7 +46,7 @@ class Server {
     routes() {
         this.app.use('/api/tours', tourRoutes);
         this.app.use('/api/days', diaRoutes);
-        this.app.use('/api', uploadRoutes); // Afegim la nova ruta d'upload
+        this.app.use('/api', uploadRoutes);
     }
 
     async dbConnect() {
