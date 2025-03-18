@@ -26,7 +26,7 @@ export class TourService {
 
 
 
-    // LOGIN
+    // LOGIN (enviem al backend)
 
     verifyUserTour(email: string, password: string) {
         return this.http.post<{ valid: boolean; id_tour: number }>(`${this.apiUrl}/verify-user-tour`, { email, password });

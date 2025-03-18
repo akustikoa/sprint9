@@ -36,7 +36,7 @@ class Server {
         this.app.use(cors());
         //per a arxius estàtics des de /public/assets
         const assetsPath = path.join(process.cwd(), 'public', 'assets');
-
+        
 
         this.app.use('/assets', (req, res, next) => {
             next();
