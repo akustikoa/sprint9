@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '../db/connection';
+import Tour from './tour';
 
 class User extends Model {
     public id_user!: number;

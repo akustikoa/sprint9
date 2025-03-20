@@ -3,6 +3,8 @@ import db from '../db/connection';
 import Dia from './dia';
 import User from './user';
 
+
+
 class Tour extends Model {
     public id_tour!: number;
     public nom_tour!: string;
@@ -52,6 +54,9 @@ Tour.init(
 );
 
 export default Tour;
+
+
+
 
 
 

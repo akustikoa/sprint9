@@ -17,6 +17,10 @@
   content: "|"; /* Afegim el separador */
   margin-left: 10px;
 }
+.btn-red {
+  background-color: #d93536 !important;
+  color: white;
+}
 
 /* Estil per a pantalles petites */
 @media (max-width: 768px) {

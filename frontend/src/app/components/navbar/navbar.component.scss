@@ -16,6 +16,20 @@
 .navbar-toggler:focus {
   box-shadow: none;
 }
+.btn-log {
+  background-color: #d93536 !important;
+  color: white;
+}
+.btn-altura {
+  margin-top: 7px;
+}
+
+.btn-log:hover {
+  background-color: darken(#d93536, 10%) !important;
+  color: white;
+  
+}
+
 @media (max-width: 767.98px) {
   .navbar {
     padding-bottom: 18px;

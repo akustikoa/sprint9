@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '../db/connection';
+import Tour from './tour';
 
 class Dia extends Model {
     public id_dia!: number;
@@ -43,4 +44,6 @@ Dia.init(
 );
 
 export default Dia;
+
+
 
