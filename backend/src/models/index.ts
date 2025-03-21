@@ -5,7 +5,7 @@ import Dia from './dia';
 import Hotel from './hotel';
 import Location from './location'
 
-// Defineix les relacions
+// Definim les relacions
 Tour.hasMany(Dia, { foreignKey: 'id_tour', as: 'days' });
 Tour.hasMany(User, { foreignKey: 'id_tour', as: 'users' });
 Tour.hasMany(Hotel, { foreignKey: 'id_tour', as: 'hotels' });
@@ -17,3 +17,5 @@ Hotel.belongsTo(Tour, { foreignKey: 'id_tour' });
 Location.belongsTo(Tour, { foreignKey: 'id_tour' });
 
 export { db, Dia, User, Tour, Hotel, Location };
+
+

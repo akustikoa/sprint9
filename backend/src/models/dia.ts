@@ -31,6 +31,7 @@ Dia.init(
         descripcio: DataTypes.TEXT,
         coordenades_inici: DataTypes.STRING,
         coordenades_final: DataTypes.STRING,
+        
         id_tour: {
             type: DataTypes.INTEGER,
             allowNull: false,
