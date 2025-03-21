@@ -12,7 +12,7 @@ export const getLocationByTour = async (req: Request, res: Response) => {
     }
 };
 
-export const crateLocation = async (req: Request, res: Response) => {
+export const createLocation = async (req: Request, res: Response) => {
     try {
         const location = await Location.create(req.body);
         res.json({ message: 'Location created successfully', location });

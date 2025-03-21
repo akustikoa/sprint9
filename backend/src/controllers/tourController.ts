@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { Tour, User } from '../models';
 import Dia from '../models/dia';
+import Hotel from '../models/hotel';
+import Location from '../models/location';
 
 
 
@@ -197,6 +199,8 @@ export const getTourWithDetails = async (req: Request, res: Response): Promise<v
             include: [
                 { model: Dia, as: 'days' },
                 { model: User, as: 'users' },
+                { model: Hotel, as: 'hotels' },
+                { model: Location, as: 'locations' },
             ],
         });
 
@@ -213,12 +217,15 @@ export const getTourWithDetails = async (req: Request, res: Response): Promise<v
                 data_final: tour.data_final,
                 password: tour.password,
             },
-            days: tour.days, // Incloure els dies
-            users: tour.users, // Incloure els usuaris
+            days: tour.days,
+            users: tour.users,
+            hotels: tour.hotels,
+            locations: tour.locations,
         };
 
         res.json(payload);
     } catch (error) {
+        console.error('Error al carregar el tour complet:', error);
         res.status(500).json({ msg: 'Error del servidor' });
     }
 };

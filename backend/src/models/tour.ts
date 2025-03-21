@@ -2,7 +2,8 @@ import { DataTypes, Model } from 'sequelize';
 import db from '../db/connection';
 import Dia from './dia';
 import User from './user';
-
+import Hotel from './hotel';
+import Location from './location';
 
 
 class Tour extends Model {
@@ -13,9 +14,11 @@ class Tour extends Model {
     public data_final!: string;
     public password!: string;
 
-    // Relacions opcionals
-    public days?: Dia[]; // Associació amb la taula days
-    public users?: User[]; // Associació amb la taula users
+    //Associacions amb les taules 
+    public days?: Dia[];
+    public users?: User[];
+    public hotels?: Hotel[];
+    public locations?: Location[];
 }
 
 Tour.init(

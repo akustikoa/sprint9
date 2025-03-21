@@ -5,7 +5,10 @@ import * as path from 'path';
 
 import tourRoutes from '../routes/tour';
 import diaRoutes from '../routes/dia';
+import hotelRoutes from '../routes/hotel';
+import locationRoutes from '../routes/hotel';
 import uploadRoutes from '../routes/upload';
+
 import './index'; // Inicialitza relacions i models
 import db from '../db/connection';
 
@@ -36,7 +39,7 @@ class Server {
         this.app.use(cors());
         //per a arxius estàtics des de /public/assets
         const assetsPath = path.join(process.cwd(), 'public', 'assets');
-        
+
 
         this.app.use('/assets', (req, res, next) => {
             next();
@@ -47,6 +50,8 @@ class Server {
         this.app.use('/api/tours', tourRoutes);
         this.app.use('/api/days', diaRoutes);
         this.app.use('/api', uploadRoutes);
+        this.app.use('/api/hotels', hotelRoutes);
+        this.app.use('/api/locations', locationRoutes);
     }
 
     async dbConnect() {
