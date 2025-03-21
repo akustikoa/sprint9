@@ -79,7 +79,7 @@ export const createFullTour = async (req: Request, res: Response): Promise<void>
 // MOFIFICAR
 export const updateFullTour = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const { tour, days, users } = req.body;
+    const { tour, days, users, hotels, locations } = req.body;
 
     try {
         const existingTour = await Tour.findByPk(id);
@@ -87,9 +87,10 @@ export const updateFullTour = async (req: Request, res: Response): Promise<void>
             res.status(404).json({ msg: `No s'ha trobat cap tour amb l'id ${id}` });
             return;
         }
-
+        //------------------------------Actualitza dades del tour--------------
         await existingTour.update(tour);
 
+        //------------------------------Dies-----------------------------------
         await Dia.destroy({ where: { id_tour: id } });
         if (days && Array.isArray(days) && days.length > 0) {
             for (const day of days) {
@@ -97,10 +98,27 @@ export const updateFullTour = async (req: Request, res: Response): Promise<void>
             }
         }
 
+        //------------------------------Usuaris-----------------------------------
         await User.destroy({ where: { id_tour: id } });
         if (users && Array.isArray(users) && users.length > 0) {
             for (const user of users) {
                 await User.create({ ...user, id_tour: id });
+            }
+        }
+
+        //------------------------------Hotels-----------------------------------
+        await Hotel.destroy({ where: { id_tour: id } });
+        if (hotels && Array.isArray(hotels) && hotels.length > 0) {
+            for (const hotel of hotels) {
+                await Hotel.create({ ...hotel, id_tour: id });
+            }
+        }
+
+        //------------------------------Localitzacions----------------------------
+        await Location.destroy({ where: { id_tour: id } });
+        if (locations && Array.isArray(locations) && locations.length > 0) {
+            for (const location of locations) {
+                await Location.create({ ...location, id_tour: id });
             }
         }
 
