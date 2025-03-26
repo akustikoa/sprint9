@@ -1,10 +1,10 @@
 <div class="container mt-4">
     <h2 class="mb-5">Gestió de {{adminForm.get('nom_tour')?.value }} </h2>
     <form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
-        <!-- Camps de la taula tours -->
+        <!-- ---------------------------------------------------- TOURS ----------------------------------------------- -->
         <div class="card shadow-sm">
             <div class="card-header bg-dark text-white">
-                <h4 class="mb-0">Dades del Tour</h4>
+                <h4 class="mb-0">Dades del tour</h4>
             </div>
             <div class="card-body">
                 <div class="mb-3">
@@ -45,28 +45,26 @@
         </div>
 
 
-        <!-- Camps de la taula dies -->
-        <h3 class="text-center custom-mt mb-4">Gestió dels Dies</h3>
-        <div formArrayName="days">
-            @for (day of days.controls; track day.value.numero_dia) {
-            <div class="card mb-5 shadow-sm">
-                <!-- 🔹 Header amb botó per desplegar -->
-                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">Etapa {{ day.value.numero_dia }}</h4>
-                    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
-                        [attr.data-bs-target]="'#etapa' + days.controls.indexOf(day)">
-                        <i class="bi bi-chevron-down"></i> Editar
-                    </button>
+        <!-- ---------------------------------------------------- DIES ----------------------------------------------- -->
+        <!-- DIES -->
+        <div class="card my-5 shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h3 class="mb-0 text-center">Gestió dels dies</h3>
+            </div>
+            <div class="card-body hotel-body text-dark" formArrayName="days">
+                @for (day of days.controls; track day.value.numero_dia) {
+                <div class="card mb-4 mt-3 shadow-sm">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Etapa {{ day.value.numero_dia }}</h4>
+                        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#etapa' + days.controls.indexOf(day)">
+                            <i class="bi bi-chevron-down"></i> Editar
+                        </button>
+                    </div>
 
-
-                </div>
-
-                <!-- Contingut desplegable -->
-                <div id="etapa{{ days.controls.indexOf(day) }}" class="collapse">
-                    <div class="card-body">
-                        <div [formGroupName]="days.controls.indexOf(day)">
+                    <div [id]="'etapa' + days.controls.indexOf(day)" class="collapse">
+                        <div class="card-body" [formGroupName]="days.controls.indexOf(day)">
                             <div class="row">
-                                <!-- Primera columna -->
                                 <div class="col-md-6">
                                     <label class="form-label">Número de Dia:</label>
                                     <input type="text" formControlName="numero_dia" class="form-control mb-3" />
@@ -80,7 +78,7 @@
                                     <label class="form-label">Imatge de l'Etapa:</label>
                                     <input type="file" class="form-control mb-3"
                                         (change)="onFileSelected($event, 'day', days.controls.indexOf(day))" />
-                                    <!-- Previsualització -->
+
                                     <div>
                                         @if (day.get('imatge_etapa')?.value) {
                                         <img [src]="'http://localhost:3001' + day.get('imatge_etapa')?.value"
@@ -90,7 +88,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Segona columna -->
                                 <div class="col-md-6">
                                     <label class="form-label">Descripció:</label>
                                     <textarea formControlName="descripcio" class="form-control mb-3"
@@ -103,48 +100,45 @@
                                     <input type="text" formControlName="coordenades_final" class="form-control" />
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Botó d'eliminar dia -->
-                        <div class="text-end mt-3">
-                            <button type="button" class="btn btn-danger"
-                                (click)="deleteDay(days.controls.indexOf(day))">
-                                Eliminar Dia
-                            </button>
+                            <div class="text-end mt-3">
+                                <button type="button" class="btn btn-danger"
+                                    (click)="deleteDay(days.controls.indexOf(day))">
+                                    Eliminar dia
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                }
             </div>
-            }
+
+            <div class="bg-gray fons-gris_form p-3">
+                <button type="button" class="btn btn-secondary" (click)="addDay()">Afegir dia</button>
+            </div>
         </div>
 
 
-        <!-- Botó per afegir més dies -->
-        <div class="text-center">
-            <button type="button" class="btn btn-secondary mt-1 mb-4" (click)="addDay()">Afegir Dia</button>
-        </div>
 
-        <h3 class="text-center mt-5 mb-4">Gestió d'usuaris</h3>
-        <div class="card mb-4 shadow-sm">
+        <!-- ----------------------------------------------------USUARIS------------------------------------------------->
+
+
+        <div class="card my-5 shadow-sm">
             <div class="card-header bg-dark text-white">
-                <h4 class="mb-0">Llista d'Usuaris</h4>
+                <h4 class="mb-0">Llista d'usuaris</h4>
             </div>
             <div class="card-body">
                 <div formArrayName="users">
                     @for (user of users.controls; track user.value.email) {
                     <div [formGroupName]="users.controls.indexOf(user)" class="mb-3">
-                        <!-- Label a la part superior -->
                         <label for="email_{{ users.controls.indexOf(user) }}" class="form-label">Email Usuari {{
                             users.controls.indexOf(user) + 1 }}:</label>
-                        <!-- Contenidor per a l'input i el botó alineats a la mateixa línia -->
                         <div class="d-flex align-items-center">
-                            <!-- Input -->
                             <input type="email" id="email_{{ users.controls.indexOf(user) }}" formControlName="email"
                                 class="form-control me-2" />
-                            <!-- Botó d'eliminar -->
                             <button type="button" class="btn btn-danger text-nowrap"
                                 (click)="deleteUser(users.controls.indexOf(user))">
-                                Eliminar Usuari
+                                Eliminar usuari
                             </button>
                         </div>
                     </div>
@@ -153,144 +147,144 @@
 
 
                 <!-- Botó per afegir més usuaris -->
-                <button type="button" class="btn btn-secondary mt-3" (click)="addUser()">Afegir Usuari</button>
+                <button type="button" class="btn btn-secondary mt-3" (click)="addUser()">Afegir usuari</button>
             </div>
         </div>
 
-        <!-- HOTELS -->
-        <h3 class="text-center mt-5 mb-4">Gestió d'Hotels</h3>
-        <div formArrayName="hotels">
-            @for (hotel of hotels.controls; track hotel.value.nom_hotel) {
-            <div class="card mb-4 shadow-sm">
-                <!-- 🔹 Header amb botó per desplegar -->
-                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">Hotel {{ hotels.controls.indexOf(hotel) + 1 }}</h4>
-                    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
-                        [attr.data-bs-target]="'#hotel' + hotels.controls.indexOf(hotel)">
-                        <i class="bi bi-chevron-down"></i> Editar
-                    </button>
-                </div>
-
-                <!-- Contingut desplegable -->
-                <div [id]="'hotel' + hotels.controls.indexOf(hotel)" class="collapse">
-                    <div class="card-body" [formGroupName]="hotels.controls.indexOf(hotel)">
-                        <div class="row">
-                            <!-- Primera columna -->
-                            <div class="col-md-6">
-                                <label class="form-label">Nom de l'Hotel:</label>
-                                <input type="text" formControlName="nom_hotel" class="form-control mb-3" />
-
-                                <label class="form-label">Descripció:</label>
-                                <textarea formControlName="descripcio" class="form-control mb-3" rows="4"></textarea>
-
-                                <label class="form-label">Enllaç:</label>
-                                <input type="text" formControlName="enllac" class="form-control mb-3" />
-                            </div>
-
-                            <!-- Segona columna -->
-                            <div class="col-md-6">
-                                <label class="form-label">Nits:</label>
-                                <input type="number" formControlName="nits" class="form-control mb-3" />
-
-                                <label class="form-label">Imatge:</label>
-                                <input type="file" class="form-control mb-3"
-                                    (change)="onFileSelected($event, 'hotel', hotels.controls.indexOf(hotel))" />
-
-                                <!-- Previsualització -->
-                                <div>
-                                    @if (hotel.get('imatge_url')?.value) {
-                                    <img [src]="'http://localhost:3001' + hotel.get('imatge_url')?.value"
-                                        alt="Imatge de l'Hotel" class="img-thumbnail mb-3" style="max-width: 200px;" />
-                                    }
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Botó eliminar -->
-                        <div class="text-end mt-3">
-                            <button type="button" class="btn btn-danger"
-                                (click)="deleteHotel(hotels.controls.indexOf(hotel))">
-                                Eliminar Hotel
-                            </button>
-                        </div>
+        <!-- ---------------------------------------------------- HOTELS ----------------------------------------------- -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h3 class="mb-0 text-center">Gestió d'hotels</h3>
+            </div>
+            <div class="card-body hotel-body text-dark" formArrayName="hotels">
+                @for (hotel of hotels.controls; track hotel.value.nom_hotel) {
+                <div class="card mb-4 mt-3 shadow-sm">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Hotel {{ hotels.controls.indexOf(hotel) + 1 }}</h4>
+                        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#hotel' + hotels.controls.indexOf(hotel)">
+                            <i class="bi bi-chevron-down"></i> Editar
+                        </button>
                     </div>
-                </div>
-            </div>
-            }
-        </div>
 
-        <!-- Botó per afegir hotel -->
-        <div class="text-center mb-5">
-            <button type="button" class="btn btn-secondary" (click)="addHotel()">Afegir Hotel</button>
-        </div>
+                    <div [id]="'hotel' + hotels.controls.indexOf(hotel)" class="collapse">
+                        <div class="card-body" [formGroupName]="hotels.controls.indexOf(hotel)">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nom de l'Hotel:</label>
+                                    <input type="text" formControlName="nom_hotel" class="form-control mb-3" />
 
-        <!-- LOCATIONS -->
-        <!-- Gestió de Localitzacions -->
-        <h3 class="text-center mt-5 mb-4">Gestió de Localitzacions</h3>
-        <div formArrayName="locations">
-            @for (location of locations.controls; track location.value.nom_location) {
-            <div class="card mb-4 shadow-sm">
-                <!-- 🔹 Header amb botó per desplegar -->
-                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">Localització {{ locations.controls.indexOf(location) + 1 }}</h4>
-                    <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
-                        [attr.data-bs-target]="'#location' + locations.controls.indexOf(location)">
-                        <i class="bi bi-chevron-down"></i> Editar
-                    </button>
-                </div>
+                                    <label class="form-label">Descripció:</label>
+                                    <textarea formControlName="descripcio" class="form-control mb-3"
+                                        rows="4"></textarea>
 
-                <!-- Contingut desplegable -->
-                <div [id]="'location' + locations.controls.indexOf(location)" class="collapse">
-                    <div class="card-body" [formGroupName]="locations.controls.indexOf(location)">
-                        <div class="row">
-                            <!-- Columna esquerra -->
-                            <div class="col-md-6">
-                                <label class="form-label">Nom:</label>
-                                <input type="text" formControlName="nom_location" class="form-control mb-3" />
+                                    <label class="form-label">Enllaç:</label>
+                                    <input type="text" formControlName="enllac" class="form-control mb-3" />
+                                </div>
 
-                                <label class="form-label">Imatge:</label>
-                                <input type="file" class="form-control mb-3"
-                                    (change)="onFileSelected($event, 'location', locations.controls.indexOf(location))" />
+                                <div class="col-md-6">
+                                    <label class="form-label">Nits:</label>
+                                    <input type="number" formControlName="nits" class="form-control mb-3" />
 
-                                <!-- Previsualització -->
-                                <div>
-                                    @if (location.get('imatge_url')?.value) {
-                                    <img [src]="'http://localhost:3001' + location.get('imatge_url')?.value"
-                                        alt="Imatge de la Localització" class="img-thumbnail mb-3"
-                                        style="max-width: 200px;" />
-                                    }
+                                    <label class="form-label">Imatge:</label>
+                                    <input type="file" class="form-control mb-3"
+                                        (change)="onFileSelected($event, 'hotel', hotels.controls.indexOf(hotel))" />
+
+                                    <div>
+                                        @if (hotel.get('imatge_url')?.value) {
+                                        <img [src]="'http://localhost:3001' + hotel.get('imatge_url')?.value"
+                                            alt="Imatge de l'Hotel" class="img-thumbnail mb-3"
+                                            style="max-width: 200px;" />
+                                        }
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Columna dreta -->
-                            <div class="col-md-6">
-                                <label class="form-label">Descripció:</label>
-                                <textarea formControlName="descripcio" class="form-control mb-3" rows="5"></textarea>
+                            <div class="text-end mt-3">
+                                <button type="button" class="btn btn-danger"
+                                    (click)="deleteHotel(hotels.controls.indexOf(hotel))">
+                                    Eliminar hotel
+                                </button>
                             </div>
-                        </div>
-
-                        <!-- Botó eliminar -->
-                        <div class="text-end mt-3">
-                            <button type="button" class="btn btn-danger"
-                                (click)="deleteLocation(locations.controls.indexOf(location))">
-                                Eliminar Localització
-                            </button>
                         </div>
                     </div>
                 </div>
+                }
             </div>
-            }
+
+            <div class="bg-gray fons-gris_form p-3">
+                <button type="button" class="btn btn-secondary" (click)="addHotel()">Afegir hotel</button>
+            </div>
         </div>
 
-        <!-- Afegir Localització  -->
-        <div class="text-center mb-5">
-            <button type="button" class="btn btn-secondary" (click)="addLocation()">Afegir Localització</button>
+
+        <!-- ---------------------------------------------------- LOCALITZACIONS ----------------------------------------------- -->
+        <div class="card my-5 shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h3 class="mb-0 text-center">Gestió de localitzacions</h3>
+            </div>
+            <div class="card-body hotel-body text-dark" formArrayName="locations">
+                @for (location of locations.controls; track location.value.nom_location) {
+                <div class="card mb-4 mt-3 shadow-sm">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Localització {{ locations.controls.indexOf(location) + 1 }}</h4>
+                        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#location' + locations.controls.indexOf(location)">
+                            <i class="bi bi-chevron-down"></i> Editar
+                        </button>
+                    </div>
+
+                    <div [id]="'location' + locations.controls.indexOf(location)" class="collapse">
+                        <div class="card-body" [formGroupName]="locations.controls.indexOf(location)">
+                            <div class="row">
+                                <!-- Columna esquerra -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Nom:</label>
+                                    <input type="text" formControlName="nom_location" class="form-control mb-3" />
+
+                                    <label class="form-label">Imatge:</label>
+                                    <input type="file" class="form-control mb-3"
+                                        (change)="onFileSelected($event, 'location', locations.controls.indexOf(location))" />
+
+                                    <div>
+                                        @if (location.get('imatge_url')?.value) {
+                                        <img [src]="'http://localhost:3001' + location.get('imatge_url')?.value"
+                                            alt="Imatge de la Localització" class="img-thumbnail mb-3"
+                                            style="max-width: 200px;" />
+                                        }
+                                    </div>
+                                </div>
+
+                                <!-- Columna dreta -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Descripció:</label>
+                                    <textarea formControlName="descripcio" class="form-control mb-3"
+                                        rows="5"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="text-end mt-3">
+                                <button type="button" class="btn btn-danger"
+                                    (click)="deleteLocation(locations.controls.indexOf(location))">
+                                    Eliminar localització
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+
+            <div class="bg-gray fons-gris_form p-3">
+                <button type="button" class="btn btn-secondary" (click)="addLocation()">Afegir localització</button>
+            </div>
         </div>
+
 
 
         <!-- SUBMIT Actualitzar tour -->
         <button type="submit" class="btn btn-danger mt-4 mb-5" [disabled]="!adminForm.valid">
-            {{ tourId ? 'Actualitzar Tour' : 'Crear Tour' }}
+            {{ tourId ? 'Actualitzar tour' : 'Crear Tour' }}
         </button>
     </form>
 </div>
