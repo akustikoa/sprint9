@@ -46,6 +46,8 @@ export class AdminFormComponent implements OnInit {
       password: [''],
       days: this.fb.array([]),
       users: this.fb.array([]),
+      hotels: this.fb.array([]),
+      locations: this.fb.array([]),
     });
   }
 
@@ -71,6 +73,26 @@ export class AdminFormComponent implements OnInit {
     this.users.push(userGroup);
   }
 
+  addHotel(): void {
+    const hotelGroup = this.fb.group({
+      nom_hotel: [''],
+      descripcio: [''],
+      imatge_url: [''],
+      enllac: [''],
+      nits: [1],
+    });
+    this.hotels.push(hotelGroup);
+  }
+
+  addLocation(): void {
+    const locationGroup = this.fb.group({
+      nom_location: [''],
+      descripico: [''],
+      imatge_url: [''],
+    })
+    this.locations.push(locationGroup);
+  }
+
 
   get days(): FormArray<FormGroup> {
     return this.adminForm.get('days') as FormArray<FormGroup>;
@@ -79,6 +101,15 @@ export class AdminFormComponent implements OnInit {
   get users(): FormArray<FormGroup> {
     return this.adminForm.get('users') as FormArray<FormGroup>;
   }
+
+  get hotels(): FormArray<FormGroup> {
+    return this.adminForm.get('hotels') as FormArray<FormGroup>;
+  }
+
+  get locations(): FormArray<FormGroup> {
+    return this.adminForm.get('locations') as FormArray<FormGroup>;
+  }
+
 
   loadTourDetails(id: number): void {
     this.tourService.getTourDetailsById(id).subscribe({
@@ -122,6 +153,34 @@ export class AdminFormComponent implements OnInit {
             });
           }
 
+          // Carregar hotels associats
+          this.hotels.clear();
+          if (Array.isArray(tourPayload.hotels)) {
+            tourPayload.hotels.forEach((hotel) => {
+              const hotelGroup = this.fb.group({
+                nom_hotel: hotel.nom_hotel || '',
+                descripcio: hotel.descripcio || '',
+                enllac: hotel.enllac || '',
+                nits: hotel.nits || 0,
+                imatge_url: hotel.imatge_url || '',
+              });
+              this.hotels.push(hotelGroup);
+            });
+          }
+
+          // Carregar locations associats
+          this.locations.clear();
+          if (Array.isArray(tourPayload.locations)) {
+            tourPayload.locations.forEach((location) => {
+              const locationGroup = this.fb.group({
+                nom_location: location.nom_location || '',
+                descripcio: location.descripcio || '',
+                imatge_url: location.imatge_url || '',
+              });
+              this.locations.push(locationGroup);
+            });
+          }
+
         } else {
           console.error('El payload rebut no conté informació vàlida:', tourPayload);
           alert('No s\'han trobat dades vàlides per aquest tour.');
@@ -151,7 +210,25 @@ export class AdminFormComponent implements OnInit {
     }
   }
 
-  onFileSelected(event: Event, type: 'tour' | 'day', index?: number): void {
+  deleteHotel(index: number): void {
+    const confirmDelete = confirm('Estàs segur que vols eliminar aquest hotel?');
+    if (confirmDelete) {
+      this.hotels.removeAt(index);
+      this.onSubmit();
+    }
+  }
+
+  deleteLocation(index: number): void {
+    const confirmDelete = confirm('Estàs segur que vols eliminar aquesta localització?');
+    if (confirmDelete) {
+      this.locations.removeAt(index);
+      this.onSubmit();
+    }
+  }
+
+
+
+  onFileSelected(event: Event, type: 'tour' | 'day' | 'hotel' | 'location', index?: number): void {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
@@ -168,6 +245,10 @@ export class AdminFormComponent implements OnInit {
           } else if (type === 'day' && index !== undefined) {
             // Actualitza el camp de la imatge de l'etapa específica
             this.days.at(index).patchValue({ imatge_etapa: imageUrl });
+          } else if (type === 'hotel' && index !== undefined) {
+            this.hotels.at(index).patchValue({ imatge_url: imageUrl });
+          } else if (type === 'location' && index !== undefined) {
+            this.locations.at(index).patchValue({ imatge_url: imageUrl });
           }
         },
         error: (err) => {
@@ -194,6 +275,8 @@ export class AdminFormComponent implements OnInit {
         },
         days: formData.days || [],
         users: formData.users || [],
+        hotels: formData.hotels || [],
+        locations: formData.locations || [],
       };
 
       if (this.tourId) {
@@ -210,6 +293,6 @@ export class AdminFormComponent implements OnInit {
       }
     } else {
       alert('El formulari no és vàlid. Revisa els camps.');
-    }
+    };
   }
 }

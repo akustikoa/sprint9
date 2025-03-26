@@ -1,5 +1,7 @@
 import { Dia } from './dia.interface';
 import { User } from './user.interface';
+import { Hotel } from './hotel.interface';
+import { Location } from './location.interface';
 
 export interface TourPayload {
     tour: {
@@ -11,4 +13,6 @@ export interface TourPayload {
     };
     days: Dia[];
     users: User[];
+    hotels: Hotel[];
+    locations: Location[];
 }
