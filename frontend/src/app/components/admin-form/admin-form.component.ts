@@ -48,6 +48,7 @@ export class AdminFormComponent implements OnInit {
       users: this.fb.array([]),
       hotels: this.fb.array([]),
       locations: this.fb.array([]),
+      discovers: this.fb.array([]),
     });
   }
 
@@ -93,6 +94,15 @@ export class AdminFormComponent implements OnInit {
     this.locations.push(locationGroup);
   }
 
+  addDiscover(): void {
+    const discoverGroup = this.fb.group({
+      titol: [''],
+      descripcio: [''],
+      imatge_url: [''],
+    });
+    this.discovers.push(discoverGroup);
+  }
+
 
   get days(): FormArray<FormGroup> {
     return this.adminForm.get('days') as FormArray<FormGroup>;
@@ -108,6 +118,10 @@ export class AdminFormComponent implements OnInit {
 
   get locations(): FormArray<FormGroup> {
     return this.adminForm.get('locations') as FormArray<FormGroup>;
+  }
+
+  get discovers(): FormArray<FormGroup> {
+    return this.adminForm.get('discovers') as FormArray<FormGroup>;
   }
 
 
@@ -181,6 +195,19 @@ export class AdminFormComponent implements OnInit {
             });
           }
 
+          // Carregar discovers associats
+          this.discovers.clear();
+          if (Array.isArray(tourPayload.discovers)) {
+            tourPayload.discovers.forEach((discover) => {
+              const discoverGroup = this.fb.group({
+                titol: discover.titol || '',
+                descripcio: discover.descripcio || '',
+                imatge_url: discover.imatge_url || '',
+              });
+              this.discovers.push(discoverGroup);
+            });
+          }
+
         } else {
           console.error('El payload rebut no conté informació vàlida:', tourPayload);
           alert('No s\'han trobat dades vàlides per aquest tour.');
@@ -228,7 +255,7 @@ export class AdminFormComponent implements OnInit {
 
 
 
-  onFileSelected(event: Event, type: 'tour' | 'day' | 'hotel' | 'location', index?: number): void {
+  onFileSelected(event: Event, type: 'tour' | 'day' | 'hotel' | 'location' | 'discover', index?: number): void {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
@@ -249,6 +276,8 @@ export class AdminFormComponent implements OnInit {
             this.hotels.at(index).patchValue({ imatge_url: imageUrl });
           } else if (type === 'location' && index !== undefined) {
             this.locations.at(index).patchValue({ imatge_url: imageUrl });
+          } else if (type === 'discover' && index !== undefined) {
+            this.discovers.at(index).patchValue({ imatge_url: imageUrl });
           }
         },
         error: (err) => {
@@ -277,6 +306,7 @@ export class AdminFormComponent implements OnInit {
         users: formData.users || [],
         hotels: formData.hotels || [],
         locations: formData.locations || [],
+        discovers: formData.discovers || [],
       };
 
       if (this.tourId) {

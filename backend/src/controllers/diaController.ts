@@ -18,7 +18,7 @@ export const getDiesByTour = async (req: Request, res: Response) => {
     }
 };
 
-// //Obtenir un dia específic
+//Obtenir un dia específic
 // export const getDia = async (req: Request, res: Response) => {
 //     const { id } = req.params;
 //     const dia = await Dia.findByPk(id);

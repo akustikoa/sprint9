@@ -6,7 +6,8 @@ import * as path from 'path';
 import tourRoutes from '../routes/tour';
 import diaRoutes from '../routes/dia';
 import hotelRoutes from '../routes/hotel';
-import locationRoutes from '../routes/hotel';
+import locationRoutes from '../routes/location';
+import discoverRoutes from '../routes/discover';
 import uploadRoutes from '../routes/upload';
 
 import './index'; // Inicialitza relacions i models
@@ -52,6 +53,7 @@ class Server {
         this.app.use('/api', uploadRoutes);
         this.app.use('/api/hotels', hotelRoutes);
         this.app.use('/api/locations', locationRoutes);
+        this.app.use('/api/discovers', discoverRoutes);
     }
 
     async dbConnect() {
