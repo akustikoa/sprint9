@@ -3,5 +3,5 @@ export interface Discover {
     id_tour: number;
     titol: string;
     descripcio: string;
-    imatge_url: string;
+    imatge_url?: string;
 }
