@@ -18,6 +18,22 @@ export class DiscoverComponent implements OnInit {
   tourLocations = this.tourService.tourLocations;
   tourHotels = this.tourService.tourHotels;
 
+  expandedDiscoverIds = new Set<number>();
+
+  toggleDiscover(id: number): void {
+    if (this.expandedDiscoverIds.has(id)) {
+      this.expandedDiscoverIds.delete(id);
+    } else {
+      this.expandedDiscoverIds.add(id);
+    }
+  }
+
+  isExpanded(id: number): boolean {
+    return this.expandedDiscoverIds.has(id);
+  }
+
+
+
   ngOnInit(): void {
     const selectedTour = this.tourService.selectedTour();
     if (selectedTour) {

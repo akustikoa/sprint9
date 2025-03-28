@@ -1,8 +1,27 @@
 .redtext {
-  color: #d93536;
+  font-weight: Semi-bold;
 }
 
 /* .img_mod {
     border: 1.2px solid #c7cacc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   } per les imatges */
+
+.section-divider {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.clamp-text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.btn-red {
+  background-color: #d93536 !important;
+  color: white;
+}
