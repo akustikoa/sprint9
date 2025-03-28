@@ -2,6 +2,9 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Tour } from '../interfaces/tour.interface';
 import { Dia } from '../interfaces/dia.interface';
+import { Discover } from '../interfaces/discover.interface';
+import { Hotel } from '../interfaces/hotel.interface';
+import { Location } from '../interfaces/location.interface';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TourPayload } from '../interfaces/tour-payload.interface';
@@ -12,14 +15,22 @@ import { TourPayload } from '../interfaces/tour-payload.interface';
 })
 
 export class TourService {
-    private apiUrl = 'http://localhost:3001/api/tours'; // endponit tours
-    private daysUrl = 'http://localhost:3001/api/days'; //endpoint dies  
+    private apiUrl = 'http://localhost:3001/api/tours';
+    private daysUrl = 'http://localhost:3001/api/days';
+    private discoverUrl = 'http://localhost:3001/api/discovers';
+    private hotelsUrl = 'http://localhost:3001/api/hotels';
+    private locationsUrls = 'http://localhost:3001/api/locations';
+
     public isLoading = signal(false);
     public errorMessage = signal<string | null>(null);
 
     tours = signal<Tour[]>([]);
     selectedTour = signal<Tour | null>(null);
     tourDays = signal<Dia[]>([]); // dies d'un tour seleccionat
+    tourDiscovers = signal<Discover[]>([]);
+    tourHotels = signal<Hotel[]>([]);
+    tourLocations = signal<Location[]>([]);
+
 
 
     constructor(private http: HttpClient, private router: Router) { }
@@ -31,6 +42,7 @@ export class TourService {
     verifyUserTour(email: string, password: string) {
         return this.http.post<{ valid: boolean; id_tour: number }>(`${this.apiUrl}/verify-user-tour`, { email, password });
     }
+
 
 
     //ADMIN - DASHBOARD
@@ -105,6 +117,7 @@ export class TourService {
     }
 
 
+
     //LIST-DAYS
 
     loadDaysBytourId(id_tour: number): void {
@@ -115,10 +128,36 @@ export class TourService {
     }
 
 
+
     //DETAILS
 
     getDayById(id_dia: number): Dia | undefined {
         return this.tourDays().find((dia) => dia.id_dia === id_dia);
+    }
+
+
+
+    //DISCOVER
+
+    loadDiscoverByTourId(id_tour: number): void {
+        this.http.get<Discover[]>(`${this.discoverUrl}/tour/${id_tour}`).subscribe({
+            next: (discovers) => this.tourDiscovers.set(discovers),
+            error: (err) => console.error('Error carregant discovers:', err),
+        });
+    }
+
+    loadHotelsByTourId(id_tour: number): void {
+        this.http.get<Hotel[]>(`${this.hotelsUrl}/tour/${id_tour}`).subscribe({
+            next: (hotels) => this.tourHotels.set(hotels),
+            error: (err) => console.error('Error carregant hotels:', err),
+        });
+    }
+
+    loadLocationsByTourId(id_tour: number): void {
+        this.http.get<Location[]>(`${this.locationsUrl}/tour/${id_tour}`).subscribe({
+            next: (locations) => this.tourLocations.set(locations),
+            error: (err) => console.error('Error carregant locations:', err),
+        });
     }
 
 
@@ -130,6 +169,7 @@ export class TourService {
         this.selectedTour.set(null);
         this.router.navigate(['/login']);
     }
+
 
 
     //APP.COMPONENTS
