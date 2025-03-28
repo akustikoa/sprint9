@@ -19,7 +19,7 @@ export class TourService {
     private daysUrl = 'http://localhost:3001/api/days';
     private discoverUrl = 'http://localhost:3001/api/discovers';
     private hotelsUrl = 'http://localhost:3001/api/hotels';
-    private locationsUrls = 'http://localhost:3001/api/locations';
+    private locationsUrl = 'http://localhost:3001/api/locations';
 
     public isLoading = signal(false);
     public errorMessage = signal<string | null>(null);

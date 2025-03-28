@@ -1,0 +1,48 @@
+<div class="container mt-4">
+    <!-- DISCOVER -->
+    @if (tourDiscovers().length > 0) {
+    <div class="mb-5">
+        <h3 class="redtext">Discover the Area</h3>
+        @for (discover of tourDiscovers(); track discover.id_discover) {
+        <h4 class="mt-3">{{ discover.titol }}</h4>
+        <img [src]="'http://localhost:3001' + discover.imatge_url" class="img-fluid mt-2 mb-3 w-100 rounded-1"
+            [alt]="discover.titol" />
+        <p>{{ discover.descripcio }}</p>
+        }
+    </div>
+    }
+
+    <!-- LOCATIONS -->
+    @if (tourLocations().length > 0) {
+    <div class="mb-5">
+        <h3 class="redtext">Points of Interest</h3>
+        @for (location of tourLocations(); track location.id_location) {
+        <h5 class="mt-3">{{ location.nom_location }}</h5>
+        <img [src]="'http://localhost:3001' + location.imatge_url" class="img-fluid mt-2 mb-2 w-100 rounded-1"
+            [alt]="location.nom_location" />
+        <p>{{ location.descripcio }}</p>
+        }
+    </div>
+    }
+
+    <!-- HOTELS -->
+    @if (tourHotels().length > 0) {
+    <div class="mb-5">
+        <h3 class="redtext">Accommodation</h3>
+        @for (hotel of tourHotels(); track hotel.id_hotel) {
+        <h5 class="mt-3">
+            {{ hotel.nom_hotel }}
+            @if (hotel.nits) {
+            - {{ hotel.nits }} nights
+            }
+        </h5>
+        <img [src]="'http://localhost:3001' + hotel.imatge_url" class="img-fluid mt-2 mb-2 w-100 rounded-1"
+            [alt]="hotel.nom_hotel" />
+        <p>{{ hotel.descripcio }}</p>
+        @if (hotel.enllac) {
+        <a [href]="hotel.enllac" target="_blank">Visit Hotel Website</a>
+        }
+        }
+    </div>
+    }
+</div>
