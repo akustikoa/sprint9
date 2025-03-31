@@ -11,7 +11,7 @@ import { TourPayload } from '../../interfaces/tour-payload.interface';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './admin-form.component.html',
-  styleUrls: ['./admin-form.component.scss'],
+  styleUrls: ['./admin-form.component.scss'], 
 })
 export class AdminFormComponent implements OnInit {
   adminForm!: FormGroup;

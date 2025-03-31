@@ -32,6 +32,11 @@ export class DiscoverComponent implements OnInit {
     return this.expandedDiscoverIds.has(id);
   }
 
+  expandedSection: 'discover' | 'locations' | 'hotels' | null = null;
+
+  toggleSection(section: 'discover' | 'locations' | 'hotels'): void {
+    this.expandedSection = this.expandedSection === section ? null : section;
+  }
 
 
   ngOnInit(): void {

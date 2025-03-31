@@ -25,3 +25,13 @@
   background-color: #d93536 !important;
   color: white;
 }
+.accordion-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease-out; // Per al plegat
+}
+
+.accordion-content.expanded {
+  max-height: 2000px;
+  transition: max-height 1s ease-in-out; // Per al desplegat
+}
