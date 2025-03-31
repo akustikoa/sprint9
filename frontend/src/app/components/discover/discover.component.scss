@@ -14,11 +14,29 @@
 }
 
 .clamp-text {
-  overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
-  line-clamp: 5;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5rem; // 🔧 forçat per millorar compatibilitat
+  max-height: 7.2em; // 🔁 mateixa alçada per garantir el tall
+}
+
+.readmore-wrapper {
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+  max-height: 7.2em; //(distància de les 6 linies)
+}
+.readmore-wrapper p {
+  /* white-space: pre-line; */
+  line-height: 1.5rem;
+}
+
+.readmore-wrapper.expanded {
+  max-height: 1000px;
+  transition: max-height 0.6s ease-in-out;
 }
 
 .btn-red {
