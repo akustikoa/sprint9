@@ -20,17 +20,17 @@
   line-clamp: 6;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.5rem; // 🔧 forçat per millorar compatibilitat
-  max-height: 7.2em; // 🔁 mateixa alçada per garantir el tall
+  line-height: 1.5rem; // forçat per millorar compatibilitat
+  max-height: 7.2em; // mateixa alçada per garantir el tall
 }
 
 .readmore-wrapper {
   overflow: hidden;
   transition: max-height 0.4s ease-out;
-  max-height: 7.2em; //(distància de les 6 linies)
+  max-height: 7.2em; //distància de les 6 linies
 }
 .readmore-wrapper p {
-  /* white-space: pre-line; */
+  white-space: pre-line;
   line-height: 1.5rem;
 }
 

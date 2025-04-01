@@ -11,7 +11,7 @@ import { TourPayload } from '../../interfaces/tour-payload.interface';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './admin-form.component.html',
-  styleUrls: ['./admin-form.component.scss'], 
+  styleUrls: ['./admin-form.component.scss'],
 })
 export class AdminFormComponent implements OnInit {
   adminForm!: FormGroup;
@@ -128,6 +128,7 @@ export class AdminFormComponent implements OnInit {
   loadTourDetails(id: number): void {
     this.tourService.getTourDetailsById(id).subscribe({
       next: (tourPayload) => {
+        console.log('Payload rebut:', tourPayload);
 
         if (tourPayload && tourPayload.tour) {
           // Carregar dades principals
@@ -249,6 +250,14 @@ export class AdminFormComponent implements OnInit {
     const confirmDelete = confirm('Estàs segur que vols eliminar aquesta localització?');
     if (confirmDelete) {
       this.locations.removeAt(index);
+      this.onSubmit();
+    }
+  }
+
+  deleteDiscover(index: number): void {
+    const confirmDelete = confirm('Estàs segur que vols eliminar aquest discover?');
+    if (confirmDelete) {
+      this.discovers.removeAt(index);
       this.onSubmit();
     }
   }

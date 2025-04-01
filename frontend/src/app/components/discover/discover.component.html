@@ -11,8 +11,8 @@
           'bi-chevron-up': expandedSection === 'discover'
         }"></i>
         </h3>
-        <img [src]="'http://localhost:3001' + tourDiscovers()[0]?.imatge_url"
-            class="img-fluid mt-2 mb-3 w-100 rounded-1" alt="Discover Preview" />
+        <img [src]="'http://localhost:3001' + tourDiscovers()[0].imatge_url" class="img-fluid mt-2 mb-3 w-100 rounded-1"
+            alt="Discover Preview" />
 
         <!-- Desplegable -->
         <div class="accordion-content" [ngClass]="{ 'expanded': expandedSection === 'discover' }">
@@ -59,15 +59,15 @@
         </h3>
 
         <!-- Imatge destacada SEMPRE visible (només la del primer location) -->
-        <img [src]="'http://localhost:3001' + tourLocations()[0]?.imatge_url"
-            class="img-fluid mt-2 mb-3 w-100 rounded-1" [alt]="tourLocations()[0]?.nom_location" />
+        <img [src]="'http://localhost:3001' + tourLocations()[0].imatge_url" class="img-fluid mt-2 mb-3 w-100 rounded-1"
+            [alt]="tourLocations()[0].nom_location" />
 
         <!-- Contingut desplegable -->
         <div class="accordion-content" [ngClass]="{ 'expanded': expandedSection === 'locations' }">
             @for (location of tourLocations(); track location.id_location) {
 
             <!-- ✅ NOMÉS mostra la imatge si NO és el primer -->
-            @if (location.id_location !== tourLocations()[0]?.id_location) {
+            @if (location.id_location !== tourLocations()[0].id_location) {
             <img [src]="'http://localhost:3001' + location.imatge_url" class="img-fluid mt-2 mb-2 w-100 rounded-1"
                 [alt]="location.nom_location" />
             }
@@ -113,8 +113,8 @@
         </h3>
 
         <!-- Imatge SEMPRE visible -->
-        <img [src]="'http://localhost:3001' + tourHotels()[0]?.imatge_url" class="img-fluid mt-2 mb-3 w-100 rounded-1"
-            [alt]="tourHotels()[0]?.nom_hotel" />
+        <img [src]="'http://localhost:3001' + tourHotels()[0].imatge_url" class="img-fluid mt-2 mb-3 w-100 rounded-1"
+            [alt]="tourHotels()[0].nom_hotel" />
 
         <!-- Contingut desplegable -->
         <div class="accordion-content" [ngClass]="{ 'expanded': expandedSection === 'hotels' }">

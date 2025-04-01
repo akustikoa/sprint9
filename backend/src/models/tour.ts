@@ -4,6 +4,7 @@ import Dia from './dia';
 import User from './user';
 import Hotel from './hotel';
 import Location from './location';
+import Discover from './discover';
 
 
 class Tour extends Model {
@@ -19,6 +20,7 @@ class Tour extends Model {
     public users?: User[];
     public hotels?: Hotel[];
     public locations?: Location[];
+    public discovers?: Discover[];
 }
 
 Tour.init(

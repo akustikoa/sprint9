@@ -3,7 +3,7 @@ import { Tour, User } from '../models';
 import Dia from '../models/dia';
 import Hotel from '../models/hotel';
 import Location from '../models/location';
-
+import Discover from '../models/discover'
 
 
 //LOGIN
@@ -79,7 +79,7 @@ export const createFullTour = async (req: Request, res: Response): Promise<void>
 // MOFIFICAR
 export const updateFullTour = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const { tour, days, users, hotels, locations } = req.body;
+    const { tour, days, users, hotels, locations, discovers } = req.body;
 
     try {
         const existingTour = await Tour.findByPk(id);
@@ -119,6 +119,13 @@ export const updateFullTour = async (req: Request, res: Response): Promise<void>
         if (locations && Array.isArray(locations) && locations.length > 0) {
             for (const location of locations) {
                 await Location.create({ ...location, id_tour: id });
+            }
+        }
+        //------------------------------Localitzacions----------------------------
+        await Discover.destroy({ where: { id_tour: id } });
+        if (discovers && Array.isArray(discovers) && discovers.length > 0) {
+            for (const discover of discovers) {
+                await Discover.create({ ...discover, id_tour: id });
             }
         }
 
@@ -219,6 +226,7 @@ export const getTourWithDetails = async (req: Request, res: Response): Promise<v
                 { model: User, as: 'users' },
                 { model: Hotel, as: 'hotels' },
                 { model: Location, as: 'locations' },
+                { model: Discover, as: 'discovers' },
             ],
         });
 
@@ -239,6 +247,7 @@ export const getTourWithDetails = async (req: Request, res: Response): Promise<v
             users: tour.users,
             hotels: tour.hotels,
             locations: tour.locations,
+            discovers: tour.discovers,
         };
 
         res.json(payload);
