@@ -1,20 +1,27 @@
 <div class="container mt-4">
+    <!-- <h2 class="text-start ms-3 mt-4 mb-4">Discover</h2> -->
     <!-- DISCOVER -->
     @if (tourDiscovers().length > 0) {
-    <div class="mb-3">
+    <div class="">
 
-        <!-- Títol desplegable -->
-        <h3 class="d-flex align-items-center justify-content-between" (click)="toggleSection('discover')" role="button">
-            <span><i class="bi bi-search me-2"></i>Discover the Area</span>
-            <i class="bi" [ngClass]="{
-          'bi-chevron-down': expandedSection !== 'discover',
-          'bi-chevron-up': expandedSection === 'discover'
-        }"></i>
-        </h3>
-        <img [src]="'http://localhost:3001' + tourDiscovers()[0].imatge_url" class="img-fluid mt-2 mb-3 w-100 rounded-1"
-            alt="Discover Preview" />
+        <!-- Targeta clicable -->
+        <div class="clickable-card d-flex flex-column card-container" (click)="toggleSection('discover')" role="button">
 
-        <!-- Desplegable -->
+            <!-- Títol desplegable -->
+            <h3 class="d-flex align-items-center justify-content-between mb-2">
+                <span><i class="bi bi-search me-2"></i>Discover the Area</span>
+                <i class="bi" [ngClass]="{
+            'bi-chevron-down': expandedSection !== 'discover',
+            'bi-chevron-up': expandedSection === 'discover'
+          }"></i>
+            </h3>
+
+            <!-- Imatge -->
+            <img [src]="'http://localhost:3001' + tourDiscovers()[0].imatge_url" class="img-fluid w-100 rounded-1"
+                alt="Discover Preview" />
+        </div>
+
+        <!-- Contingut desplegable -->
         <div class="accordion-content" [ngClass]="{ 'expanded': expandedSection === 'discover' }">
             @for (discover of tourDiscovers(); track discover.id_discover) {
             <h5 class="mt-3">{{ discover.titol }}</h5>
@@ -28,7 +35,8 @@
                 </p>
             </div>
 
-            <button class="btn btn-red rounded-1 p-1 mt-2" (click)="toggleDiscover(discover.id_discover)">
+            <button class="btn btn-red rounded-1 p-1 mt-2"
+                (click)="toggleDiscover(discover.id_discover); $event.stopPropagation()">
                 @if (isExpanded(discover.id_discover)) {
                 Show less <i class="bi bi-arrow-up"></i>
                 } @else {
@@ -43,30 +51,32 @@
     }
 
 
+
     <!-- LOCATIONS -->
-
     @if (tourLocations().length > 0) {
-    <div class="mb-3">
-        <!-- Títol clicable -->
-        <!-- Títol clicable -->
-        <h3 class="d-flex align-items-center justify-content-between" (click)="toggleSection('locations')"
-            role="button">
-            <span><i class="bi bi-geo-alt-fill me-2"></i>Points of Interest</span>
-            <i class="bi" [ngClass]="{
-      'bi-chevron-down': expandedSection !== 'locations',
-      'bi-chevron-up': expandedSection === 'locations'
-    }"></i>
-        </h3>
+    <div class="card-container mb-3">
 
-        <!-- Imatge destacada SEMPRE visible (només la del primer location) -->
-        <img [src]="'http://localhost:3001' + tourLocations()[0].imatge_url" class="img-fluid mt-2 mb-3 w-100 rounded-1"
-            [alt]="tourLocations()[0].nom_location" />
+        <!-- Bloc clicable (títol + imatge) -->
+        <div class="clickable-card d-flex flex-column" (click)="toggleSection('locations')" role="button">
+            <!-- Títol clicable -->
+            <h3 class="d-flex align-items-center justify-content-between mb-2">
+                <span><i class="bi bi-geo-alt-fill me-2"></i>Points of Interest</span>
+                <i class="bi" [ngClass]="{
+            'bi-chevron-down': expandedSection !== 'locations',
+            'bi-chevron-up': expandedSection === 'locations'
+          }"></i>
+            </h3>
+
+            <!-- Imatge destacada (clicable) -->
+            <img [src]="'http://localhost:3001' + tourLocations()[0].imatge_url" class="img-fluid mb-3 w-100 rounded-1"
+                [alt]="tourLocations()[0].nom_location" />
+        </div>
 
         <!-- Contingut desplegable -->
         <div class="accordion-content" [ngClass]="{ 'expanded': expandedSection === 'locations' }">
             @for (location of tourLocations(); track location.id_location) {
 
-            <!-- ✅ NOMÉS mostra la imatge si NO és el primer -->
+            <!-- ✅ NOMÉS mostra la imatge si NO és la primera -->
             @if (location.id_location !== tourLocations()[0].id_location) {
             <img [src]="'http://localhost:3001' + location.imatge_url" class="img-fluid mt-2 mb-2 w-100 rounded-1"
                 [alt]="location.nom_location" />
@@ -75,15 +85,16 @@
             <h5 class="mt-3">{{ location.nom_location }}</h5>
 
             <div [ngClass]="{
-        'readmore-wrapper': true,
-        'expanded': isExpanded(location.id_location)
-      }">
+            'readmore-wrapper': true,
+            'expanded': isExpanded(location.id_location)
+          }">
                 <p class="mb-0" [ngClass]="{ 'clamp-text': !isExpanded(location.id_location) }">
                     {{ location.descripcio }}
                 </p>
             </div>
 
-            <button class="btn btn-red rounded-1 p-1 mt-2" (click)="toggleDiscover(location.id_location)">
+            <button class="btn btn-red rounded-1 p-1 mt-2"
+                (click)="toggleDiscover(location.id_location); $event.stopPropagation()">
                 @if (isExpanded(location.id_location)) {
                 Show less <i class="bi bi-arrow-up"></i>
                 } @else {
@@ -94,27 +105,31 @@
             <div class="section-divider"></div>
             }
         </div>
-
     </div>
     }
 
 
 
+
     <!-- HOTELS -->
     @if (tourHotels().length > 0) {
-    <div class="mb-3">
-        <!-- Títol clicable -->
-        <h3 class="d-flex align-items-center justify-content-between" (click)="toggleSection('hotels')" role="button">
-            <span><i class="bi bi-house-fill me-2"></i>Accommodation</span>
-            <i class="bi" [ngClass]="{
-          'bi-chevron-down': expandedSection !== 'hotels',
-          'bi-chevron-up': expandedSection === 'hotels'
-        }"></i>
-        </h3>
+    <div class="card-container mb-3">
 
-        <!-- Imatge SEMPRE visible -->
-        <img [src]="'http://localhost:3001' + tourHotels()[0].imatge_url" class="img-fluid mt-2 mb-3 w-100 rounded-1"
-            [alt]="tourHotels()[0].nom_hotel" />
+        <!-- Bloc clicable (títol + imatge) -->
+        <div class="clickable-card d-flex flex-column" (click)="toggleSection('hotels')" role="button">
+            <!-- Títol clicable -->
+            <h3 class="d-flex align-items-center justify-content-between mb-2">
+                <span><i class="bi bi-house-fill me-2"></i>Accommodation</span>
+                <i class="bi" [ngClass]="{
+            'bi-chevron-down': expandedSection !== 'hotels',
+            'bi-chevron-up': expandedSection === 'hotels'
+          }"></i>
+            </h3>
+
+            <!-- Imatge destacada (clicable) -->
+            <img [src]="'http://localhost:3001' + tourHotels()[0].imatge_url" class="img-fluid mb-3 w-100 rounded-1"
+                [alt]="tourHotels()[0].nom_hotel" />
+        </div>
 
         <!-- Contingut desplegable -->
         <div class="accordion-content" [ngClass]="{ 'expanded': expandedSection === 'hotels' }">
@@ -141,7 +156,8 @@
             </a>
             }
 
-            <button class="btn btn-red rounded-1 p-1 mt-3" (click)="toggleDiscover(hotel.id_hotel)">
+            <button class="btn btn-red rounded-1 p-1 mt-3"
+                (click)="toggleDiscover(hotel.id_hotel); $event.stopPropagation()">
                 @if (isExpanded(hotel.id_hotel)) {
                 Show less <i class="bi bi-arrow-up"></i>
                 } @else {
@@ -154,6 +170,7 @@
         </div>
     </div>
     }
+
 
 
 </div>
