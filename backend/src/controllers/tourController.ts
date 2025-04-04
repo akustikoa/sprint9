@@ -10,7 +10,7 @@ import Discover from '../models/discover'
 export const verifyUserTourPassword = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
-    try {
+    try {   
         // Existeix usuasi?
         const user = await User.findOne({ where: { email } });
         if (!user) {
