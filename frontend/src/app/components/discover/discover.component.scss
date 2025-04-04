@@ -51,30 +51,29 @@
   margin-bottom: 1.5rem;
 }
 
-.clamp-text {
+clamp-text {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 6;
   line-clamp: 6;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.5rem; // forçat per millorar compatibilitat
-  max-height: 7.2em; // mateixa alçada per garantir el tall
 }
 
 .readmore-wrapper {
   overflow: hidden;
-  transition: max-height 0.4s ease-out;
-  max-height: 7.2em; //distància de les 6 linies
-}
-.readmore-wrapper p {
-  white-space: pre-line;
-  line-height: 1.5rem;
+  transition: max-height 0.6s ease-in-out, padding 0.6s ease-in-out;
+  max-height: 7.2em;
 }
 
 .readmore-wrapper.expanded {
   max-height: 1000px;
-  transition: max-height 0.6s ease-in-out;
+}
+
+.readmore-wrapper p {
+  white-space: pre-line;
+  line-height: 1.5rem;
+  transition: all 0.3s ease-in-out; // ⬅️ Transició suau per al text
 }
 
 .btn-red {
@@ -117,4 +116,10 @@
 .custom-title {
   padding: 0 20px;
   margin-bottom: 1.6rem;
+}
+
+.btn-custom-hotel {
+  background-color: rgba(255, 255, 255, 0.842);
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.753)
 }
