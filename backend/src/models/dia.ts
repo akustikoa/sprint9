@@ -9,9 +9,11 @@ class Dia extends Model {
     public titol_etapa!: string;
     public imatge_etapa!: string;
     public descripcio!: string;
+    public reliveUrl!: string;
     public coordenades_inici!: string;
     public coordenades_final!: string;
     public id_tour!: number;
+
 }
 
 Dia.init(
@@ -29,9 +31,13 @@ Dia.init(
         titol_etapa: DataTypes.STRING,
         imatge_etapa: DataTypes.STRING,
         descripcio: DataTypes.TEXT,
+        reliveUrl: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         coordenades_inici: DataTypes.STRING,
         coordenades_final: DataTypes.STRING,
-        
+
         id_tour: {
             type: DataTypes.INTEGER,
             allowNull: false,
