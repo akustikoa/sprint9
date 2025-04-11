@@ -151,59 +151,56 @@
             </div>
         </div>
 
-        <!-- ---------------------------------------------------- HOTELS ----------------------------------------------- -->
-        <div class="card shadow-sm">
+        <!-- ---------------------------------------------------- DISCOVERS ----------------------------------------------- -->
+        <div class="card my-5 shadow-sm">
             <div class="card-header bg-dark text-white">
-                <h3 class="mb-0 text-center">Gestió d'hotels</h3>
+                <h3 class="mb-0 text-center">Gestió de Discover the Area</h3>
             </div>
-            <div class="card-body hotel-body text-dark" formArrayName="hotels">
-                @for (hotel of hotels.controls; track hotel.value.nom_hotel) {
+
+            <div class="card-body text-dark" formArrayName="discovers">
+                @for (discover of discovers.controls; track discover.value.titol) {
                 <div class="card mb-4 mt-3 shadow-sm">
                     <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Hotel {{ hotels.controls.indexOf(hotel) + 1 }}</h4>
+                        <h4 class="mb-0">Discover {{ discovers.controls.indexOf(discover) + 1 }}</h4>
                         <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
-                            [attr.data-bs-target]="'#hotel' + hotels.controls.indexOf(hotel)">
+                            [attr.data-bs-target]="'#discover' + discovers.controls.indexOf(discover)">
                             <i class="bi bi-chevron-down"></i> Editar
                         </button>
                     </div>
 
-                    <div [id]="'hotel' + hotels.controls.indexOf(hotel)" class="collapse">
-                        <div class="card-body" [formGroupName]="hotels.controls.indexOf(hotel)">
+                    <div [id]="'discover' + discovers.controls.indexOf(discover)" class="collapse">
+                        <div class="card-body" [formGroupName]="discovers.controls.indexOf(discover)">
                             <div class="row">
+                                <!-- Columna esquerra -->
                                 <div class="col-md-6">
-                                    <label class="form-label">Nom de l'Hotel:</label>
-                                    <input type="text" formControlName="nom_hotel" class="form-control mb-3" />
-
-                                    <label class="form-label">Descripció:</label>
-                                    <textarea formControlName="descripcio" class="form-control mb-3"
-                                        rows="4"></textarea>
-
-                                    <label class="form-label">Enllaç:</label>
-                                    <input type="text" formControlName="enllac" class="form-control mb-3" />
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="form-label">Nits:</label>
-                                    <input type="number" formControlName="nits" class="form-control mb-3" />
+                                    <label class="form-label">Títol:</label>
+                                    <input type="text" formControlName="titol" class="form-control mb-3" />
 
                                     <label class="form-label">Imatge:</label>
                                     <input type="file" class="form-control mb-3"
-                                        (change)="onFileSelected($event, 'hotel', hotels.controls.indexOf(hotel))" />
+                                        (change)="onFileSelected($event, 'discover', discovers.controls.indexOf(discover))" />
 
                                     <div>
-                                        @if (hotel.get('imatge_url')?.value) {
-                                        <img [src]="'http://localhost:3001' + hotel.get('imatge_url')?.value"
-                                            alt="Imatge de l'Hotel" class="img-thumbnail mb-3"
+                                        @if (discover.get('imatge_url')?.value) {
+                                        <img [src]="'http://localhost:3001' + discover.get('imatge_url')?.value"
+                                            alt="Imatge Discover" class="img-thumbnail mb-3"
                                             style="max-width: 200px;" />
                                         }
                                     </div>
+                                </div>
+
+                                <!-- Columna dreta -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Descripció:</label>
+                                    <textarea formControlName="descripcio" class="form-control mb-3"
+                                        rows="6"></textarea>
                                 </div>
                             </div>
 
                             <div class="text-end mt-3">
                                 <button type="button" class="btn btn-danger"
-                                    (click)="deleteHotel(hotels.controls.indexOf(hotel))">
-                                    Eliminar hotel
+                                    (click)="deleteDiscover(discovers.controls.indexOf(discover))">
+                                    Eliminar Discover
                                 </button>
                             </div>
                         </div>
@@ -213,7 +210,7 @@
             </div>
 
             <div class="bg-gray fons-gris_form p-3">
-                <button type="button" class="btn btn-secondary" (click)="addHotel()">Afegir hotel</button>
+                <button type="button" class="btn btn-secondary" (click)="addDiscover()">Afegir Discover</button>
             </div>
         </div>
 
@@ -280,56 +277,60 @@
             </div>
         </div>
 
-        <!-- ---------------------------------------------------- DISCOVERS ----------------------------------------------- -->
-        <div class="card my-5 shadow-sm">
-            <div class="card-header bg-dark text-white">
-                <h3 class="mb-0 text-center">Gestió de Discover the Area</h3>
-            </div>
 
-            <div class="card-body text-dark" formArrayName="discovers">
-                @for (discover of discovers.controls; track discover.value.titol) {
+        <!-- ---------------------------------------------------- HOTELS ----------------------------------------------- -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h3 class="mb-0 text-center">Gestió d'hotels</h3>
+            </div>
+            <div class="card-body hotel-body text-dark" formArrayName="hotels">
+                @for (hotel of hotels.controls; track hotel.value.nom_hotel) {
                 <div class="card mb-4 mt-3 shadow-sm">
                     <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Discover {{ discovers.controls.indexOf(discover) + 1 }}</h4>
+                        <h4 class="mb-0">Hotel {{ hotels.controls.indexOf(hotel) + 1 }}</h4>
                         <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
-                            [attr.data-bs-target]="'#discover' + discovers.controls.indexOf(discover)">
+                            [attr.data-bs-target]="'#hotel' + hotels.controls.indexOf(hotel)">
                             <i class="bi bi-chevron-down"></i> Editar
                         </button>
                     </div>
 
-                    <div [id]="'discover' + discovers.controls.indexOf(discover)" class="collapse">
-                        <div class="card-body" [formGroupName]="discovers.controls.indexOf(discover)">
+                    <div [id]="'hotel' + hotels.controls.indexOf(hotel)" class="collapse">
+                        <div class="card-body" [formGroupName]="hotels.controls.indexOf(hotel)">
                             <div class="row">
-                                <!-- Columna esquerra -->
                                 <div class="col-md-6">
-                                    <label class="form-label">Títol:</label>
-                                    <input type="text" formControlName="titol" class="form-control mb-3" />
+                                    <label class="form-label">Nom de l'Hotel:</label>
+                                    <input type="text" formControlName="nom_hotel" class="form-control mb-3" />
+
+                                    <label class="form-label">Descripció:</label>
+                                    <textarea formControlName="descripcio" class="form-control mb-3"
+                                        rows="4"></textarea>
+
+                                    <label class="form-label">Enllaç:</label>
+                                    <input type="text" formControlName="enllac" class="form-control mb-3" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Nits:</label>
+                                    <input type="number" formControlName="nits" class="form-control mb-3" />
 
                                     <label class="form-label">Imatge:</label>
                                     <input type="file" class="form-control mb-3"
-                                        (change)="onFileSelected($event, 'discover', discovers.controls.indexOf(discover))" />
+                                        (change)="onFileSelected($event, 'hotel', hotels.controls.indexOf(hotel))" />
 
                                     <div>
-                                        @if (discover.get('imatge_url')?.value) {
-                                        <img [src]="'http://localhost:3001' + discover.get('imatge_url')?.value"
-                                            alt="Imatge Discover" class="img-thumbnail mb-3"
+                                        @if (hotel.get('imatge_url')?.value) {
+                                        <img [src]="'http://localhost:3001' + hotel.get('imatge_url')?.value"
+                                            alt="Imatge de l'Hotel" class="img-thumbnail mb-3"
                                             style="max-width: 200px;" />
                                         }
                                     </div>
-                                </div>
-
-                                <!-- Columna dreta -->
-                                <div class="col-md-6">
-                                    <label class="form-label">Descripció:</label>
-                                    <textarea formControlName="descripcio" class="form-control mb-3"
-                                        rows="6"></textarea>
                                 </div>
                             </div>
 
                             <div class="text-end mt-3">
                                 <button type="button" class="btn btn-danger"
-                                    (click)="deleteDiscover(discovers.controls.indexOf(discover))">
-                                    Eliminar Discover
+                                    (click)="deleteHotel(hotels.controls.indexOf(hotel))">
+                                    Eliminar hotel
                                 </button>
                             </div>
                         </div>
@@ -339,11 +340,9 @@
             </div>
 
             <div class="bg-gray fons-gris_form p-3">
-                <button type="button" class="btn btn-secondary" (click)="addDiscover()">Afegir Discover</button>
+                <button type="button" class="btn btn-secondary" (click)="addHotel()">Afegir hotel</button>
             </div>
         </div>
-
-
 
 
         <!-- SUBMIT Actualitzar tour -->

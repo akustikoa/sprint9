@@ -1,4 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
@@ -6,8 +7,6 @@ import { TourService } from '../../services/tour.service';
 import { Dia } from '../../interfaces/dia.interface';
 import * as mapboxgl from 'mapbox-gl';
 import { Chart, registerables } from 'chart.js';
-
-
 
 @Component({
   selector: 'app-details',
@@ -19,25 +18,40 @@ import { Chart, registerables } from 'chart.js';
 export class DetailsComponent implements OnInit {
   id_dia: number | null = null;
   selectedDay = signal<Dia | null | undefined>(null);
+  reliveSafeUrl: SafeResourceUrl | null = null;
+
   map!: mapboxgl.Map;
   routes: { name: string; color: string; coordinates: [number, number][] }[] = [];
   chart!: Chart;
 
-  constructor(private route: ActivatedRoute, private tourService: TourService) {
+  constructor(
+    private route: ActivatedRoute,
+    private tourService: TourService,
+    private sanitizer: DomSanitizer
+  ) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
     this.id_dia = Number(this.route.snapshot.paramMap.get('id'));
+
     if (this.id_dia) {
       const day = this.tourService.getDayById(this.id_dia);
       console.log(day);
 
       if (day) {
+        console.log('DAY REBUT DEL SERVEI:', day);
         this.selectedDay.set(day);
         this.configureRoutes(day);
+
+        // ✅ Construcció segura de l'enllaç al vídeo Relive
+        if (day.reliveUrl) {
+          const url = 'https://www.relive.com/view/' + day.reliveUrl + '/widget?r=embed-site';
+          this.reliveSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        }
       }
     }
+
     this.initializeMap();
     this.createChart([]); // Inicialitza el gràfic amb dades buides
   }
@@ -47,7 +61,6 @@ export class DetailsComponent implements OnInit {
 
     const parseCoordinates = (coord: string | null): [number, number] | null => {
       if (coord) {
-        // converteix en nombre
         const parts = coord.split(',').map(part => parseFloat(part.trim()));
         if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
           return [parts[0], parts[1]] as [number, number];

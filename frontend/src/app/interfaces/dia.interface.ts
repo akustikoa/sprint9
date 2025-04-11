@@ -12,4 +12,5 @@ export interface Dia {
     coordenades_final: string;
     coordenades_final2: string;
     coordenades_final3: string;
+    reliveUrl?: string;
 }

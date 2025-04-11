@@ -9,6 +9,16 @@
             {{selectedDay()!.data_dia}}</h5>
 
         <p class="mt-4 custom-text">{{ selectedDay()!.descripcio }}</p>
+
+        @if (reliveSafeUrl) {
+        <div class="embed-responsive mt-4"
+            style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+            <iframe [src]="reliveSafeUrl" frameborder="0" scrolling="no" allowfullscreen
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+            </iframe>
+        </div>
+        }
+
         }
     </div>
 
