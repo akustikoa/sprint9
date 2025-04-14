@@ -13,4 +13,5 @@ export interface Dia {
     coordenades_final2: string;
     coordenades_final3: string;
     reliveUrl?: string;
+    elevationImage?: string;
 }

@@ -95,10 +95,7 @@ export class TourService {
     }
 
     // Pujar imatges al backend
-    uploadImage(file: File): Observable<{ url: string }> {
-        const formData = new FormData();
-        formData.append('file', file);
-
+    uploadImage(formData: FormData): Observable<{ url: string }> {
         return this.http.post<{ url: string }>(
             'http://localhost:3001/api/upload',
             formData

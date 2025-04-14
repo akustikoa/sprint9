@@ -60,6 +60,7 @@ export class AdminFormComponent implements OnInit {
       imatge_etapa: [''],
       descripcio: [''],
       reliveUrl: [''],
+      elevationImage: [''],
       coordenades_inici: [''],
       coordenades_final: [''],
     });
@@ -152,6 +153,7 @@ export class AdminFormComponent implements OnInit {
                 imatge_etapa: day.imatge_etapa || '',
                 descripcio: day.descripcio || '',
                 reliveUrl: day.reliveUrl || '',
+                elevationImage: day.elevationImage || '',
                 coordenades_inici: day.coordenades_inici || '',
                 coordenades_final: day.coordenades_final || '',
               });
@@ -265,36 +267,66 @@ export class AdminFormComponent implements OnInit {
   }
 
 
-
-  onFileSelected(event: Event, type: 'tour' | 'day' | 'hotel' | 'location' | 'discover', index?: number): void {
+  // per a camps individuals dipus ID
+  onFileSelected(event: Event, field: string, index: number): void {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
 
-      // Mostra la càrrega al servei
-      this.tourService.uploadImage(file).subscribe({
-        next: (response) => {
-          const imageUrl = response.url;
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        alert('Només es poden pujar imatges (jpg, png, webp).');
+        return;
+      }
 
-          if (type === 'tour') {
-            // Actualitza el camp de la imatge del tour
-            this.adminForm.patchValue({ imatge_tour: imageUrl });
-          } else if (type === 'day' && index !== undefined) {
-            // Actualitza el camp de la imatge de l'etapa específica
-            this.days.at(index).patchValue({ imatge_etapa: imageUrl });
-          } else if (type === 'hotel' && index !== undefined) {
-            this.hotels.at(index).patchValue({ imatge_url: imageUrl });
-          } else if (type === 'location' && index !== undefined) {
-            this.locations.at(index).patchValue({ imatge_url: imageUrl });
-          } else if (type === 'discover' && index !== undefined) {
-            this.discovers.at(index).patchValue({ imatge_url: imageUrl });
-          }
+      const formData = new FormData();
+      formData.append('file', file);
+
+      this.tourService.uploadImage(formData).subscribe({
+        next: (response) => {
+          const url = response.url;
+          console.log('URL rebuda del backend:', url);
+          console.log('Valor elevationImage abans:', this.days.at(index).get(field)?.value);
+
+          this.days.at(index).get(field)?.setValue(url);
+
+          console.log('Valor elevationImage després:', this.days.at(index).get(field)?.value);
         },
         error: (err) => {
-          console.error('Error pujant la imatge:', err);
-          alert('Hi ha hagut un error en pujar la imatge.');
+          console.error(`Error pujant la imatge per ${field}:`, err);
+          alert('Error en pujar la imatge.');
+        }
+      });
+    }
+  }
+
+  // per a camps dins d'un FormArray (imatge_etapa...)
+  onFileSelectedRoot(event: Event, field: string): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+
+      // Validació de tipus d’arxiu
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        alert('Només es poden pujar imatges (jpg, png, webp).');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      this.tourService.uploadImage(formData).subscribe({
+        next: (response) => {
+          const url = response.url;
+          this.adminForm.get(field)?.setValue(url);
         },
+        error: (err) => {
+          console.error(`Error pujant la imatge per ${field}:`, err);
+          alert('Error en pujar la imatge.');
+        }
       });
     }
   }
