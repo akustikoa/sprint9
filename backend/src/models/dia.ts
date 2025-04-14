@@ -10,6 +10,7 @@ class Dia extends Model {
     public imatge_etapa!: string;
     public descripcio!: string;
     public reliveUrl!: string;
+    public elevationImage!: string;
     public coordenades_inici!: string;
     public coordenades_final!: string;
     public id_tour!: number;
@@ -32,6 +33,10 @@ Dia.init(
         imatge_etapa: DataTypes.STRING,
         descripcio: DataTypes.TEXT,
         reliveUrl: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        elevationImage: {
             type: DataTypes.STRING,
             allowNull: true,
         },

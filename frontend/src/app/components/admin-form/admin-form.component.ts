@@ -59,6 +59,7 @@ export class AdminFormComponent implements OnInit {
       titol_etapa: [''],
       imatge_etapa: [''],
       descripcio: [''],
+      reliveUrl: [''],
       coordenades_inici: [''],
       coordenades_final: [''],
     });
@@ -150,6 +151,7 @@ export class AdminFormComponent implements OnInit {
                 titol_etapa: day.titol_etapa || '',
                 imatge_etapa: day.imatge_etapa || '',
                 descripcio: day.descripcio || '',
+                reliveUrl: day.reliveUrl || '',
                 coordenades_inici: day.coordenades_inici || '',
                 coordenades_final: day.coordenades_final || '',
               });
