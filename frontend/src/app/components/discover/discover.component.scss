@@ -30,11 +30,14 @@
 }
 
 .section-bar-fill {
-  height: 1rem;
+  height: 0.8rem;
   background: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.829) 60%,
-    rgba(0, 0, 0, 0.9) 100%
+    rgba(255, 255, 255, 0.8) 20%,
+    rgba(150, 150, 150, 0.7) 50%,
+    rgba(80, 80, 80, 0.6) 75%,
+    rgba(50, 50, 50, 0.5) 90%,
+    #1d1e1f 98%
   );
   flex-grow: 1;
   border-radius: 0.25rem;
@@ -121,5 +124,5 @@ clamp-text {
 .btn-custom-hotel {
   background-color: rgba(255, 255, 255, 0.842);
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.753)
+  color: rgba(0, 0, 0, 0.753);
 }
