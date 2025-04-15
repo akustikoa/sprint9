@@ -1,5 +1,18 @@
-<div class="container mt-4">
-    <div class="container mt-4">
+<div class="container fade-in">
+    <div class="container">
+        <!-- Breadcrumb -->
+        <div class="section-heading mb-3">
+            <div class="row">
+                <div class="col-md-12 custom-title">
+                    <div class="section-title-bar">
+                        <a [routerLink]="['/home']" class="bikecat-title text-decoration-none">BIKECAT/</a><a
+                            [routerLink]="['/days']" class="section-name text-decoration-none">Tour
+                            stages</a>
+                        <div class="section-bar-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @if (selectedDay()) {
         <h2 class="d-inline text-start">{{ selectedDay()!.titol_etapa }}</h2>
         <img [src]="'http://localhost:3001' + selectedDay()!.imatge_etapa" class="img-fluid mt-3 mb-5 w-100 rounded-1"
@@ -11,7 +24,7 @@
         <p class="mt-4 custom-text">{{ selectedDay()!.descripcio }}</p>
 
         @if (reliveSafeUrl) {
-        <div class="embed-responsive mt-4 fade-in"
+        <div class="embed-responsive mt-4"
             style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
             <iframe [src]="reliveSafeUrl" frameborder="0" scrolling="no" allowfullscreen
                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">

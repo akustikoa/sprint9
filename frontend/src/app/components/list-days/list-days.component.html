@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <div class="row d-flex justify-content-start">
+    <div class="row d-flex justify-content-start fade-in">
         @for (dia of tourDays(); track dia.id_dia) {
         <div class="col-md-4 mb-4 card-container">
             <a class="text-decoration-none" [routerLink]="['/detail', dia.id_dia]">

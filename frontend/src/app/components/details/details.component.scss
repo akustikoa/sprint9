@@ -15,7 +15,7 @@
 /* --------------------------- */
 .fade-in {
   opacity: 0;
-  animation: fadeIn 1.2s ease-in-out forwards;
+  animation: fadeIn 0.3s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
@@ -27,3 +27,48 @@
   }
 }
 /* --------------------------- */
+
+.section-heading {
+  margin-top: 1rem;
+  margin-bottom: 5px;
+}
+
+.section-title-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  gap: 0; // cap espai entre els spans
+}
+
+.bikecat-title {
+  font-weight: bold;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.808);
+  margin-right: 0;
+}
+
+.section-name {
+  font-weight: normal;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.808);
+  margin-right: 1rem;
+}
+
+.section-bar-fill {
+  height: 0.8rem;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.8) 20%,
+    rgba(150, 150, 150, 0.7) 50%,
+    rgba(80, 80, 80, 0.6) 75%,
+    rgba(50, 50, 50, 0.5) 90%,
+    #1d1e1f 98%
+  );
+  flex-grow: 1;
+  border-radius: 0.25rem;
+}
+
+.custom-title {
+  padding: 0 8px;
+  margin-bottom: 0.6rem;
+}

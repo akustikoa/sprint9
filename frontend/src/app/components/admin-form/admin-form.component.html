@@ -77,7 +77,7 @@
 
                                     <label class="form-label">Imatge de l'Etapa:</label>
                                     <input type="file" class="form-control mb-3"
-                                        (change)="onFileSelected($event, 'day', days.controls.indexOf(day))" />
+                                        (change)="onFileSelected($event, 'day', days.controls.indexOf(day), 'day')" />
 
                                     <div>
                                         <!-- Càrrega de la  imatge -->
@@ -97,7 +97,7 @@
                                     <input type="text" formControlName="reliveUrl" class="form-control mb-3" />
                                     <label class="form-label">Imatge Perfil Altitud:</label>
                                     <input type="file" class="form-control mb-3"
-                                        (change)="onFileSelected($event, 'elevationImage', days.controls.indexOf(day))" />
+                                        (change)="onFileSelected($event, 'elevationImage', days.controls.indexOf(day), 'day')" />
 
                                     <!-- Càrrega de la  imatge -->
                                     @if (day.get('elevationImage')?.value) {
@@ -189,7 +189,8 @@
 
                                     <label class="form-label">Imatge:</label>
                                     <input type="file" class="form-control mb-3"
-                                        (change)="onFileSelected($event, 'discover', discovers.controls.indexOf(discover))" />
+                                        (change)="onFileSelected($event, 'imatge_url', discovers.controls.indexOf(discover), 'discover')" />
+
 
                                     <div>
                                         @if (discover.get('imatge_url')?.value) {
@@ -252,7 +253,8 @@
 
                                     <label class="form-label">Imatge:</label>
                                     <input type="file" class="form-control mb-3"
-                                        (change)="onFileSelected($event, 'location', locations.controls.indexOf(location))" />
+                                        (change)="onFileSelected($event, 'imatge_url', locations.controls.indexOf(location), 'location')" />
+
 
                                     <div>
                                         @if (location.get('imatge_url')?.value) {
@@ -260,6 +262,7 @@
                                             alt="Imatge de la Localització" class="img-thumbnail mb-3"
                                             style="max-width: 200px;" />
                                         }
+                                        <p class="text-muted">Valor: {{ location.get('imatge_url')?.value }}</p>
                                     </div>
                                 </div>
 
@@ -326,7 +329,8 @@
 
                                     <label class="form-label">Imatge:</label>
                                     <input type="file" class="form-control mb-3"
-                                        (change)="onFileSelected($event, 'hotel', hotels.controls.indexOf(hotel))" />
+                                        (change)="onFileSelected($event, 'imatge_url', hotels.controls.indexOf(hotel), 'hotel')" />
+
 
                                     <div>
                                         @if (hotel.get('imatge_url')?.value) {

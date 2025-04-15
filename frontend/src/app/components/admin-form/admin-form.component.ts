@@ -268,7 +268,7 @@ export class AdminFormComponent implements OnInit {
 
 
   // per a camps individuals dipus ID
-  onFileSelected(event: Event, field: string, index: number): void {
+  onFileSelected(event: Event, field: string, index: number, group: 'day' | 'hotel' | 'location' | 'discover'): void {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
@@ -286,12 +286,22 @@ export class AdminFormComponent implements OnInit {
       this.tourService.uploadImage(formData).subscribe({
         next: (response) => {
           const url = response.url;
-          console.log('URL rebuda del backend:', url);
-          console.log('Valor elevationImage abans:', this.days.at(index).get(field)?.value);
+          console.log(`Assignant al camp: ${field} del grup ${index}`, url);
 
-          this.days.at(index).get(field)?.setValue(url);
-
-          console.log('Valor elevationImage després:', this.days.at(index).get(field)?.value);
+          switch (group) {
+            case 'day':
+              this.days.at(index).get(field)?.setValue(url);
+              break;
+            case 'hotel':
+              this.hotels.at(index).get(field)?.setValue(url);
+              break;
+            case 'location':
+              this.locations.at(index).get(field)?.setValue(url);
+              break;
+            case 'discover':
+              this.discovers.at(index).get(field)?.setValue(url);
+              break;
+          }
         },
         error: (err) => {
           console.error(`Error pujant la imatge per ${field}:`, err);
@@ -300,6 +310,9 @@ export class AdminFormComponent implements OnInit {
       });
     }
   }
+
+
+
 
   // per a camps dins d'un FormArray (imatge_etapa...)
   onFileSelectedRoot(event: Event, field: string): void {

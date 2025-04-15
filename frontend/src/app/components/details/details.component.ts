@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { TourService } from '../../services/tour.service';
 import { Dia } from '../../interfaces/dia.interface';
@@ -11,7 +12,7 @@ import { Chart, registerables } from 'chart.js';
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })

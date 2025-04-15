@@ -126,3 +126,19 @@ clamp-text {
   font-weight: 600;
   color: rgba(0, 0, 0, 0.753);
 }
+
+/* --------------------------- */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* --------------------------- */
