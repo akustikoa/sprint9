@@ -270,7 +270,7 @@ export class AdminFormComponent implements OnInit {
   // per a camps individuals dipus ID
   onFileSelected(event: Event, field: string, index: number, group: 'day' | 'hotel' | 'location' | 'discover'): void {
     const input = event.target as HTMLInputElement;
-
+    console.log('Valor imatge_etapa:', this.days.at(index).get('imatge_etapa')?.value);
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
 
