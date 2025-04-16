@@ -85,12 +85,14 @@ export class AdminFormComponent implements OnInit {
       nits: [1],
     });
     this.hotels.push(hotelGroup);
+    console.log('Hotel carregat al formulari:', hotelGroup.value);
+
   }
 
   addLocation(): void {
     const locationGroup = this.fb.group({
       nom_location: [''],
-      descripico: [''],
+      descripcio: [''],
       imatge_url: [''],
     })
     this.locations.push(locationGroup);
@@ -294,6 +296,7 @@ export class AdminFormComponent implements OnInit {
               break;
             case 'hotel':
               this.hotels.at(index).get(field)?.setValue(url);
+              console.log('Assignació d’imatge a hotel', index, url);
               break;
             case 'location':
               this.locations.at(index).get(field)?.setValue(url);
