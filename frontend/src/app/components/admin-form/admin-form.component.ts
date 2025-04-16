@@ -368,11 +368,14 @@ export class AdminFormComponent implements OnInit {
         discovers: formData.discovers || [],
       };
 
+      console.log('📦 Payload enviat:', requestPayload);
+
       if (this.tourId) {
         this.tourService.updateFullTour(this.tourId, requestPayload);
       } else {
         this.tourService.createFullTour(requestPayload);
       }
+      
 
       if (!this.tourService.errorMessage()) {
         this.router.navigate(['/admin']);

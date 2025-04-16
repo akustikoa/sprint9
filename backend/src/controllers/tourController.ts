@@ -10,7 +10,7 @@ import Discover from '../models/discover'
 export const verifyUserTourPassword = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
 
-    try {   
+    try {
         // Existeix usuasi?
         const user = await User.findOne({ where: { email } });
         if (!user) {
@@ -41,7 +41,7 @@ export const verifyUserTourPassword = async (req: Request, res: Response): Promi
 //TOURS COMPLETS
 //CREAR 
 export const createFullTour = async (req: Request, res: Response): Promise<void> => {
-    const { tour, days, users } = req.body;
+    const { tour, days, users, hotels, locations, discovers } = req.body;
 
     try {
         if (!tour || !tour.nom_tour || !tour.imatge_tour || !tour.data_inici || !tour.data_final || !tour.password) {
@@ -51,18 +51,40 @@ export const createFullTour = async (req: Request, res: Response): Promise<void>
 
         // Crea el tour
         const createdTour = await Tour.create(tour);
+        const id_tour = createdTour.getDataValue('id_tour');
 
         // Crea els dies associats
         if (days && days.length > 0) {
             for (const day of days) {
-                await Dia.create({ ...day, id_tour: createdTour.getDataValue('id_tour') });
+                await Dia.create({ ...day, id_tour });
             }
         }
 
         // Crea usuaris associats
         if (users && users.length > 0) {
             for (const user of users) {
-                await User.create({ ...user, id_tour: createdTour.getDataValue('id_tour') });
+                await User.create({ ...user, id_tour });
+            }
+        }
+
+        // Hotels
+        if (hotels && hotels.length > 0) {
+            for (const hotel of hotels) {
+                await Hotel.create({ ...hotel, id_tour });
+            }
+        }
+
+        // Localitzacions
+        if (locations && locations.length > 0) {
+            for (const location of locations) {
+                await Location.create({ ...location, id_tour });
+            }
+        }
+
+        // Discover
+        if (discovers && discovers.length > 0) {
+            for (const discover of discovers) {
+                await Discover.create({ ...discover, id_tour });
             }
         }
 
