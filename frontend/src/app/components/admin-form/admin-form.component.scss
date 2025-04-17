@@ -30,3 +30,11 @@ textarea {
 .custom-mt {
   margin-top: 60px;
 }
+
+.img-preview {
+  max-width: 100%;
+  width: 200px; // o la mida que vulguis
+  height: auto;
+  object-fit: cover;
+  // opcional si vols igualar Bootstrap
+}

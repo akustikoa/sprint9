@@ -22,7 +22,7 @@
                     <div class="col-md-3">
                         @if (adminForm.get('imatge_tour')?.value) {
                         <img [src]="'http://localhost:3001' + adminForm.get('imatge_tour')?.value" alt="Imatge del Tour"
-                            class="img-thumbnail mb-3" style="max-width: 200px;" />
+                            class="img-thumbnail img-preview mb-3" style="max-width: 200px;" />
                         }
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                                         <!-- Càrrega de la  imatge -->
                                         @if (day.get('imatge_etapa')?.value) {
                                         <img [src]="'http://localhost:3001' + day.get('imatge_etapa')?.value"
-                                            alt="Imatge de l'Etapa" class="img-thumbnail mb-3"
+                                            alt="Imatge de l'Etapa" class="img-thumbnail img-preview mb-3"
                                             style="max-width: 200px;" />
                                         }
                                     </div>
@@ -105,7 +105,8 @@
                                     <!-- Càrrega de la  imatge -->
                                     @if (day.get('elevationImage')?.value) {
                                     <img [src]="'http://localhost:3001' + day.get('elevationImage')?.value"
-                                        alt="Perfil d'altitud" class="img-thumbnail mb-3" style="max-width: 200px;" />
+                                        alt="Perfil d'altitud" class="img-thumbnail img-preview mb-3"
+                                        style="max-width: 200px;" />
                                     }
                                     <label class="form-label">Coordenades Inici:</label>
                                     <input type="text" formControlName="coordenades_inici" class="form-control mb-3" />
@@ -198,7 +199,7 @@
                                     <div>
                                         @if (discover.get('imatge_url')?.value) {
                                         <img [src]="'http://localhost:3001' + discover.get('imatge_url')?.value"
-                                            alt="Imatge Discover" class="img-thumbnail mb-3"
+                                            alt="Imatge Discover" class="img-thumbnail img-preview mb-3"
                                             style="max-width: 200px;" />
                                         }
                                     </div>
@@ -262,7 +263,7 @@
                                     <div>
                                         @if (location.get('imatge_url')?.value) {
                                         <img [src]="'http://localhost:3001' + location.get('imatge_url')?.value"
-                                            alt="Imatge de la Localització" class="img-thumbnail mb-3"
+                                            alt="Imatge de la Localització" class="img-thumbnail img-preview mb-3"
                                             style="max-width: 200px;" />
                                         }
                                     </div>
@@ -337,7 +338,7 @@
                                     <div>
                                         @if (hotel.get('imatge_url')?.value) {
                                         <img [src]="'http://localhost:3001' + hotel.get('imatge_url')?.value"
-                                            alt="Imatge de l'Hotel" class="img-thumbnail mb-3"
+                                            alt="Imatge de l'Hotel" class="img-thumbnail img-preview mb-3"
                                             style="max-width: 200px;" />
                                         }
                                     </div>
