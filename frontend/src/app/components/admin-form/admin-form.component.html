@@ -1,6 +1,6 @@
 <div class="container mt-4">
     <h2 class="mb-5">Gestió de {{adminForm.get('nom_tour')?.value }} </h2>
-    <form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="adminForm" novalidate>
         <!-- ---------------------------------------------------- TOURS ----------------------------------------------- -->
         <div class="card shadow-sm">
             <div class="card-header bg-dark text-white">
@@ -11,12 +11,19 @@
                     <label for="nom_tour" class="form-label">Nom del Tour:</label>
                     <input type="text" id="nom_tour" formControlName="nom_tour" class="form-control" />
                 </div>
+                <!-- ---------------------------------------------------------- -->
+                @if (!tourId) {
+                <button class="btn btn-success mb-3" (click)="createBaseTour()">
+                    Crear tour
+                </button>
+                <!-- ---------------------------------------------------------- -->
+                }
                 <div class="row d-flex align-items-end">
 
                     <div class="col-md-9 mb-3 ">
                         <label for="imatge_tour" class="form-label">Imatge del Tour:</label>
                         <input type="file" id="imatge_tour" class="form-control"
-                            (change)="onFileSelectedRoot($event, 'imatge_tour')" />
+                            (change)="onFileSelectedRoot($event, 'imatge_tour')" [disabled]="!tourId" />
                     </div>
                     <!-- Previsualització -->
                     <div class="col-md-3">
@@ -364,7 +371,7 @@
 
 
         <!-- SUBMIT Actualitzar tour -->
-        <button type="submit" class="btn btn-danger mt-4 mb-5" [disabled]="!adminForm.valid">
+        <button type="button" class="btn btn-danger mt-4 mb-5" [disabled]="!adminForm.valid" (click)="onSubmit()">
             {{ tourId ? 'Actualitzar tour' : 'Crear Tour' }}
         </button>
     </form>

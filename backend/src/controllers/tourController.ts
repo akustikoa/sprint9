@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { Request, Response } from 'express';
 import { Tour, User } from '../models';
 import Dia from '../models/dia';
@@ -40,6 +42,26 @@ export const verifyUserTourPassword = async (req: Request, res: Response): Promi
 
 //TOURS COMPLETS
 //CREAR 
+
+export const createBaseTour = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { nom_tour, imatge_tour, data_inici, data_final, password } = req.body;
+
+        if (!nom_tour) {
+            res.status(400).json({ msg: 'Falta el nom del tour' });
+            return;
+        }
+
+        const newTour = await Tour.create({ nom_tour, imatge_tour, data_inici, data_final, password });
+
+        res.status(201).json({ id_tour: newTour.getDataValue('id_tour') });
+    } catch (error) {
+        console.error('❌ Error en crear el tour bàsic:', error);
+        res.status(500).json({ msg: 'Error del servidor' });
+    }
+};
+
+
 export const createFullTour = async (req: Request, res: Response): Promise<void> => {
     const { tour, days, users, hotels, locations, discovers } = req.body;
 
@@ -52,6 +74,13 @@ export const createFullTour = async (req: Request, res: Response): Promise<void>
         // Crea el tour
         const createdTour = await Tour.create(tour);
         const id_tour = createdTour.getDataValue('id_tour');
+
+        // 🔧 Crea la carpeta d'imatges per aquest tour
+        const folderPath = path.join(__dirname, '..', '..', 'public', 'assets', `${id_tour}`);
+        if (!fs.existsSync(folderPath)) {
+            fs.mkdirSync(folderPath, { recursive: true });
+            console.log(`📁 Carpeta creada: assets/${id_tour}`);
+        }
 
         // Crea els dies associats
         if (days && days.length > 0) {

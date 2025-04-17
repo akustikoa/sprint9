@@ -47,6 +47,8 @@ export class TourService {
 
     //ADMIN - DASHBOARD
 
+
+
     loadTours(): void {
         this.http.get<Tour[]>(this.apiUrl).subscribe({
             next: (tours) => {
@@ -95,9 +97,9 @@ export class TourService {
     }
 
     // Pujar imatges al backend
-    uploadImage(formData: FormData): Observable<{ url: string }> {
+    uploadImage(formData: FormData, tourId: number): Observable<{ url: string }> {
         return this.http.post<{ url: string }>(
-            'http://localhost:3001/api/upload',
+            `http://localhost:3001/api/upload?id_tour=${tourId}`,
             formData
         );
     }
@@ -173,5 +175,14 @@ export class TourService {
 
     loadSelectedTourById(id: number) {
         return this.http.get<Tour>(`${this.apiUrl}/${id}`);
+    }
+
+    // CREACIÓ ID TOUR FORMULARI
+    createBaseTour(tourData: any): Observable<{ id_tour: number }> {
+        console.log('Endpoint API URL:', this.apiUrl);
+        return this.http.post<{ id_tour: number }>(
+            `${this.apiUrl}/create-base-tour`,  // ✅ aquest és el path correcte
+            tourData
+        );
     }
 }

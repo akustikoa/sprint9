@@ -272,7 +272,7 @@ export class AdminFormComponent implements OnInit {
   // per a camps individuals dipus ID
   onFileSelected(event: Event, field: string, index: number, group: 'day' | 'hotel' | 'location' | 'discover'): void {
     const input = event.target as HTMLInputElement;
-    console.log('Valor imatge_etapa:', this.days.at(index).get('imatge_etapa')?.value);
+
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
 
@@ -285,18 +285,20 @@ export class AdminFormComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', file);
 
-      this.tourService.uploadImage(formData).subscribe({
+      // 👉 Afegim la tourId per identificar la carpeta
+      if (this.tourId) {
+        formData.append('id_tour', this.tourId?.toString() || 'unknown');
+      }
+
+      this.tourService.uploadImage(formData, this.tourId!).subscribe({
         next: (response) => {
           const url = response.url;
-          console.log(`Assignant al camp: ${field} del grup ${index}`, url);
-
           switch (group) {
             case 'day':
               this.days.at(index).get(field)?.setValue(url);
               break;
             case 'hotel':
               this.hotels.at(index).get(field)?.setValue(url);
-              console.log('Assignació d’imatge a hotel', index, url);
               break;
             case 'location':
               this.locations.at(index).get(field)?.setValue(url);
@@ -313,6 +315,7 @@ export class AdminFormComponent implements OnInit {
       });
     }
   }
+
 
 
 
@@ -334,7 +337,9 @@ export class AdminFormComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', file);
 
-      this.tourService.uploadImage(formData).subscribe({
+      console.log('📦 Pujant imatge amb tourId:', this.tourId);
+
+      this.tourService.uploadImage(formData, this.tourId!).subscribe({
         next: (response) => {
           const url = response.url;
           this.adminForm.get(field)?.setValue(url);
@@ -347,6 +352,34 @@ export class AdminFormComponent implements OnInit {
     }
   }
 
+  createBaseTour(): void {
+    const formData = this.adminForm.value;
+
+    if (!formData.nom_tour) {
+      alert('El nom del tour és obligatori per començar.');
+      return;
+    }
+
+    const baseTour = {
+      nom_tour: formData.nom_tour,
+      imatge_tour: formData.imatge_tour || '',       // opcional
+      data_inici: formData.data_inici || '',         // opcional
+      data_final: formData.data_final || '',         // opcional
+      password: formData.password || '',             // opcional
+    };
+
+    this.tourService.createBaseTour(baseTour).subscribe({
+      next: (response) => {
+        this.tourId = response.id_tour;
+        console.log('🆔 tourId assignat:', this.tourId);
+        alert('✅ Tour creat correctament! Ja pots continuar amb la resta de dades.');
+      },
+      error: (err) => {
+        console.error('Error en crear el tour bàsic:', err);
+        alert('❌ No s\'ha pogut crear el tour. Revisa les dades.');
+      }
+    });
+  }
 
 
   onSubmit(): void {
@@ -375,7 +408,7 @@ export class AdminFormComponent implements OnInit {
       } else {
         this.tourService.createFullTour(requestPayload);
       }
-      
+
 
       if (!this.tourService.errorMessage()) {
         this.router.navigate(['/admin']);
