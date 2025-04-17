@@ -202,12 +202,27 @@ export const deleteFullTour = async (req: Request, res: Response): Promise<void>
             return;
         }
 
-        const deletedDays = await Dia.destroy({ where: { id_tour: id } });
-        const deletedUsers = await User.destroy({ where: { id_tour: id } });
+        // Esborrar dades relacionades
+        await Dia.destroy({ where: { id_tour: id } });
+        await User.destroy({ where: { id_tour: id } });
+        await Hotel.destroy({ where: { id_tour: id } });
+        await Location.destroy({ where: { id_tour: id } });
+        await Discover.destroy({ where: { id_tour: id } });
 
+        // Esborrar el tour principal
         await existingTour.destroy();
-        res.status(200).json({ msg: `Tour amb l'id ${id} eliminat correctament` });
+
+        // 🗑️ Esborrar carpeta d’imatges
+        const folderPath = path.join(__dirname, '..', '..', 'public', 'assets', id);
+        if (fs.existsSync(folderPath)) {
+            fs.rmSync(folderPath, { recursive: true, force: true });
+            console.log(`🗑️ Carpeta assets/${id} esborrada correctament`);
+        }
+
+        res.status(200).json({ msg: `Tour amb l'id ${id} i la seva carpeta han estat eliminats correctament` });
+
     } catch (error) {
+        console.error('❌ Error eliminant el tour:', error);
         res.status(500).json({ msg: 'Error del servidor. Si us plau, intenta-ho més tard.' });
     }
 };
