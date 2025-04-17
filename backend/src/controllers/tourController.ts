@@ -145,7 +145,11 @@ export const updateFullTour = async (req: Request, res: Response): Promise<void>
         await Dia.destroy({ where: { id_tour: id } });
         if (days && Array.isArray(days) && days.length > 0) {
             for (const day of days) {
-                await Dia.create({ ...day, id_tour: id });
+                await Dia.create({
+                    ...day,
+                    numero_dia: parseInt(day.numero_dia),  // transformem a número
+                    id_tour: id
+                });
             }
         }
 
