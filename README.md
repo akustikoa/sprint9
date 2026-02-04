@@ -1,4 +1,3 @@
-
 # 🚴 Bikecat — Cycling Tours Management Platform
 
 A full-stack web application to manage and visualize **cycling tours**, including  
@@ -6,9 +5,9 @@ days (stages), routes, hotels, locations and discover points.
 
 Built with:
 
--  Angular (frontend)
--  Node + Express (backend)
--  MySQL + Sequelize (ORM)
+- Angular (frontend)
+- Node + Express (backend)
+- MySQL + Sequelize (ORM)
 
 Bikecat allows administrators to create and manage complete tours and lets users explore all tour details in a responsive mobile-first interface.
 
@@ -17,42 +16,36 @@ Bikecat allows administrators to create and manage complete tours and lets users
 ## 📸 Preview
 
 <div align="center">
-  <img src="./screenshots/captura-tour-home.webp" width="240" style="margin: 0 20px;"/>
+  <img src="./screenshots/captura-tour-stages.webp" width="240" style="margin: 0 20px;"/>
   <img src="./screenshots/captura-tour-login.webp" width="240" style="margin: 0 20px;"/>
   <img src="./screenshots/captura-tour-detail.webp" width="240" style="margin: 0 20px;"/>
 </div>
 
 ---
 
-## 🚀 Local URLs
-
-Frontend  
-👉 http://localhost:4200  
-
-Backend API  
-👉 http://localhost:3001  
-
----
-
 ## ✨ Main Features
 
-###  Tours
+### Tours
+
 - Create / update / delete tours
 - Nested relational creation (days, hotels, locations, discover)
 - Full admin management panel
 
-###  Days (Stages)
+### Days (Stages)
+
 - Daily stages per tour
 - Images and descriptions
 - Elevation profile support
 - Relive route integration
 
-###  Discover
+### Discover
+
 - Tour-related travel guide with points of interest and accommodation
 - Rich content sections with images, descriptions and expandable blocks
 - Dynamic loading by tourId
 
-###  Technical
+### Technical
+
 - REST API
 - MySQL relational DB
 - Image uploads
@@ -64,6 +57,7 @@ Backend API
 ## 🛠️ Technologies Used
 
 ### Frontend
+
 - Angular 18
 - TypeScript
 - Signals
@@ -72,11 +66,13 @@ Backend API
 - Relive
 
 ### Backend
+
 - Node.js
 - Express
 - Sequelize ORM
 - MySQL
 - Multer (file uploads)
+
 ---
 
 ## ⚙️ Installation & Execution
@@ -99,6 +95,7 @@ npm run dev
 ```
 
 Runs on:
+
 ```
 http://localhost:3001
 ```
@@ -114,26 +111,31 @@ npx ng serve
 ```
 
 Runs on:
+
 ```
 http://localhost:4200
 ```
+
 ---
 
-# 🧩 Helpful Commands
+## 🧩 Helpful Commands
 
 Backend:
+
 ```bash
-npm run dev              
+npm run dev
 ```
 
 Frontend:
+
 ```bash
 npx ng serve
 ```
 
 ---
 
-# ✨ Author
+## ✨ Author
 
-**Xavier Prat** — Frontend / Full-Stack Developer  
-🔗 https://linkedin.com/in/xavierprat
+Developed by **Xavier Prat**
+🔗 Connect with me on [LinkedIn](https://linkedin.com/in/xavierprat)
+Frontend Developer — React · Angular · JavaScript
